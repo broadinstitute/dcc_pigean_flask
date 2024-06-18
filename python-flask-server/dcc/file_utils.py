@@ -14,8 +14,10 @@ def read_tab_delimited_file(file_path, log=False):
     with open(file_path, 'r') as file:
         for line in file:
             fields = line.strip().split('\t')
+            stripped_list = [item.strip() for item in fields]
+
             key = fields[0]
-            values = fields[1:]
+            values = stripped_list[1:]
             if key in result:
                 result[key].extend(values)
             else:
@@ -30,18 +32,24 @@ def load_gene_file_into_map(file_path, log=False):
     will read the gene file and return a map of gene to position in array
     '''
     # initialize
-    result = {}
-    count = 0
+    map_result = {}
+    list_temp = []
 
     # read in the data
     with open(file_path, 'r') as file:
         for line in file:
             gene = line.strip()
-            result[gene] = count
-            count = count + 1
+            list_temp.append(gene)
+            # result[gene] = count
+            # count = count + 1
+
+    # create the map from the list; make sure no duplicates
+    list_unique = list(set(list_temp))
+    list_unique.sort()
+    map_result = {value: index for index, value in enumerate(list_unique)}
 
     # return
-    return result
+    return map_result
 
 
 
