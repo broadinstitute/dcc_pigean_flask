@@ -1,0 +1,6 @@
+{
+    "gene_file": "genes.txt",
+    "gene_set_files": [
+        "gene_set_list_msigdb_h.txt"
+    ]
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Gene Set Pubmed</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    </head>
+    <body>
+        <img src="">
+        <br>
+        <form action="submit_genes" method="post">
+            <p>Enter the set of genes separated by commas</p>
+            <p/>
+            <textarea id="input_gene_set" name="input_gene_set" rows="2" cols="150"></textarea>
+            <p/>
+            <input type="submit" value="Submit Genes" id="submit_genes">
+
+
+            <p/>
+            {% for message in get_flashed_messages(category_filter=['list_genes_input']) %}
+                <strong>Genes entered by the user</strong>
+                <p> {{message}} </p>
+            {% endfor %}
+            {% for message in get_flashed_messages(category_filter=['list_genes_used']) %}
+                <strong>Genes found and used for the abstracts</strong>
+                <p> {{message}} </p>
+            {% endfor %}
+            {% for message in get_flashed_messages(category_filter=['abstract_biology']) %}
+                <strong>Biology abstract</strong>
+                <p> <div>{{message}}</div> </p>
+            {% endfor %}
+            {% for message in get_flashed_messages(category_filter=['no_abstract_biology']) %}
+                <strong>Default LLM answer</strong>
+                <p> <div>{{message}}</div> </p>
+            {% endfor %}
+        </form>
+    </body>
+</html>
+
