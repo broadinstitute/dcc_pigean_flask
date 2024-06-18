@@ -42,6 +42,31 @@ def test_load_geneset_matrix():
     print("genes: {}".format(json.dumps(map_gene_index, indent=2)))
     print("gene sets: {}".format(json.dumps(map_gene_set_index, indent=2)))
 
+def test_generate_gene_vector_from_list():
+    '''
+    test creating the vector from the input genes 
+    '''
+    # initialize
+    vector_result = None
+    map_gene_index = None 
+    list_gene = ["ACE", "SLC30A8", "PPARG", "TUBB2A"]
+
+    # get the gene index
+    map_gene_index = futils.load_gene_file_into_map(file_path=path_files + gene_file)
+
+    # get the vector
+    vector_result = mutils.generate_gene_vector_from_list(list_gene=list_gene, map_gene_index=map_gene_index, log=True)
+
+    # assert
+    assert map_gene_index is not None
+    assert vector_result is not None
+
+    # print
+    print(list_gene)
+    print(vector_result)
+
+
+
 
 # def test_load_gene_file_into_map():
 #     '''

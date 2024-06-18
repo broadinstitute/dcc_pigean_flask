@@ -84,7 +84,35 @@ def load_geneset_matrix(map_gene_index, list_gene_set_files, path_gene_set_files
     return matrix_result, map_gene_set_indexes_result
     
 
+def generate_gene_vector_from_list(list_gene, map_gene_index, log=False):
+    '''
+    will generate the gene vector from the list of genes
+    '''
+    # initialize
+    vector_result = None 
+    list_row = []
+    list_columns = []
+    list_data = []
+    data_value = 1
+    
+    # from the genes, create a sparse vector
+    for gene in list_gene:
+        if map_gene_index.get(gene) is not None:
+            list_row.append(map_gene_index.get(gene))
+            list_columns.append(0)
+            list_data.append(data_value)
 
+    # create the vector
+    vector_result = csc_matrix((list_data, (list_row, list_columns)), shape=(len(map_gene_index), 1)).toarray()
+
+    # log
+    if log:
+        print("\nrows: {}".format(list_row))
+        print("cols: {}".format(list_columns))
+        print("data: {}".format(list_data))
+
+    # return 
+    return vector_result
 
 
 # main

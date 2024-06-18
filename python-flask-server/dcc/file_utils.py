@@ -2,6 +2,13 @@
 # imports
 import json
 
+import dcc.dcc_utils as dutils 
+
+
+# constants
+logger = dutils.get_logger(__name__)
+
+
 # methods
 def read_tab_delimited_file(file_path, log=False):
     '''
@@ -47,6 +54,9 @@ def load_gene_file_into_map(file_path, log=False):
     list_unique = list(set(list_temp))
     list_unique.sort()
     map_result = {value: index for index, value in enumerate(list_unique)}
+
+    # log
+    logger.info("loaded gene file: {} into num count map: {}".format(file_path, len(map_result)))
 
     # return
     return map_result
