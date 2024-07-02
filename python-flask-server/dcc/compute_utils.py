@@ -36,12 +36,12 @@ class RunFactorException(Exception):
         super().__init__(self.message)
 
 # methods
-def compute_beta_tildes(X, Y, y_var, scale_factors, mean_shifts, resid_correlation_matrix=None, log_fun=log):
+def compute_beta_tildes(X, Y, y_var, scale_factors, mean_shifts, resid_correlation_matrix=None, log=False):
     '''
     get the scale factors and mean shifts from _calc_X_shift_scale()
     '''
 
-    log_fun("Calculating beta tildes")
+    logger.info("Calculating beta tildes")
 
     # Y can be a matrix with dimensions:
     # number of parallel runs x number of gene sets
