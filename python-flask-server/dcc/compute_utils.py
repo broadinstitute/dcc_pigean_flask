@@ -13,6 +13,16 @@ from numpy.random import exponential
 
 import dcc.dcc_utils as dutils 
 
+# TODO - process notes
+# 1. done - X matrix is sitting in memory (something like 20K genes x 40K gene sets)
+# 2. done - Request comes in with Y vector, need to reorder the Y vector to match the order of your X matrix
+# 3. p_values = compute_beta_tildes (X, Y)
+# 4. Filter V = X[:,p_values < 0.05] (edited) 
+# 5. Then V = V[X.sum(axis=1) > 0,:] (edited) 
+# 6. Then factor with V passed in as V0 (edited) 
+# Y = np.zeros(X.shape[0])
+
+
 
 # constants
 logger = dutils.get_logger(__name__)
@@ -27,6 +37,9 @@ class RunFactorException(Exception):
 
 # methods
 def compute_beta_tildes(X, Y, y_var, scale_factors, mean_shifts, resid_correlation_matrix=None, log_fun=log):
+    '''
+    get the scale factors and mean shifts from _calc_X_shift_scale()
+    '''
 
     log_fun("Calculating beta tildes")
 
