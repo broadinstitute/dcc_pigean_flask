@@ -78,7 +78,9 @@ def load_geneset_matrix(map_gene_index, list_gene_set_files, path_gene_set_files
         print("data: {}".format(list_data))
 
     # create the matrix
-    matrix_result = csc_matrix((list_data, (list_row, list_columns)), shape=(len(map_gene_index), len(map_gene_set_indexes_result))).toarray()
+    # NOTE - remove toarray due to errors in compute_utils._calc_X_shift_scale() for .A1 and .power()
+    # matrix_result = csc_matrix((list_data, (list_row, list_columns)), shape=(len(map_gene_index), len(map_gene_set_indexes_result))).toarray()
+    matrix_result = csc_matrix((list_data, (list_row, list_columns)), shape=(len(map_gene_index), len(map_gene_set_indexes_result)))
 
     # return
     return matrix_result, map_gene_set_indexes_result

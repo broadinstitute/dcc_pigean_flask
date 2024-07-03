@@ -112,7 +112,7 @@ def finalize_regression(beta_tildes, ses, se_inflation_factors):
 
         beta_tildes[ses <= 0] = 0
 
-    z_scores = np.zeros(beta_tildes.shape)_get_X_blocks_internal
+    z_scores = np.zeros(beta_tildes.shape)
     ses_positive_mask = ses > 0
     z_scores[ses_positive_mask] = beta_tildes[ses_positive_mask] / ses[ses_positive_mask]
     if np.any(~ses_positive_mask):
@@ -205,6 +205,10 @@ def _calc_X_shift_scale(X, y_corr_cholesky=None):
     if y_corr_cholesky is None:
         mean_shifts = X.sum(axis=0).A1 / X.shape[0]
         scale_factors = np.sqrt(X.power(2).sum(axis=0).A1 / X.shape[0] - np.square(mean_shifts))
+
+        # NOTE - delete? mods not necessary if don't convert cscsparse.toarray()
+        # mean_shifts = np.ravel(X.sum(axis=0)) / X.shape[0]
+        # scale_factors = np.sqrt(X.power(2).sum(axis=0).A1 / X.shape[0] - np.square(mean_shifts))
     else:
         scale_factors = np.array([])
         mean_shifts = np.array([])

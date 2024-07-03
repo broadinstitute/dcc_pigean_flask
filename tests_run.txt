@@ -1,0 +1,2 @@
+export PYTHONPATH=python-flask-server
+pytest python-flask-server/test/dcc/
