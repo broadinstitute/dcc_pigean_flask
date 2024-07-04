@@ -19,10 +19,15 @@ import dcc.dcc_utils as dutils
 # 3. p_values = compute_beta_tildes (X, Y)
 # 4. Filter V = X[:,p_values < 0.05] (edited) 
 # 5. Then V = V[X.sum(axis=1) > 0,:] (edited) 
-# 6. Then factor with V passed in as V0 (edited) 
+# 6. Then factor with V passed in as V0 (edited) (_bayes_nmf_l2())
 # Y = np.zeros(X.shape[0])
 
-
+# W is going to be gene x factor loadings
+# K is gene set x factor loadings
+# The factors are your groups
+# The top scoring gene sets are your labels for the factors
+# Then top scoring genes are the ones in the factor
+# (Each factor is a cluster)
 
 # constants
 logger = dutils.get_logger(__name__)
@@ -36,9 +41,10 @@ class RunFactorException(Exception):
         super().__init__(self.message)
 
 # methods
-def compute_beta_tildes(X, Y, y_var, scale_factors, mean_shifts, resid_correlation_matrix=None, log=False):
+def compute_beta_tildes(X, Y, scale_factors, mean_shifts, y_var=1, resid_correlation_matrix=None, log=False):
     '''
     get the scale factors and mean shifts from _calc_X_shift_scale()
+    TODO - check if y_var default 1 is ok (Jason)
     '''
 
     logger.info("Calculating beta tildes")
@@ -94,7 +100,10 @@ def compute_beta_tildes(X, Y, y_var, scale_factors, mean_shifts, resid_correlati
         # both cor_variances and variances are in units of unscaled X
         se_inflation_factors = np.sqrt(cor_variances / variances)
 
-    return finalize_regression(beta_tildes=beta_tildes, ses=ses, se_inflation_factors=se_inflation_factors)
+    # MPD - change so only return pvalues
+    # return finalize_regression(beta_tildes=beta_tildes, ses=ses, se_inflation_factors=se_inflation_factors)
+    (cal_beta_tildes, cal_ses, cal_z_scores, cal_p_values, cal_se_inflation_factors) = finalize_regression(beta_tildes=beta_tildes, ses=ses, se_inflation_factors=se_inflation_factors)
+    return cal_p_values
 
 def finalize_regression(beta_tildes, ses, se_inflation_factors):
 

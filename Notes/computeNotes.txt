@@ -1,0 +1,57 @@
+
+
+- soft clustering, variants can be associated in multiple clusters
+- HOMA-B phenotype
+  - function of beta cells; if zScore < 0, issues with cell
+- HOMA-IR - measures insulin resistance 
+- lipodiastrpohy clustering  
+  - you are not obeses, but have issues with TG and t2d
+  - characteriozed by abnormal fat storage
+  - 3 types of fat (belly, sub cutaneous, visceral fat)
+    - visceral fat worse 
+    - hip fat is best (far from liver)
+    - waist hip ration indicates how the fat is stored (if belly)
+
+- in l;atest paper
+  - lipodistrophy cluster associated with CAD and CKD (update from 2018 paper)
+  - beta cell cluster only associated with CAD 
+
+- udler paper used NNMF for clustering; soft clustering; had to run 1k times since unstable and only got 800 good results
+  - had to do 1k times; 800 times converged to 5 clusters 
+
+- model to look at 
+  - open target V2G score model 
+    - assigns variants to genes 
+
+
+
+-- netflix NMF 
+The Netflix Prize was a competition held by Netflix in 2006 to improve their recommendation system. The goal was to predict user ratings for movies based on previous ratings. The winning team, "BellKor's Pragmatic Chaos," used a combination of various techniques, including Non-Negative Matrix Factorization (NMF), to achieve their impressive results. Here's an explanation of how NMF was utilized in this context:
+
+The Netflix Challenge
+Netflix provided a large dataset of user-movie ratings and challenged participants to create a model that could predict future ratings. The competition aimed to improve the accuracy of recommendations by at least 10% compared to Netflix's existing Cinematch algorithm.
+
+Role of Matrix Factorization
+The primary task was to predict the rating 
+
+Non-Negative Matrix Factorization (NMF)
+NMF is used to decompose the user-item rating matrix 
+R into two lower-dimensional matrices 
+W and H
+R≈WH
+
+W is the user-feature matrix, where each row represents a user and each column represents a latent feature.
+H is the feature-item matrix, where each column represents a movie and each row represents a latent feature.
+In the context of the Netflix Prize, NMF helps to uncover the latent features that describe both users and movies. These features could represent underlying factors such as genres, movie popularity, or user preferences.
+
+Advantages of NMF
+Interpretability: The non-negativity constraint often results in more interpretable features.
+Sparsity: NMF can naturally handle sparse data, which is typical in recommendation systems where most users rate only a small subset of available items.
+Scalability: Efficient algorithms exist for large-scale NMF, making it feasible for large datasets like Netflix's.
+Implementation in the Netflix Prize
+While NMF was one of the techniques used, the winning solution was a blend of several algorithms. Here's how NMF was likely integrated:
+
+Feature Extraction: NMF was used to extract latent features from the user-item matrix. Each user and movie was represented by a combination of these features.
+Hybrid Models: The winning team combined NMF with other matrix factorization techniques (like Singular Value Decomposition (SVD)), as well as neighborhood-based methods and machine learning algorithms.
+Ensemble Learning: By blending predictions from multiple models, including NMF, they improved overall accuracy. The ensemble approach helped to capture different aspects of the data and mitigate weaknesses of individual models.
+Regularization and Optimization: Regularization techniques were applied to prevent overfitting. Optimization algorithms were used to minimize the reconstruction error 

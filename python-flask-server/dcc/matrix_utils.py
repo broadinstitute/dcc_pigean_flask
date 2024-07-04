@@ -100,12 +100,15 @@ def generate_gene_vector_from_list(list_gene, map_gene_index, log=False):
     # from the genes, create a sparse vector
     for gene in list_gene:
         if map_gene_index.get(gene) is not None:
-            list_row.append(map_gene_index.get(gene))
-            list_columns.append(0)
+            # was getting (m, 1) vector, when wanted (1,m) vector
+            # list_row.append(map_gene_index.get(gene))
+            # list_columns.append(0)
+            list_columns.append(map_gene_index.get(gene))
+            list_row.append(0)
             list_data.append(data_value)
 
     # create the vector
-    vector_result = csc_matrix((list_data, (list_row, list_columns)), shape=(len(map_gene_index), 1)).toarray()
+    vector_result = csc_matrix((list_data, (list_row, list_columns)), shape=(1, len(map_gene_index))).toarray()
 
     # log
     if log:
