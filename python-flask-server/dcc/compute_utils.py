@@ -12,13 +12,14 @@ from numpy.random import normal
 from numpy.random import exponential
 
 import dcc.dcc_utils as dutils 
+import dcc.matrix_utils as mutils 
 
 # TODO - process notes
 # 1. done - X matrix is sitting in memory (something like 20K genes x 40K gene sets)
 # 2. done - Request comes in with Y vector, need to reorder the Y vector to match the order of your X matrix
-# 3. p_values = compute_beta_tildes (X, Y)
-# 4. Filter V = X[:,p_values < 0.05] (edited) 
-# 5. Then V = V[X.sum(axis=1) > 0,:] (edited) 
+# 3. done - p_values = compute_beta_tildes (X, Y)
+# 4. done - Filter V = X[:,p_values < 0.05] (edited) 
+# 5. done - Then V = V[X.sum(axis=1) > 0,:] (edited) 
 # 6. Then factor with V passed in as V0 (edited) (_bayes_nmf_l2())
 # Y = np.zeros(X.shape[0])
 
@@ -41,6 +42,31 @@ class RunFactorException(Exception):
         super().__init__(self.message)
 
 # methods
+def get_factors(matrix_gene_sets_gene_original, list_gene, map_gene_index, map_gene_set_index, mean_shifts, scale_factors, log=False):
+    '''
+    will produce the gene set factors and gene factors
+    '''
+    # initialize
+
+    # get the gene vector from the gene list
+    vector_gene = mutils.generate_gene_vector_from_list(list_gene=list_gene, map_gene_index=map_gene_index)
+
+    # get the p_values by gene set
+    vector_gene_set_pvalues = compute_beta_tildes(X=matrix_gene_sets_gene_original, Y=vector_gene, scale_factors=scale_factors, mean_shifts=mean_shifts)
+
+    # filter the gene set columns based on computed pvalue for each gene set
+    matrix_gene_set_filtered_by_pvalues = filter_matrix_columns(matrix_input=matrix_gene_sets_gene_original, vector_input=vector_gene_set_pvalues)
+
+    # filter gene rows by only the genes that are part of the remaining gene sets from the filtered gene set matrix
+    matrix_gene_filtered_by_remaining_gene_sets = filter_matrix_rows_by_sum_cutoff(matrix_to_filter=matrix_gene_set_filtered_by_pvalues, matrix_to_sum=matrix_gene_sets_gene_original)
+
+    # from this double filtered matrix, compute the factors
+    gene_factor, gene_set_factor, _, _, _, _ = _bayes_nmf_l2(V0=matrix_gene_filtered_by_remaining_gene_sets)
+
+    # only return the gene factors and gene set factors
+    return gene_factor, gene_set_factor
+
+
 def compute_beta_tildes(X, Y, scale_factors, mean_shifts, y_var=1, resid_correlation_matrix=None, log=False):
     '''
     get the scale factors and mean shifts from _calc_X_shift_scale()
@@ -201,7 +227,7 @@ def _bayes_nmf_l2(V0, n_iter=10000, a0=10, tol=1e-7, K=15, K0=15, phi=1.0):
     return W, H, n_like[-1], n_evid[-1], n_lambda[-1], n_error[-1]
         #W # Variant weight matrix (N x K)
         #H # Trait weight matrix (K x M)
-        #n_like # List of reconstruction errors (sum of squared errors / 2) per iteration
+        #n_like # List of reconstruction errors (sum of squared errors / 2) pe_bayes_nmf_l2r iteration
         #n_evid # List of negative log-likelihoods per iteration
         #n_lambda # List of lambda vectors (shared weights for each of K clusters, some ~0) per iteration
         #n_error # List of reconstruction errors (sum of squared errors) per iteration
@@ -307,6 +333,37 @@ def _get_num_X_blocks(X_orig, batch_size=None):
     if batch_size is None:
         batch_size = BATCH_SIZE
     return int(np.ceil(X_orig.shape[1] / batch_size))
+
+
+def filter_matrix_columns(matrix_input, vector_input, cutoff_input=0.05, log=False):
+    '''
+    will filter the matrix based on the vector and cutoff
+    '''
+    matrix_result = matrix_input[:, vector_input < cutoff_input]
+
+    # log
+    if log:
+        print("got resulting shape from column filters from: {} to {}".format(matrix_input.shape, matrix_result.shape))
+
+    # return
+    return matrix_result
+
+
+def filter_matrix_rows_by_sum_cutoff(matrix_to_filter, matrix_to_sum, cutoff_input=0, log=False):
+    '''
+    will filter the matrix based on sum of each row and cutoff
+    '''
+    mask = matrix_to_sum.sum(axis=1) > cutoff_input
+    matrix_result = matrix_to_filter[mask, :]
+
+    # log
+    if log:
+        print("got resulting shape from row sum filters from: {} to {}".format(matrix_to_filter.shape, matrix_result.shape))
+
+    # return
+    return matrix_result
+
+
 
 
 # main

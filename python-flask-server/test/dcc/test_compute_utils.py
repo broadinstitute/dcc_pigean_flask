@@ -3,7 +3,7 @@
 import pytest 
 import json 
 import logging
-
+import numpy as np
 
 import dcc.file_utils as futils
 import dcc.matrix_utils as mutils 
@@ -86,6 +86,62 @@ def test_compute_beta_tildes():
     assert vector_pvalues is not None
     print("got pValues of shape: {} and data: {}".format(vector_pvalues.shape, vector_pvalues))
     # print("got pValues data: {}".format(vector_pvalues))
+
+
+def test_filter_matrix_columns():
+    '''
+    test the column filtering
+    '''
+    print("\n=============== IN test_filter_matrix_columns()")
+
+    # initialize
+    matrix01 = None
+    matrix00 = np.array([
+        [1, 2, 3, 4],
+        [5, 6, 7, 8],
+        [9, 10, 11, 12],
+        [13, 14, 15, 16],
+        [17, 18, 19, 20]
+    ])
+    cutoff = 0.05
+
+    # Example p-values array
+    p_values = np.array([0.01, 0.2, 0.03, 0.5])
+
+    # get result
+    matrix01 = cutils.filter_matrix_columns(matrix_input=matrix00, vector_input=p_values, cutoff_input=cutoff, log=True)
+
+    # test 
+    assert matrix01 is not None
+
+
+def test_filter_matrix_rows_by_sum_cutoff():
+    '''
+    test the row sum filtering
+    '''
+    print("\n=============== IN test_filter_matrix_rows_by_sum_cutoff()")
+    # initialize
+    matrix_result = None
+    X = np.array([
+        [1, -1, 0],
+        [0, 1, 0],
+        [2, 4, -5],
+        [-1, -1, -1]
+    ])
+
+    V = np.array([
+        [10, 20, 30],
+        [40, 50, 60],
+        [70, 80, 90],
+        [100, 110, 120]
+    ])
+
+    # get the filtered matrix
+    matrix_result = cutils.filter_matrix_rows_by_sum_cutoff(matrix_to_filter=V, matrix_to_sum=X, log=True)
+
+    # test
+    assert matrix_result is not None
+    print("got result matrix of shape: {} and data: \n{}".format(matrix_result.shape, matrix_result))
 
 
 
