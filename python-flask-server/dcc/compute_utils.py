@@ -44,7 +44,7 @@ class RunFactorException(Exception):
         super().__init__(self.message)
 
 # methods
-def calculate_factors(matrix_gene_sets_gene_original, list_gene, map_gene_index, mean_shifts, scale_factors, log=False):
+def calculate_factors(matrix_gene_sets_gene_original, list_gene, map_gene_index, mean_shifts, scale_factors, p_value=0.05, log=False):
     '''
     will produce the gene set factors and gene factors
     '''
@@ -55,16 +55,16 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, map_gene_index,
 
     # log
     if log:
-        print("got gene set matrix of shape: {}".format(matrix_gene_sets_gene_original.shape))
-        print("got gene vector of shape: {}".format(vector_gene.shape))
-        print("got mean_shifts of shape: {}".format(mean_shifts.shape))
-        print("got scale_factors of shape: {}".format(scale_factors.shape))
+        print("step 1: got gene set matrix of shape: {}".format(matrix_gene_sets_gene_original.shape))
+        print("step 1: got mean_shifts of shape: {}".format(mean_shifts.shape))
+        print("step 1: got scale_factors of shape: {}".format(scale_factors.shape))
+        print("step 2: got gene vector of shape: {}".format(vector_gene.shape))
 
     # get the p_values by gene set
     vector_gene_set_pvalues = compute_beta_tildes(X=matrix_gene_sets_gene_original, Y=vector_gene, scale_factors=scale_factors, mean_shifts=mean_shifts)
 
     if log:
-        print("got p values vector of shape: {}".format(vector_gene_set_pvalues.shape))
+        print("step 3: got p values vector of shape: {}".format(vector_gene_set_pvalues.shape))
 
     # filter the gene set columns based on computed pvalue for each gene set
     matrix_gene_set_filtered_by_pvalues, selected_gene_set_indices = filter_matrix_columns(matrix_input=matrix_gene_sets_gene_original, vector_input=vector_gene_set_pvalues, 
@@ -73,25 +73,25 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, map_gene_index,
     #                                                                                        cutoff_input=0.5, log=log)
 
     if log:
-        print("got gene set filtered (col) matrix of shape: {}".format(matrix_gene_set_filtered_by_pvalues.shape))
-        print("got gene set filtered indices of length: {}".format(len(selected_gene_set_indices)))
-        print("got gene set filtered indices: {}".format(selected_gene_set_indices))
+        print("step 4: got gene set filtered (col) matrix of shape: {}".format(matrix_gene_set_filtered_by_pvalues.shape))
+        print("step 4: got gene set filtered indices of length: {}".format(len(selected_gene_set_indices)))
+        print("step 4: got gene set filtered indices: {}".format(selected_gene_set_indices))
 
     # filter gene rows by only the genes that are part of the remaining gene sets from the filtered gene set matrix
     matrix_gene_filtered_by_remaining_gene_sets, selected_gene_indices = filter_matrix_rows_by_sum_cutoff(matrix_to_filter=matrix_gene_set_filtered_by_pvalues, 
-                                                                                                          matrix_to_sum=matrix_gene_sets_gene_original, log=log)
+                                                                                                          matrix_to_sum=matrix_gene_set_filtered_by_pvalues, log=log)
 
     if log:
-        print("got gene filtered (rows) matrix of shape: {}".format(matrix_gene_filtered_by_remaining_gene_sets.shape))
-        print("got gene filtered indices of length: {}".format(len(selected_gene_indices)))
+        print("step 5: got gene filtered (rows) matrix of shape: {}".format(matrix_gene_filtered_by_remaining_gene_sets.shape))
+        print("step 5: got gene filtered indices of length: {}".format(len(selected_gene_indices)))
 
     # from this double filtered matrix, compute the factors
-    # gene_factor, gene_set_factor, _, _, _, _ = _bayes_nmf_l2(V0=matrix_gene_filtered_by_remaining_gene_sets)
-    gene_factor, gene_set_factor = run_nmf(matrix_input=matrix_gene_filtered_by_remaining_gene_sets, log=log)
+    gene_factor, gene_set_factor, _, _, _, _ = _bayes_nmf_l2(V0=matrix_gene_filtered_by_remaining_gene_sets)
+    # gene_factor, gene_set_factor = run_nmf(matrix_input=matrix_gene_filtered_by_remaining_gene_sets, log=log)
 
     if log:
-        print("got gene factor matrix of shape: {}".format(gene_factor.shape))
-        print("got gene set factor matrix of shape: {}".format(gene_set_factor.shape))
+        print("step 6: got gene factor matrix of shape: {}".format(gene_factor.shape))
+        print("step 6: got gene set factor matrix of shape: {}".format(gene_set_factor.shape))
 
     # only return the gene factors and gene set factors
     return gene_factor, gene_set_factor, selected_gene_indices, selected_gene_set_indices
@@ -200,6 +200,9 @@ def _bayes_nmf_l2(V0, n_iter=10000, a0=10, tol=1e-7, K=15, K0=15, phi=1.0):
         exp_gene_set_factors = result[0]
     '''
 
+    # convert the sparse matrix tto a dense array
+    V0 = V0.toarray()
+
     # Bayesian NMF with half-normal priors for W and H
     # V0: input z-score matrix (variants x traits)
     # n_iter: Number of iterations for parameter optimization
@@ -224,6 +227,14 @@ def _bayes_nmf_l2(V0, n_iter=10000, a0=10, tol=1e-7, K=15, K0=15, phi=1.0):
 
     I = np.ones((N, M)) #NxM
     V_ap = W.dot(H) + eps #NxM
+
+    print("1 V is: {} of dimension: {}".format(type(V), V.shape))
+    temp = np.std(V)
+    print("2 V is: {} of dimension: {}".format(type(V), V.shape))
+    temp = np.power(temp, 2) 
+    print("3 V is: {} of dimension: {}".format(type(V), V.shape))
+    temp = temp * phi
+    print("4 V is: {} of dimension: {}".format(type(V), V.shape))
 
     phi = np.power(np.std(V), 2) * phi
     C = (N + M) / 2 + a0 + 1
@@ -251,7 +262,7 @@ def _bayes_nmf_l2(V0, n_iter=10000, a0=10, tol=1e-7, K=15, K0=15, phi=1.0):
         n_lambda.append(lambdak)
         n_error.append(np.sum(np.power(V - V_ap, 2)))
         if it % 100 == 0:
-            logger.info("Iteration=%d; evid=%.3g; lik=%.3g; err=%.3g; delambda=%.3g; factors=%d; factors_non_zero=%d" % (it, n_evid[it], n_like[it], n_error[it], delambda, np.sum(np.sum(W, axis=0) != 0), np.sum(lambdak >= lambda_cut)), TRACE)
+            logger.info("Iteration=%d; evid=%.3g; lik=%.3g; err=%.3g; delambda=%.3g; factors=%d; factors_non_zero=%d" % (it, n_evid[it], n_like[it], n_error[it], delambda, np.sum(np.sum(W, axis=0) != 0), np.sum(lambdak >= lambda_cut)))
         it += 1
 
     return W, H, n_like[-1], n_evid[-1], n_lambda[-1], n_error[-1]
@@ -411,14 +422,16 @@ def filter_matrix_rows_by_sum_cutoff(matrix_to_filter, matrix_to_sum, cutoff_inp
         print("got matrix to sum of shape: {} and type: {}".format(matrix_to_sum.shape, type(matrix_to_sum)))
 
     mask = matrix_to_sum.sum(axis=1) > cutoff_input
-    selected_indices = np.where(mask)[0]
-    keep_metrics = np.where(np.any(mask, axis=0))[0]
-    matrix_result = matrix_to_filter[keep_metrics, :]
+    # selected_indices = np.where(mask)[0]
+    selected_indices = np.where(np.any(mask, axis=1))[0]
+    matrix_result = matrix_to_filter[selected_indices, :]
     # matrix_result = matrix_to_filter[mask, :]
 
     # log
     if log:
         print("got resulting shape from row sum filters from: {} to {}".format(matrix_to_filter.shape, matrix_result.shape))
+        # print("got filter rows indices: {}".format(selected_indices))
+        # print("example matrix to sum: {}".format(matrix_to_sum.toarray()[2]))
 
     # return
     return matrix_result, selected_indices

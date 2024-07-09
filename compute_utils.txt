@@ -1,0 +1,2 @@
+export PYTHONPATH=python-flask-server
+pytest -s python-flask-server/test/dcc/test_compute_utils_large.py
