@@ -109,10 +109,11 @@ def test_filter_matrix_columns():
     p_values = np.array([0.01, 0.2, 0.03, 0.5])
 
     # get result
-    matrix01 = cutils.filter_matrix_columns(matrix_input=matrix00, vector_input=p_values, cutoff_input=cutoff, log=True)
+    matrix01, selected_column_indices = cutils.filter_matrix_columns(matrix_input=matrix00, vector_input=p_values, cutoff_input=cutoff, log=True)
 
     # test 
     assert matrix01 is not None
+    print("got select columns: {}".format(selected_column_indices))
 
 
 def test_filter_matrix_rows_by_sum_cutoff():
@@ -137,12 +138,34 @@ def test_filter_matrix_rows_by_sum_cutoff():
     ])
 
     # get the filtered matrix
-    matrix_result = cutils.filter_matrix_rows_by_sum_cutoff(matrix_to_filter=V, matrix_to_sum=X, log=True)
+    matrix_result, select_row_indices = cutils.filter_matrix_rows_by_sum_cutoff(matrix_to_filter=V, matrix_to_sum=X, log=True)
 
     # test
     assert matrix_result is not None
     print("got result matrix of shape: {} and data: \n{}".format(matrix_result.shape, matrix_result))
+    print("got select rows: {}".format(select_row_indices))
 
+
+def test_bayes_nmf_l2():
+    '''
+    test the bayes NMF
+    '''
+    print("\n=============== IN test_bayes_nmf_l2()")
+    # initialize
+    X = np.array([
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9]
+    ])
+
+    # get the result
+    factor00, factor01, _, _, _, _ = cutils._bayes_nmf_l2(V0=X)
+
+    # test
+    assert np.all(factor00 >= 0)
+    assert np.all(factor01 >= 0)
+    print("got factor shapes: {} and {}".format(factor00.shape, factor01.shape))
+    print("got factors: \n{} \n{}".format(factor00, factor01))
 
 
 
