@@ -68,7 +68,7 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
 
     # step 4: filter the gene set columns based on computed pvalue for each gene set
     matrix_gene_set_filtered_by_pvalues, selected_gene_set_indices = filter_matrix_columns(matrix_input=matrix_gene_sets_gene_original, vector_input=vector_gene_set_pvalues, 
-                                                                                           cutoff_input=0.5, log=log)
+                                                                                           cutoff_input=p_value, log=log)
     # matrix_gene_set_filtered_by_pvalues, selected_gene_set_indices = filter_matrix_columns(matrix_input=matrix_gene_sets_gene_original, vector_input=vector_gene_set_pvalues, 
     #                                                                                        cutoff_input=0.5, log=log)
 
@@ -212,6 +212,8 @@ def _bayes_nmf_l2(V0, n_iter=10000, a0=10, tol=1e-7, K=15, K0=15, phi=1.0):
         exp_gene_factors = result[1].T
         exp_gene_set_factors = result[0]
     '''
+    # seed the random call
+    np.random.seed(42)
 
     # convert the sparse matrix tto a dense array
     V0 = V0.toarray()
@@ -390,9 +392,9 @@ def rank_gene_and_gene_sets(X, Y, exp_lambdak, exp_gene_factors, exp_gene_set_fa
         # print("list type: {}".format(type(list_gene_set_index_factor)))
         # print("list: {}".format(list_gene_set_index_factor))
 
-        if log:
-            print("got pathway indexes: {}".format(list_gene_set_index_factor))
-            print("got gene indexes: {}".format(list_gene_index_factor))
+        # if log:
+        #     print("got pathway indexes: {}".format(list_gene_set_index_factor))
+        #     print("got gene indexes: {}".format(list_gene_index_factor))
 
         top_gene_sets.append([map_gene_set_index.get(i) for i in list_gene_set_index_factor])
         top_genes.append([list_system_genes[i] for i in list_gene_index_factor])
