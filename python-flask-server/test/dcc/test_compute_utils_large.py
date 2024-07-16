@@ -28,7 +28,7 @@ def test_calculate_factors():
     print("\n=============== IN test_calculate_factors()")
     # initialize
     map_gene_index = None 
-    list_genes = [
+    list_input_genes = [
         "TCF7L2", "PPARG", "KCNJ11", "KCNQ1", "FTO", "SLC30A8", "HHEX", "CDKAL1",
         "IGF2BP2", "CDKN2A/B", "NOTCH2", "THADA", "ADAMTS9", "JAZF1", "CDC123/CAMK1D",
         "TP53INP1", "UBE2E2", "MAEA", "PRC1", "GCK", "GLIS3", "GCKR", "HNF1A",
@@ -45,7 +45,7 @@ def test_calculate_factors():
     ]
 
     # get the gene index
-    map_gene_index = futils.load_gene_file_into_map(file_path=path_files + gene_file)
+    map_gene_index, list_system_genes = futils.load_gene_file_into_map(file_path=path_files + gene_file)
 
     # get the data
     matrix_gene_sets, map_gene_set_index = mutils.load_geneset_matrix(map_gene_index=map_gene_index, list_gene_set_files=list_gene_set_file, path_gene_set_files=path_files, log=False)
@@ -54,7 +54,8 @@ def test_calculate_factors():
     (mean_shifts, scale_factors) = cutils._calc_X_shift_scale(X=matrix_gene_sets)
 
     # get the factors
-    gene_factors, gene_set_factors, map_filtered_index, map_filtered_gene_set_index = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, list_gene=list_genes, 
+    gene_factors, gene_set_factors, map_filtered_index, map_filtered_gene_set_index = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, list_gene=list_input_genes, 
+                                                                                                               list_system_genes=list_system_genes, 
                                                                                                                map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
                                                                                                                mean_shifts=mean_shifts, scale_factors=scale_factors,
                                                                                                                log=True)

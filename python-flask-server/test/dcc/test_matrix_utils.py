@@ -23,7 +23,7 @@ def test_load_geneset_matrix():
     map_gene_index = None 
 
     # get the gene index
-    map_gene_index = futils.load_gene_file_into_map(file_path=path_files + gene_file)
+    map_gene_index, list_genes = futils.load_gene_file_into_map(file_path=path_files + gene_file)
 
     # get the data
     matrix_result, map_gene_set_index = mutils.load_geneset_matrix(map_gene_index=map_gene_index, list_gene_set_files=list_gene_set_file, path_gene_set_files=path_files, log=True)
@@ -52,7 +52,7 @@ def test_generate_gene_vector_from_list():
     list_gene = ["ACE", "SLC30A8", "PPARG", "TUBB2A"]
 
     # get the gene index
-    map_gene_index = futils.load_gene_file_into_map(file_path=path_files + gene_file)
+    map_gene_index, list_genes = futils.load_gene_file_into_map(file_path=path_files + gene_file)
 
     # get the vector
     vector_result = mutils.generate_gene_vector_from_list(list_gene=list_gene, map_gene_index=map_gene_index, log=True)

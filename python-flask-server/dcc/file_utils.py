@@ -53,13 +53,13 @@ def load_gene_file_into_map(file_path, log=False):
     # create the map from the list; make sure no duplicates
     list_unique_gene = list(set(list_temp))
     list_unique_gene.sort()
-    map_result = {value: index for index, value in enumerate(list_unique)}
+    map_result = {value: index for index, value in enumerate(list_unique_gene)}
 
     # log
     logger.info("loaded gene file: {} into num count map: {}".format(file_path, len(map_result)))
 
     # return
-    return map_result
+    return map_result, list_unique_gene
 
 def get_all_files_in_dir(path_dir, log=False):
     '''

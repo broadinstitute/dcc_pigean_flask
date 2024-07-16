@@ -32,7 +32,7 @@ def test_calc_X_shift_scale():
     map_gene_index = None 
 
     # get the gene index
-    map_gene_index = futils.load_gene_file_into_map(file_path=path_files + gene_file)
+    map_gene_index, list_genes = futils.load_gene_file_into_map(file_path=path_files + gene_file)
 
     # get the data
     matrix_result, map_gene_set_index = mutils.load_geneset_matrix(map_gene_index=map_gene_index, list_gene_set_files=list_gene_set_file, path_gene_set_files=path_files, log=False)
@@ -63,7 +63,7 @@ def test_compute_beta_tildes():
     vector_pvalues = None
 
     # get the gene index
-    map_gene_index = futils.load_gene_file_into_map(file_path=path_files + gene_file)
+    map_gene_index, list_genes = futils.load_gene_file_into_map(file_path=path_files + gene_file)
 
     # get the gene set data
     matrix_gene_sets, map_gene_set_index = mutils.load_geneset_matrix(map_gene_index=map_gene_index, list_gene_set_files=list_gene_set_file, path_gene_set_files=path_files, log=False)

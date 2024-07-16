@@ -34,7 +34,7 @@ def test_load_gene_file_into_map():
     map_result = {}
 
     # get the data
-    map_result = futils.load_gene_file_into_map(file_path=gene_file)
+    map_result, list_genes = futils.load_gene_file_into_map(file_path=gene_file)
 
     # test
     assert len(map_result) == 200
