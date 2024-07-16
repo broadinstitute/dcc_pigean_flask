@@ -15,11 +15,12 @@ import dcc.compute_utils as cutils
 # list_gene_set_file = ["gene_set_list_msigdb_c2.txt"]
 path_files = "python-flask-server/conf/startup_files/"
 
-list_gene_set_file = ["gene_set_list_msigdb_c1.txt", "gene_set_list_msigdb_c2.txt", "gene_set_list_msigdb_c3.txt", "gene_set_list_msigdb_c4.txt", "gene_set_list_msigdb_c5.txt", 
-                      "gene_set_list_msigdb_c6.txt", "gene_set_list_msigdb_c7.txt", "gene_set_list_msigdb_c8.txt"]
-
 # list_gene_set_file = ["gene_set_list_msigdb_c1.txt", "gene_set_list_msigdb_c2.txt", "gene_set_list_msigdb_c3.txt", "gene_set_list_msigdb_c4.txt", "gene_set_list_msigdb_c5.txt", 
-#                       "gene_set_list_msigdb_c6.txt", "gene_set_list_msigdb_c7.txt", "gene_set_list_msigdb_c8.txt", "gene_set_list_msigdb_h.txt", "gene_set_list_msigdb_h2.txt"]
+#                       "gene_set_list_msigdb_c6.txt", "gene_set_list_msigdb_c7.txt", "gene_set_list_msigdb_c8.txt"]
+
+list_gene_set_file = ["gene_set_list_msigdb_c1.txt", "gene_set_list_msigdb_c2.txt", "gene_set_list_msigdb_c3.txt", "gene_set_list_msigdb_c4.txt", "gene_set_list_msigdb_c5.txt", 
+                      "gene_set_list_msigdb_c6.txt", "gene_set_list_msigdb_c7.txt", "gene_set_list_msigdb_c8.txt", "gene_set_list_msigdb_h.txt", "gene_set_list_msigdb_h2.txt",
+                      "gene_set_list_mouse_2024.txt", "gene_set_list_ocr_human.txt"]
 gene_file = "genes.txt"
 
 # Configure logging
@@ -61,7 +62,7 @@ def test_calculate_factors():
     (mean_shifts, scale_factors) = cutils._calc_X_shift_scale(X=matrix_gene_sets)
 
     # get the factors
-    gene_factors, gene_set_factors, map_filtered_index, map_filtered_gene_set_index = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, p_value=0.05,
+    gene_factors, gene_set_factors, map_filtered_index, map_filtered_gene_set_index = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, p_value=0.3,
                                                                                                                list_gene=list_input_genes, 
                                                                                                                list_system_genes=list_system_genes, 
                                                                                                                map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,

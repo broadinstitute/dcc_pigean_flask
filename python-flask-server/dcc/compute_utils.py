@@ -11,7 +11,7 @@ from numpy.random import gamma
 from numpy.random import normal
 from numpy.random import exponential
 from sklearn.decomposition import NMF
-
+import json
 
 import dcc.dcc_utils as dutils 
 import dcc.matrix_utils as mutils 
@@ -82,7 +82,7 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
                                                                                                           matrix_to_sum=matrix_gene_set_filtered_by_pvalues, log=log)
 
     if log:
-        print("step 5: got gene filtered (rows) matrix of shape: {}".format(matrix_gene_filtered_by_remaining_gene_sets.shape))
+        print("step 5: ===> got gene filtered (rows) matrix of shape: {}".format(matrix_gene_filtered_by_remaining_gene_sets.shape))
         print("step 5: got gene filtered indices of length: {}".format(len(selected_gene_indices)))
         # print("step 5: got gene filtered indices of length: {}".format(selected_gene_indices.shape))
 
@@ -102,8 +102,12 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
 
     if log:
         print("step 7: got factor list: {}".format(list_factor))
-        print("step 7: got gene list: {}".format(list_factor_genes))
-        print("step 7: got gene set list: {}".format(list_factor_gene_sets))
+        print("step 7: got gene list:")
+        for row in list_factor_genes: 
+            print (row)
+        print("step 7: got gene set list:")
+        for row in list_factor_gene_sets: 
+            print (row)
 
 
     # only return the gene factors and gene set factors
@@ -372,7 +376,7 @@ def rank_gene_and_gene_sets(X, Y, exp_lambdak, exp_gene_factors, exp_gene_set_fa
 
     # log
     if log:
-        print("looping through factor gene set scores: {}".format(factor_gene_set_scores))
+        print("looping through factor gene set scores of size: {} and data: \n{}".format(len(factor_gene_set_scores), factor_gene_set_scores))
         print("got top pathway ids type: {} and data: {}".format(type(top_gene_set_inds), top_gene_set_inds))
         print("got top gene ids: {}".format(top_gene_inds))
 
