@@ -55,7 +55,8 @@ def test_calculate_factors():
 
     # get the factors
     gene_factors, gene_set_factors, map_filtered_index, map_filtered_gene_set_index = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, list_gene=list_genes, 
-                                                                                                               map_gene_index=map_gene_index, mean_shifts=mean_shifts, scale_factors=scale_factors,
+                                                                                                               map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
+                                                                                                               mean_shifts=mean_shifts, scale_factors=scale_factors,
                                                                                                                log=True)
 
     # test

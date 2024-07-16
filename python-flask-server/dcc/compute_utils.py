@@ -44,13 +44,13 @@ class RunFactorException(Exception):
         super().__init__(self.message)
 
 # methods
-def calculate_factors(matrix_gene_sets_gene_original, list_gene, map_gene_index, mean_shifts, scale_factors, p_value=0.05, log=False):
+def calculate_factors(matrix_gene_sets_gene_original, list_gene, map_gene_index, map_gene_set_index, mean_shifts, scale_factors, p_value=0.05, log=False):
     '''
     will produce the gene set factors and gene factors
     '''
     # initialize
 
-    # get the gene vector from the gene list
+    # step 1/2: get the gene vector from the gene list
     vector_gene = mutils.generate_gene_vector_from_list(list_gene=list_gene, map_gene_index=map_gene_index)
 
     # log
@@ -60,13 +60,13 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, map_gene_index,
         print("step 1: got scale_factors of shape: {}".format(scale_factors.shape))
         print("step 2: got gene vector of shape: {}".format(vector_gene.shape))
 
-    # get the p_values by gene set
+    # step 3: get the p_values by gene set
     vector_gene_set_pvalues = compute_beta_tildes(X=matrix_gene_sets_gene_original, Y=vector_gene, scale_factors=scale_factors, mean_shifts=mean_shifts)
 
     if log:
         print("step 3: got p values vector of shape: {}".format(vector_gene_set_pvalues.shape))
 
-    # filter the gene set columns based on computed pvalue for each gene set
+    # step 4: filter the gene set columns based on computed pvalue for each gene set
     matrix_gene_set_filtered_by_pvalues, selected_gene_set_indices = filter_matrix_columns(matrix_input=matrix_gene_sets_gene_original, vector_input=vector_gene_set_pvalues, 
                                                                                            cutoff_input=0.5, log=log)
     # matrix_gene_set_filtered_by_pvalues, selected_gene_set_indices = filter_matrix_columns(matrix_input=matrix_gene_sets_gene_original, vector_input=vector_gene_set_pvalues, 
@@ -77,21 +77,34 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, map_gene_index,
         print("step 4: got gene set filtered indices of length: {}".format(len(selected_gene_set_indices)))
         print("step 4: got gene set filtered indices: {}".format(selected_gene_set_indices))
 
-    # filter gene rows by only the genes that are part of the remaining gene sets from the filtered gene set matrix
+    # step 5: filter gene rows by only the genes that are part of the remaining gene sets from the filtered gene set matrix
     matrix_gene_filtered_by_remaining_gene_sets, selected_gene_indices = filter_matrix_rows_by_sum_cutoff(matrix_to_filter=matrix_gene_set_filtered_by_pvalues, 
                                                                                                           matrix_to_sum=matrix_gene_set_filtered_by_pvalues, log=log)
 
     if log:
         print("step 5: got gene filtered (rows) matrix of shape: {}".format(matrix_gene_filtered_by_remaining_gene_sets.shape))
         print("step 5: got gene filtered indices of length: {}".format(len(selected_gene_indices)))
+        # print("step 5: got gene filtered indices of length: {}".format(selected_gene_indices.shape))
 
-    # from this double filtered matrix, compute the factors
-    gene_factor, gene_set_factor, _, _, _, _ = _bayes_nmf_l2(V0=matrix_gene_filtered_by_remaining_gene_sets)
+    # step 6: from this double filtered matrix, compute the factors
+    gene_factor, gene_set_factor, _, _, exp_lambda, _ = _bayes_nmf_l2(V0=matrix_gene_filtered_by_remaining_gene_sets)
     # gene_factor, gene_set_factor = run_nmf(matrix_input=matrix_gene_filtered_by_remaining_gene_sets, log=log)
 
     if log:
         print("step 6: got gene factor matrix of shape: {}".format(gene_factor.shape))
         print("step 6: got gene set factor matrix of shape: {}".format(gene_set_factor.shape))
+        print("step 6: got lambda matrix of shape: {} with data: {}".format(exp_lambda.shape, exp_lambda))
+
+    # step 7: find and rank the gene and gene set groups
+    list_factor, list_factor_genes, list_factor_gene_sets = rank_gene_and_gene_sets(X=None, Y=None, exp_lambdak=exp_lambda, exp_gene_factors=gene_factor, exp_gene_set_factors=gene_set_factor.T,
+                                                                     map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index, 
+                                                                     list_gene_mask=selected_gene_indices, list_gene_set_mask=selected_gene_set_indices, log=log)
+
+    if log:
+        print("step 7: got factor list: {}".format(list_factor))
+        print("step 7: got gene list: {}".format(list_factor_genes))
+        print("step 7: got gene set list: {}".format(list_factor_gene_sets))
+
 
     # only return the gene factors and gene set factors
     return gene_factor, gene_set_factor, selected_gene_indices, selected_gene_set_indices
@@ -228,13 +241,13 @@ def _bayes_nmf_l2(V0, n_iter=10000, a0=10, tol=1e-7, K=15, K0=15, phi=1.0):
     I = np.ones((N, M)) #NxM
     V_ap = W.dot(H) + eps #NxM
 
-    print("1 V is: {} of dimension: {}".format(type(V), V.shape))
+    # print("1 V is: {} of dimension: {}".format(type(V), V.shape))
     temp = np.std(V)
-    print("2 V is: {} of dimension: {}".format(type(V), V.shape))
+    # print("2 V is: {} of dimension: {}".format(type(V), V.shape))
     temp = np.power(temp, 2) 
-    print("3 V is: {} of dimension: {}".format(type(V), V.shape))
+    # print("3 V is: {} of dimension: {}".format(type(V), V.shape))
     temp = temp * phi
-    print("4 V is: {} of dimension: {}".format(type(V), V.shape))
+    # print("4 V is: {} of dimension: {}".format(type(V), V.shape))
 
     phi = np.power(np.std(V), 2) * phi
     C = (N + M) / 2 + a0 + 1
@@ -272,6 +285,136 @@ def _bayes_nmf_l2(V0, n_iter=10000, a0=10, tol=1e-7, K=15, K0=15, phi=1.0):
         #n_evid # List of negative log-likelihoods per iteration
         #n_lambda # List of lambda vectors (shared weights for each of K clusters, some ~0) per iteration
         #n_error # List of reconstruction errors (sum of squared errors) per iteration
+
+        # The key is that the lambdk (n_lambda) values tell you which factors remain vs. are zeroed out
+        # And then genes (H) / gene sets (W) are assigned to the factors for which they have the highest weights
+        # There is then logic to “score” each cluster and also annotate them with an LMM, but that is probably not necessary (yet)
+
+def rank_gene_and_gene_sets(X, Y, exp_lambdak, exp_gene_factors, exp_gene_set_factors, list_gene_mask, list_gene_set_mask, map_gene_index, map_gene_set_index, cutoff=1e-5, log=False):
+    '''
+    will rank the gene sets and gene factors
+    '''
+    # self.exp_lambdak = result[4]
+    # self.exp_gene_factors = result[1].T
+    # self.exp_gene_set_factors = result[0]
+
+    # log
+    if log:
+        print("got lambda of shape: {}".format(exp_lambdak.shape))
+        print("got gene factor of shape: {}".format(exp_gene_factors.shape))
+        print("got gene set factor of shape: {}".format(exp_gene_set_factors.shape))
+
+    #subset_down
+    factor_mask = exp_lambdak != 0 & (np.sum(exp_gene_factors, axis=0) > 0) & (np.sum(exp_gene_set_factors, axis=0) > 0)
+    factor_mask = factor_mask & (np.max(exp_gene_set_factors, axis=0) > cutoff * np.max(exp_gene_set_factors))
+
+    # TODO - QUESTION
+    # filter by factors; why invert factor_mask?
+    if np.sum(~factor_mask) > 0:
+        exp_lambdak = exp_lambdak[factor_mask]
+        exp_gene_factors = exp_gene_factors[:,factor_mask]
+        exp_gene_set_factors = exp_gene_set_factors[:,factor_mask]
+
+    # self.gene_factor_gene_mask = gene_mask
+    # self.gene_set_factor_gene_set_mask = gene_set_mask
+
+    # gene_set_values = None
+    # if self.betas is not None:
+    #     gene_set_values = self.betas
+    # elif self.betas_uncorrected is not None:
+    #     gene_set_values = self.betas_uncorrected
+
+    # gene_values = None
+    # if self.combined_prior_Ys is not None:
+    #     gene_values = self.combined_prior_Ys
+    # elif self.priors is not None:
+    #     gene_values = self.priors
+    # elif self.Y is not None:
+    #     gene_values = self.Y
+
+    # if gene_set_values is not None:
+    #     self.factor_gene_set_scores = self.exp_gene_set_factors.T.dot(gene_set_values[self.gene_set_factor_gene_set_mask])
+    # else:
+    #     self.factor_gene_set_scores = self.exp_lambdak
+
+    factor_gene_set_scores = exp_lambdak
+
+    # if gene_values is not None:
+    #     self.factor_gene_scores = self.exp_gene_factors.T.dot(gene_values[self.gene_factor_gene_mask]) / self.exp_gene_factors.shape[0]
+    # else:
+    #     self.factor_gene_scores = self.exp_lambdak
+
+    factor_gene_scores = exp_lambdak
+
+    reorder_inds = np.argsort(-factor_gene_set_scores)
+    exp_lambdak = exp_lambdak[reorder_inds]
+
+    factor_gene_set_scores = factor_gene_set_scores[reorder_inds]
+    factor_gene_scores = factor_gene_scores[reorder_inds]
+    exp_gene_factors = exp_gene_factors[:,reorder_inds]
+    exp_gene_set_factors = exp_gene_set_factors[:,reorder_inds]
+
+    #now label them
+    # TODO - QUESTION - do I feed in the filtered ids here?
+    # gene_set_factor_gene_set_inds = np.where(self.gene_set_factor_gene_set_mask)[0]
+    # gene_factor_gene_inds = np.where(self.gene_factor_gene_mask)[0]
+
+    num_top = 5
+    top_gene_inds = np.argsort(-exp_gene_factors, axis=0)[:num_top,:]
+    top_gene_set_inds = np.argsort(-exp_gene_set_factors, axis=0)[:num_top,:]
+
+    factor_labels = []
+    top_gene_sets = []
+    top_genes = []
+    factor_prompts = []
+
+    # log
+    if log:
+        print("looping through factor gene set scores: {}".format(factor_gene_set_scores))
+
+    for i in range(len(factor_gene_set_scores)):
+        # orginal for reference
+        # top_gene_sets.append([self.gene_sets[i] for i in np.where(self.gene_set_factor_gene_set_mask)[0][top_gene_set_inds[:,i]]])
+        # top_genes.append([self.genes[i] for i in np.where(self.gene_factor_gene_mask)[0][top_gene_inds[:,i]]])
+
+        # build the list of genes and gene sets that were filtered first by p_value, then the factor process in this method
+        list_gene_index_factor = get_referenced_list_elements(list_referenced=list_gene_mask, list_index=top_gene_inds[i], log=False)
+        list_gene_set_index_factor = get_referenced_list_elements(list_referenced=list_gene_set_mask, list_index=top_gene_set_inds[i], log=False)
+
+        # print("map type: {}".format(type(map_gene_set_index)))
+        # print("list type: {}".format(type(list_gene_set_index_factor)))
+        # print("list: {}".format(list_gene_set_index_factor))
+
+        if log:
+            print("got pathway indexes: {}".format(list_gene_set_index_factor))
+            print("got gene indexes: {}".format(list_gene_index_factor))
+
+        top_gene_sets.append([map_gene_set_index.get(i) for i in list_gene_set_index_factor])
+        top_genes.append([map_gene_index.get(i) for i in list_gene_index_factor])
+        factor_labels.append(top_gene_sets[i][0] if len(top_gene_sets[i]) > 0 else "")
+        factor_prompts.append(",".join(top_gene_sets[i]))
+
+    # return
+    return factor_labels, top_genes, top_gene_sets
+
+
+def get_referenced_list_elements(list_referenced, list_index, log=False):
+    '''
+    will return a list of the referenced elements from the list
+    '''
+    list_result = []
+
+    # log
+    if log:
+        print("ref list: {}".format(list_referenced))
+        print("index list: {}".format(list_index))
+
+    # get the elements
+    list_result = [list_referenced[i] for i in list_index]
+
+    # return
+    return list_result
+
 
 
 def _calc_X_shift_scale(X, y_corr_cholesky=None):

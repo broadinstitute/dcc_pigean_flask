@@ -51,8 +51,8 @@ def load_gene_file_into_map(file_path, log=False):
             # count = count + 1
 
     # create the map from the list; make sure no duplicates
-    list_unique = list(set(list_temp))
-    list_unique.sort()
+    list_unique_gene = list(set(list_temp))
+    list_unique_gene.sort()
     map_result = {value: index for index, value in enumerate(list_unique)}
 
     # log
