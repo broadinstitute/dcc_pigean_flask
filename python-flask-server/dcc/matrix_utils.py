@@ -82,6 +82,9 @@ def load_geneset_matrix(map_gene_index, list_gene_set_files, path_gene_set_files
     # matrix_result = csc_matrix((list_data, (list_row, list_columns)), shape=(len(map_gene_index), len(map_gene_set_indexes_result))).toarray()
     matrix_result = csc_matrix((list_data, (list_row, list_columns)), shape=(len(map_gene_index), len(map_gene_set_indexes_result)))
 
+    # log
+    logger.info("returning gene set matrix of shape: {}".format(matrix_result.shape))
+    
     # return
     return matrix_result, map_gene_set_indexes_result
     

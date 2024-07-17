@@ -61,6 +61,7 @@ def load_gene_file_into_map(file_path, log=False):
     # return
     return map_result, list_unique_gene
 
+
 def get_all_files_in_dir(path_dir, log=False):
     '''
     will return the files in the directory 

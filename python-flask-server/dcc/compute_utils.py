@@ -446,6 +446,11 @@ def _calc_X_shift_scale(X, y_corr_cholesky=None):
             (cur_mean_shifts, cur_scale_factors) = _calc_shift_scale(X_b)
             mean_shifts = np.append(mean_shifts, cur_mean_shifts)
             scale_factors = np.append(scale_factors, cur_scale_factors)
+
+    # log
+    logger.info("returning mean shifts matrix of shape: {}".format(mean_shifts.shape))
+    logger.info("returning scale factors matrix of shape: {}".format(scale_factors.shape))
+
     return (mean_shifts, scale_factors)
 
 

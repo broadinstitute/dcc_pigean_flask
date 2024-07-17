@@ -1,7 +1,11 @@
 # imports
 from flask import Flask, render_template, request, flash
 
-from startup_utils import load_conf
+import startup_utils as sutils
+import file_utils as futils
+import matrix_utils as mutils 
+import compute_utils as cutils 
+import dcc_utils as dutils 
 
 
 # constants
@@ -11,7 +15,16 @@ DEBUG=True
 app = Flask(__name__)
 app.secret_key = "test_app_gpt"
 
-map_conf = load_conf()
+logger = dutils.get_logger(__name__)
+
+# in memory compute variables
+map_conf = sutils.load_conf()
+map_gene_index, list_system_genes = futils.load_gene_file_into_map(file_path=map_conf.get('root_dir') + map_conf.get('gene_file'))
+matrix_gene_sets, map_gene_set_index = mutils.load_geneset_matrix(map_gene_index=map_gene_index, 
+                                                                  list_gene_set_files=map_conf.get('gene_set_files'), path_gene_set_files=map_conf.get('root_dir'), log=False)
+(mean_shifts, scale_factors) = cutils._calc_X_shift_scale(X=matrix_gene_sets)
+
+
 
 @app.route("/query", methods=["POST"])
 def post_genes():
