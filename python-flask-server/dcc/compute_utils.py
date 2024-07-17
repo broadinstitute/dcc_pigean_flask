@@ -122,7 +122,7 @@ def group_factor_results(list_factor, list_factor_genes, list_factor_gene_sets, 
 
     # loop through the factors
     for index, row in enumerate(list_factor):
-        list_result.append({'top_set': row, 'gene_set': list_factor_gene_sets[index], 'genes': list_factor_genes[index]})
+        list_result.append({'top_set': row, 'gene_sets': list_factor_gene_sets[index], 'genes': list_factor_genes[index]})
 
     # return
     return list_result

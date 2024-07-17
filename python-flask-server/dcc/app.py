@@ -9,7 +9,7 @@ import dcc_utils as dutils
 
 
 # constants
-DEBUG=True
+DEBUG=False
 
 # variables
 app = Flask(__name__)
@@ -31,9 +31,7 @@ matrix_gene_sets, map_gene_set_index = mutils.load_geneset_matrix(map_gene_index
 def post_genes():
     # initialize 
     map_result = {}
-    phenotypes = None
     list_input_genes = []
-    genes = None 
 
     # get the input
     data = request.get_json()
@@ -57,7 +55,7 @@ def post_genes():
 
     # format the data
     map_factors = cutils.group_factor_results(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, list_factor_genes=list_factor_genes)
-    map_result['set_groupings'] = map_factors
+    map_result['data'] = map_factors
 
 
     # # split the genes into list
