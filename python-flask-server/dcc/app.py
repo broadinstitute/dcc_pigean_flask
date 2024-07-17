@@ -16,6 +16,7 @@ app = Flask(__name__)
 app.secret_key = "test_app_gpt"
 
 logger = dutils.get_logger(__name__)
+p_value_cutoff = 0.3
 
 # in memory compute variables
 map_conf = sutils.load_conf()
@@ -31,20 +32,33 @@ def post_genes():
     # initialize 
     map_result = {}
     phenotypes = None
-    list_genes = []
+    list_input_genes = []
     genes = None 
 
     # get the input
     data = request.get_json()
     if data:
-        list_genes = str(data.get('genes'))
+        list_input_genes = data.get('genes')
 
-    print("got request: {} with gene inputs: {}".format(request.method, list_genes))
+    print("got request: {} with gene inputs: {}".format(request.method, list_input_genes))
 
     # add the genes to the result
-    map_result['input_genes'] = list_genes
+    map_result['input_genes'] = list_input_genes
     if DEBUG:
         map_result['conf'] = map_conf
+
+    # compute
+    list_factor, list_factor_genes, list_factor_gene_sets = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, p_value=0.3,
+                                                                                                               list_gene=list_input_genes, 
+                                                                                                               list_system_genes=list_system_genes, 
+                                                                                                               map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
+                                                                                                               mean_shifts=mean_shifts, scale_factors=scale_factors,
+                                                                                                               log=True)
+
+    # format the data
+    map_factors = cutils.group_factor_results(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, list_factor_genes=list_factor_genes)
+    map_result['set_groupings'] = map_factors
+
 
     # # split the genes into list
     # if phenotypes:

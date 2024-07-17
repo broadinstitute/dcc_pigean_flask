@@ -62,7 +62,7 @@ def test_calculate_factors():
     (mean_shifts, scale_factors) = cutils._calc_X_shift_scale(X=matrix_gene_sets)
 
     # get the factors
-    gene_factors, gene_set_factors, map_filtered_index, map_filtered_gene_set_index = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, p_value=0.3,
+    list_factor, list_factor_genes, list_factor_gene_sets = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, p_value=0.3,
                                                                                                                list_gene=list_input_genes, 
                                                                                                                list_system_genes=list_system_genes, 
                                                                                                                map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
@@ -70,7 +70,7 @@ def test_calculate_factors():
                                                                                                                log=True)
 
     # test
-    assert gene_factors is not None
-    assert gene_set_factors is not None
+    assert list_factor_genes is not None
+    assert list_factor_gene_sets is not None
 
 

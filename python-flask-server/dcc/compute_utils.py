@@ -111,7 +111,21 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
 
 
     # only return the gene factors and gene set factors
-    return gene_factor, gene_set_factor, selected_gene_indices, selected_gene_set_indices
+    return list_factor, list_factor_genes, list_factor_gene_sets
+
+
+def group_factor_results(list_factor, list_factor_genes, list_factor_gene_sets, log=False):
+    '''
+    will group the results that come out of the computation steps
+    '''
+    list_result = []
+
+    # loop through the factors
+    for index, row in enumerate(list_factor):
+        list_result.append({'top_set': row, 'gene_set': list_factor_gene_sets[index], 'genes': list_factor_genes[index]})
+
+    # return
+    return list_result
 
 
 def compute_beta_tildes(X, Y, scale_factors, mean_shifts, y_var=1, resid_correlation_matrix=None, log=False):
