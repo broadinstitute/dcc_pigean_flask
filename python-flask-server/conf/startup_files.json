@@ -1,5 +1,5 @@
 {
-    "root_dir": "python-flask-server/conf/startup_files/",
+    "root_dir": "conf/startup_files/",
     "gene_file": "genes.txt",
     "gene_set_files": [
         "gene_set_list_msigdb_c1.txt",

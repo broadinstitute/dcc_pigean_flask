@@ -2,10 +2,11 @@
 
 # imports
 import json
-from dcc_utils import get_logger
+from dcc.dcc_utils import get_logger
 
 # constants
-DIR_CONF = "python-flask-server/conf/"
+# DIR_CONF = "python-flask-server/conf/"
+DIR_CONF = "conf/"
 FILE_CONF = "startup_files.json"
 
 # variables
