@@ -6,6 +6,8 @@ import dcc.file_utils as futils
 import dcc.matrix_utils as mutils 
 import dcc.compute_utils as cutils 
 import dcc.dcc_utils as dutils 
+import dcc.sql_utils as sql_utils
+import dcc.gui_utils as gutils
 
 
 # constants
@@ -20,7 +22,14 @@ p_value_cutoff = 0.3
 
 # in memory compute variables
 map_conf = sutils.load_conf()
-map_gene_index, list_system_genes = futils.load_gene_file_into_map(file_path=map_conf.get('root_dir') + map_conf.get('gene_file'))
+
+# load the data
+db_file = map_conf.get('root_dir') +  map_conf.get('db_file')
+logger.info("loading database file: {}".format(db_file))
+sql_connection = sql_utils.db_sqlite_get_connection(db_path=db_file)
+
+# map_gene_index, list_system_genes = futils.load_gene_file_into_map(file_path=map_conf.get('root_dir') + map_conf.get('gene_file'))
+map_gene_index, list_system_genes, map_gene_ontology = sql_utils.db_load_gene_table_into_map(conn=sql_connection)
 matrix_gene_sets, map_gene_set_index = mutils.load_geneset_matrix(map_gene_index=map_gene_index, 
                                                                   list_gene_set_files=map_conf.get('gene_set_files'), path_gene_set_files=map_conf.get('root_dir'), log=False)
 (mean_shifts, scale_factors) = cutils._calc_X_shift_scale(X=matrix_gene_sets)
@@ -41,7 +50,7 @@ def post_genes():
     print("got request: {} with gene inputs: {}".format(request.method, list_input_genes))
 
     # add the genes to the result
-    map_result['input_genes'] = list_input_genes
+    # map_result['input_genes'] = list_input_genes
     if DEBUG:
         map_result['conf'] = map_conf
 
@@ -56,7 +65,8 @@ def post_genes():
     # format the data
     map_factors = cutils.group_factor_results(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, list_factor_genes=list_factor_genes)
     map_result['data'] = map_factors
-
+    map_result = gutils.gui_build_results_map(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, list_factor_genes=list_factor_genes, 
+                                              map_gene_ontology=map_gene_ontology, list_input_gene_names=list_input_genes)
 
     # # split the genes into list
     # if phenotypes:

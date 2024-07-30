@@ -1,6 +1,7 @@
 {
     "root_dir": "conf/startup_files/",
     "gene_file": "genes.txt",
+    "db_file": "pigean.db",
     "gene_set_files": [
         "gene_set_list_msigdb_c1.txt",
         "gene_set_list_msigdb_c2.txt",

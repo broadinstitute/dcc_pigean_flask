@@ -122,6 +122,11 @@ def generate_gene_vector_from_list(list_gene, map_gene_index, log=False):
     # return 
     return vector_result
 
+def sum_of_gene_row(sparse_matrix, gene_index, log=False):
+    '''
+    Function to compute the sum of all entries for a specific gene row
+    '''
+    return sparse_matrix[gene_index].sum()
 
 # main
 if __name__ == "__main__":

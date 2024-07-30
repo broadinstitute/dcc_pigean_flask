@@ -66,6 +66,20 @@ def test_generate_gene_vector_from_list():
     print(vector_result)
 
 
+def test_sum_of_gene_row():
+    '''
+    tests sum_of_gene_row() method
+    '''
+    # TODO
+    # data = np.array([1, 2, 3, 4, 5, 6])
+    # row_indices = np.array([0, 0, 1, 2, 2, 3])
+    # col_indices = np.array([0, 2, 2, 0, 1, 4])
+
+    # # Create a CSR (Compressed Sparse Row) matrix
+    # sparse_matrix = csr_matrix((data, (row_indices, col_indices)), shape=(4, 5))
+
+    # # Display the sparse matrix
+    # print("Sparse Matrix:\n", sparse_matrix.toarray())
 
 
 # def test_load_gene_file_into_map():
