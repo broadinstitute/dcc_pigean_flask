@@ -68,11 +68,16 @@ def db_insert_sqlite_gene(conn, list_genes, log=False):
     cursor = conn.cursor()
 
     # loop and insert
-    for row in list_genes:
+    for index, row in enumerate(list_genes):
         cursor.execute(SQL_SQLITE_INSERT_GENES, {'gene_synonym': row.get('gene_synonym'), 'gene_name': row.get('gene_name')})
         cursor.execute(SQL_SQLITE_INSERT_GENES, {'gene_synonym': row.get('gene_name'), 'gene_name': row.get('gene_name')})
 
         conn.commit()
+
+        # log
+        if log:
+            if index % 500:
+                print("{}/{} - insert row: {}".format(index, len(list_genes), row))
 
 
 def db_delete_sqlite_gene(conn, log=False):
@@ -101,7 +106,7 @@ if __name__ == "__main__":
     db_delete_sqlite_gene(conn=conn_sqlite)
 
     # insert the sqlite genes
-    db_insert_sqlite_gene(conn=conn_sqlite, list_genes=list_genes)
+    db_insert_sqlite_gene(conn=conn_sqlite, list_genes=list_genes, log=True)
     print("inserted gene list of size: {}".format(len(list_genes)))
 
 
