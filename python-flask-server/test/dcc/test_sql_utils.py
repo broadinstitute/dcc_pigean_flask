@@ -31,7 +31,6 @@ def test_db_get_gene_names_from_list():
     test getting the gene names given a list
     '''
     # initialize
-    # initialize
     list_result = []
     list_input = ['ACE', 'TRAPPC2B', 'NCBIGene:10597', 'NCBIGene:23380', 'LINC02203']
 
@@ -45,6 +44,26 @@ def test_db_get_gene_names_from_list():
     assert len(list_input) == 5
     assert len(list_result) == 4
 
+
+def test_db_load_gene_table_into_map():
+    '''
+    test loading the genes data from the db
+    '''
+    # initialize
+    map_gene_to_array_pos = {}
+    list_genes = []
+    map_gene_to_ontology_id = {}
+
+    # get the db connection
+    conn = sutils.db_sqlite_get_connection(db_path=db_file)
+
+    # get the data
+    map_gene_to_array_pos, list_genes, map_gene_to_ontology_id = sutils.db_load_gene_table_into_map(conn=conn)
+
+    # test
+    assert len(list_genes) == 19500
+    assert len(map_gene_to_array_pos) == 19500
+    assert len(map_gene_to_ontology_id) == 19500
 
 # def test_get_querygraph_key_node():
 #     '''

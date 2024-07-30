@@ -14,7 +14,7 @@ DB_FILE_SQLITE = "/home/javaprog/Data/Broad/Translator/BayesGenSetNMF/Sqlite/pig
 SQL_MYSQL_SELECT_GENES = "select node_code as gene_name, ontology_id as gene_synonym from {}.agg_gene"
 
 SQL_SQLITE_DELETE_GENES = "delete from nmf_ontology_gene"
-SQL_SQLITE_INSERT_GENES = "insert into nmf_ontology_gene (gene_synonym, gene_name) values(:gene_synonym, :gene_name)"
+SQL_SQLITE_INSERT_GENES = "insert into nmf_ontology_gene (gene_synonym, gene_name, gene_ontology_id) values(:gene_synonym, :gene_name, :gene_ontology_id)"
 
 
 # methods
@@ -51,7 +51,7 @@ def db_select_mysql_gene(conn, log=False):
 
     # populate the list
     for row in db_results:
-        list_result.append({'gene_name': row[0], 'gene_synonym': row[1]})
+        list_result.append({'gene_name': row[0], 'gene_synonym': row[1], 'gene_ontology_id': row[1]})
 
     # NEED TO USE dICTcURSOR FOR THIS TO WORK
     # list_result = [dict(row) for row in db_results]
@@ -69,14 +69,14 @@ def db_insert_sqlite_gene(conn, list_genes, log=False):
 
     # loop and insert
     for index, row in enumerate(list_genes):
-        cursor.execute(SQL_SQLITE_INSERT_GENES, {'gene_synonym': row.get('gene_synonym'), 'gene_name': row.get('gene_name')})
-        cursor.execute(SQL_SQLITE_INSERT_GENES, {'gene_synonym': row.get('gene_name'), 'gene_name': row.get('gene_name')})
+        cursor.execute(SQL_SQLITE_INSERT_GENES, {'gene_synonym': row.get('gene_synonym'), 'gene_name': row.get('gene_name'), 'gene_ontology_id': row.get('gene_ontology_id')})
+        cursor.execute(SQL_SQLITE_INSERT_GENES, {'gene_synonym': row.get('gene_name'), 'gene_name': row.get('gene_name'), 'gene_ontology_id': row.get('gene_ontology_id')})
 
         conn.commit()
 
         # log
         if log:
-            if index % 500:
+            if index % 500 == 0:
                 print("{}/{} - insert row: {}".format(index, len(list_genes), row))
 
 

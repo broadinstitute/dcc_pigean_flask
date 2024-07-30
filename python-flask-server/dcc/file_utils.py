@@ -38,6 +38,7 @@ def load_gene_file_into_map(file_path, log=False):
     '''
     will read the gene file and return a map of gene to position in array
     '''
+    # DEPRECATED - now get it from sqlite db
     # initialize
     map_result = {}
     list_temp = []
