@@ -11,7 +11,7 @@ logger = dutils.get_logger(__name__)
 
 
 # methods
-def gui_build_results_map(list_factor, list_factor_genes, list_factor_gene_sets, map_gene_ontology, list_input_gene_names, map_gene_index, matrix_gene_sets, log=True):
+def gui_build_results_map(list_factor, list_factor_genes, list_factor_gene_sets, map_gene_ontology, list_input_gene_names, map_gene_index, matrix_gene_sets, log=False):
     '''
     builds the map results
     '''

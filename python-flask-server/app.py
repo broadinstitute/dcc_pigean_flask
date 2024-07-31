@@ -41,13 +41,19 @@ def post_genes():
     # initialize 
     map_result = {}
     list_input_genes = []
+    sql_conn_query = sql_utils.db_sqlite_get_connection(db_path=db_file)
 
     # get the input
     data = request.get_json()
     if data:
         list_input_genes = data.get('genes')
 
-    print("got request: {} with gene inputs: {}".format(request.method, list_input_genes))
+    logger.info("got request: {} with gene inputs: {}".format(request.method, list_input_genes))
+    logger.info("got gene inputs of size: {}".format(len(list_input_genes)))
+
+    # translate the genes into what the system can handle
+    list_input_translated = sql_utils.db_get_gene_names_from_list(conn=sql_conn_query, list_input=list_input_genes)
+    logger.info("got translated gene inputs of size: {}".format(len(list_input_translated)))
 
     # add the genes to the result
     # map_result['input_genes'] = list_input_genes
@@ -56,7 +62,7 @@ def post_genes():
 
     # compute
     list_factor, list_factor_genes, list_factor_gene_sets = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, p_value=0.3,
-                                                                                                               list_gene=list_input_genes, 
+                                                                                                               list_gene=list_input_translated, 
                                                                                                                list_system_genes=list_system_genes, 
                                                                                                                map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
                                                                                                                mean_shifts=mean_shifts, scale_factors=scale_factors,

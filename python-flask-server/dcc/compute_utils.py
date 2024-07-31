@@ -222,7 +222,8 @@ def finalize_regression(beta_tildes, ses, se_inflation_factors):
 
 
 #this code is adapted from https://github.com/gwas-partitioning/bnmf-clustering
-def _bayes_nmf_l2(V0, n_iter=10000, a0=10, tol=1e-7, K=15, K0=15, phi=1.0):
+# def _bayes_nmf_l2(V0, n_iter=10000, a0=10, tol=1e-7, K=15, K0=15, phi=1.0):
+def _bayes_nmf_l2(V0, n_iter=10000, a0=10, tol=1e-4, K=15, K0=15, phi=1.0):
     '''
     example?
         result = _bayes_nmf_l2(matrix, a0=alpha0, K=max_num_factors, K0=max_num_factors)
