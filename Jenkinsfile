@@ -8,7 +8,7 @@ pipeline {
         node { label 'translator && aws && build' }
     }
     parameters {
-        string(name: 'BUILD_VERSION', defaultValue: '', description: 'The build version to deploy (optional)')
+        string(name: 'BUILD_VERSION', defaultValue: '', description: 'This build version to deploy (optional)')
         string(name: 'AWS_REGION', defaultValue: 'us-east-1', description: 'AWS Region to deploy')
     }
     triggers {
