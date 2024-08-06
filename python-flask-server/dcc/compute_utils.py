@@ -105,7 +105,7 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
 
     # step 7a - get the lowest factor per gene
     map_lowest_factor_per_gene = get_lowest_gene_factor_by_gene(exp_gene_factors=updated_gene_factors, list_system_genes=list_system_genes, list_gene_mask=selected_gene_indices, log=False)
-    print(json.dumps(map_lowest_factor_per_gene, indent=2))
+    # print(json.dumps(map_lowest_factor_per_gene, indent=2))
 
     if log:
         print("step 7: got factor list: {}".format(list_factor))
@@ -346,15 +346,13 @@ def rank_gene_and_gene_sets(X, Y, exp_lambdak, exp_gene_factors, exp_gene_set_fa
         exp_lambdak = exp_lambdak[factor_mask]
         exp_gene_factors = exp_gene_factors[:,factor_mask]
         exp_gene_set_factors = exp_gene_set_factors[:,factor_mask]
-
-    # self.gene_factor_gene_mask = gene_mask
-    # self.gene_set_factor_gene_set_mask = gene_set_mask
-
-    # gene_set_values = None
-    # if self.betas is not None:
-    #     gene_set_values = self.betas
     # elif self.betas_uncorrected is not None:
     #     gene_set_values = self.betas_uncorrected
+
+    if log:
+        print("got NEW shrunk lambda of shape: {}".format(exp_lambdak.shape))
+        print("got NEW shrunk gene factor of shape: {}".format(exp_gene_factors.shape))
+        print("got NEW shrunk gene set factor of shape: {}".format(exp_gene_set_factors.shape))
 
     # gene_values = None
     # if self.combined_prior_Ys is not None:
@@ -392,9 +390,11 @@ def rank_gene_and_gene_sets(X, Y, exp_lambdak, exp_gene_factors, exp_gene_set_fa
     # gene_set_factor_gene_set_inds = np.where(self.gene_set_factor_gene_set_mask)[0]
     # gene_factor_gene_inds = np.where(self.gene_factor_gene_mask)[0]
 
-    # TODO - could make number factors returned a variable; currently constant in code
+    # TODO - could make top count factors returned a variable; currently constant in code
     num_top = 5
-    top_gene_inds = np.argsort(-exp_gene_factors, axis=0)[:num_top,:]
+
+    # get the top count for gene set and genes
+    top_gene_inds = np.argsort(-exp_gene_factors, axis=0)[:num_top,:]               # not used
     top_gene_set_inds = np.argsort(-exp_gene_set_factors, axis=0)[:num_top,:]
 
     factor_labels = []
@@ -428,8 +428,20 @@ def rank_gene_and_gene_sets(X, Y, exp_lambdak, exp_gene_factors, exp_gene_set_fa
         #     print("got pathway indexes: {}".format(list_gene_set_index_factor))
         #     print("got gene indexes: {}".format(list_gene_index_factor))
 
-        top_gene_sets.append([map_gene_set_index.get(i) for i in list_gene_set_index_factor])
-        top_genes.append([list_system_genes[i] for i in list_gene_index_factor])
+        # build the list of groupings of gene sets
+        top_gene_sets.append([map_gene_set_index.get(gs_index) for gs_index in list_gene_set_index_factor])
+
+        # build the list of groupings of genes (cutoff of 0.01)
+        # top_genes.append([list_system_genes[g_index] for g_index in list_gene_index_factor])
+        # top_genes.append([list_system_genes[g_index] for index_local, g_index in enumerate(list_gene_index_factor) if exp_gene_factors[top_gene_inds[index_local], i] > 0.01])
+ 
+        list_temp = []
+        for index_local, g_index in enumerate(list_gene_index_factor):
+            score_gene = exp_gene_factors[top_gene_inds[index_local, i], i]
+            if score_gene > 0.01:
+                list_temp.append({'gene': list_system_genes[g_index], 'score': score_gene})
+        top_genes.append(list_temp)
+
         factor_labels.append(top_gene_sets[i][0] if len(top_gene_sets[i]) > 0 else "")
         factor_prompts.append(",".join(top_gene_sets[i]))
 
