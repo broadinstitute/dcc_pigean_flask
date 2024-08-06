@@ -69,7 +69,7 @@ def test_compute_beta_tildes():
     matrix_gene_sets, map_gene_set_index = mutils.load_geneset_matrix(map_gene_index=map_gene_index, list_gene_set_files=list_gene_set_file, path_gene_set_files=path_files, log=False)
 
     # get the gene data
-    vector_genes = mutils.generate_gene_vector_from_list(list_gene=list_gene, map_gene_index=map_gene_index, log=False)
+    vector_genes, list_input_gene_indices = mutils.generate_gene_vector_from_list(list_gene=list_gene, map_gene_index=map_gene_index, log=False)
 
     # test the mean factors generation
     print("for test_calc_X_shift_scale, got matrix shape: {}".format(matrix_gene_sets.shape))

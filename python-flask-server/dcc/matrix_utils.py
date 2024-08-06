@@ -120,7 +120,7 @@ def generate_gene_vector_from_list(list_gene, map_gene_index, log=False):
         print("data: {}".format(list_data))
 
     # return 
-    return vector_result
+    return vector_result, list_columns
 
 def sum_of_gene_row(sparse_matrix, gene_index, log=False):
     '''

@@ -51,7 +51,7 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
     # initialize
 
     # step 1/2: get the gene vector from the gene list
-    vector_gene = mutils.generate_gene_vector_from_list(list_gene=list_gene, map_gene_index=map_gene_index)
+    vector_gene, list_input_gene_indices = mutils.generate_gene_vector_from_list(list_gene=list_gene, map_gene_index=map_gene_index)
 
     # log
     if log:
@@ -80,8 +80,11 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
     # step 5: filter gene rows by only the genes that are part of the remaining gene sets from the filtered gene set matrix
     matrix_gene_filtered_by_remaining_gene_sets, selected_gene_indices = filter_matrix_rows_by_sum_cutoff(matrix_to_filter=matrix_gene_set_filtered_by_pvalues, 
                                                                                                           matrix_to_sum=matrix_gene_set_filtered_by_pvalues, log=log)
+    # check how many genes are left out
+    list_input_genes_filtered_out_indices = [item for item in list_input_gene_indices if item not in selected_gene_indices.tolist()]    
 
     if log:
+        print("step 5: ===> got input gene filtered out of length: {}".format(len(list_input_genes_filtered_out_indices)))
         print("step 5: ===> got gene filtered (rows) matrix of shape: {}".format(matrix_gene_filtered_by_remaining_gene_sets.shape))
         print("step 5: got gene filtered indices of length: {}".format(len(selected_gene_indices)))
         # print("step 5: got gene filtered indices of length: {}".format(selected_gene_indices.shape))
@@ -96,9 +99,13 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
         print("step 6: got lambda matrix of shape: {} with data: {}".format(exp_lambda.shape, exp_lambda))
 
     # step 7: find and rank the gene and gene set groups
-    list_factor, list_factor_genes, list_factor_gene_sets = rank_gene_and_gene_sets(X=None, Y=None, exp_lambdak=exp_lambda, exp_gene_factors=gene_factor, exp_gene_set_factors=gene_set_factor.T,
+    list_factor, list_factor_genes, list_factor_gene_sets, updated_gene_factors = rank_gene_and_gene_sets(X=None, Y=None, exp_lambdak=exp_lambda, exp_gene_factors=gene_factor, exp_gene_set_factors=gene_set_factor.T,
                                                                      list_system_genes=list_system_genes, map_gene_set_index=map_gene_set_index, 
                                                                      list_gene_mask=selected_gene_indices, list_gene_set_mask=selected_gene_set_indices, log=log)
+
+    # step 7a - get the lowest factor per gene
+    map_lowest_factor_per_gene = get_lowest_gene_factor_by_gene(exp_gene_factors=updated_gene_factors, list_system_genes=list_system_genes, list_gene_mask=selected_gene_indices, log=False)
+    print(json.dumps(map_lowest_factor_per_gene, indent=2))
 
     if log:
         print("step 7: got factor list: {}".format(list_factor))
@@ -111,7 +118,7 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
 
 
     # only return the gene factors and gene set factors
-    return list_factor, list_factor_genes, list_factor_gene_sets
+    return list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_lowest_factor_per_gene
 
 
 def group_factor_results(list_factor, list_factor_genes, list_factor_gene_sets, log=False):
@@ -223,7 +230,7 @@ def finalize_regression(beta_tildes, ses, se_inflation_factors):
 
 #this code is adapted from https://github.com/gwas-partitioning/bnmf-clustering
 # def _bayes_nmf_l2(V0, n_iter=10000, a0=10, tol=1e-7, K=15, K0=15, phi=1.0):
-def _bayes_nmf_l2(V0, n_iter=10000, a0=10, tol=1e-4, K=15, K0=15, phi=1.0):
+def _bayes_nmf_l2(V0, n_iter=10000, a0=10, tol=1e-3, K=15, K0=15, phi=1.0):
     '''
     example?
         result = _bayes_nmf_l2(matrix, a0=alpha0, K=max_num_factors, K0=max_num_factors)
@@ -325,9 +332,13 @@ def rank_gene_and_gene_sets(X, Y, exp_lambdak, exp_gene_factors, exp_gene_set_fa
         print("got gene factor of shape: {}".format(exp_gene_factors.shape))
         print("got gene set factor of shape: {}".format(exp_gene_set_factors.shape))
 
-    #subset_down
+    # subset_down
+    # GUESS: filter and keep if exp_lambdak > 0 and at least one non zero factor for a gene and gene set; then filter by cutoff
     factor_mask = exp_lambdak != 0 & (np.sum(exp_gene_factors, axis=0) > 0) & (np.sum(exp_gene_set_factors, axis=0) > 0)
     factor_mask = factor_mask & (np.max(exp_gene_set_factors, axis=0) > cutoff * np.max(exp_gene_set_factors))
+
+    if log:
+        print("end up with factor mask of shape: {} and true count: {}".format(factor_mask.shape, np.sum(factor_mask)))
 
     # TODO - QUESTION
     # filter by factors; why invert factor_mask?
@@ -367,6 +378,7 @@ def rank_gene_and_gene_sets(X, Y, exp_lambdak, exp_gene_factors, exp_gene_set_fa
 
     factor_gene_scores = exp_lambdak
 
+    # get the indices with factors sorted in descending order
     reorder_inds = np.argsort(-factor_gene_set_scores)
     exp_lambdak = exp_lambdak[reorder_inds]
 
@@ -380,6 +392,7 @@ def rank_gene_and_gene_sets(X, Y, exp_lambdak, exp_gene_factors, exp_gene_set_fa
     # gene_set_factor_gene_set_inds = np.where(self.gene_set_factor_gene_set_mask)[0]
     # gene_factor_gene_inds = np.where(self.gene_factor_gene_mask)[0]
 
+    # TODO - could make number factors returned a variable; currently constant in code
     num_top = 5
     top_gene_inds = np.argsort(-exp_gene_factors, axis=0)[:num_top,:]
     top_gene_set_inds = np.argsort(-exp_gene_set_factors, axis=0)[:num_top,:]
@@ -420,8 +433,44 @@ def rank_gene_and_gene_sets(X, Y, exp_lambdak, exp_gene_factors, exp_gene_set_fa
         factor_labels.append(top_gene_sets[i][0] if len(top_gene_sets[i]) > 0 else "")
         factor_prompts.append(",".join(top_gene_sets[i]))
 
+    # return the 3 grouping data structures, then the updated (filtered) gene factors
+    return factor_labels, top_genes, top_gene_sets, exp_gene_factors
+
+
+def get_lowest_gene_factor_by_gene(exp_gene_factors, list_system_genes, list_gene_mask, log=False):
+    '''
+    will return the lowest factor per gene - to be used as novelty calculation for ARS
+    '''
+    # initialize
+    map_result = {}
+
+    # log
+    if log:
+        print("lowest factor - got gene factor of shape: {}".format(exp_gene_factors.shape))
+        # print("lowest factor - got filtered gene mask of size: {} and data: \n{}".format(len(list_gene_mask), list_gene_mask))
+
+    # get the lowest value per row
+    min_per_row = np.min(exp_gene_factors, axis=1)
+
+    if log:
+        print("lowest factor - got gene factor MINIMUM of shape: {} and type: {}".format(min_per_row.shape, type(min_per_row)))
+        for index in range(len(list_gene_mask)):
+            print("lowest factor - for gene: {} get factor : {}".format(list_system_genes[list_gene_mask[index]], exp_gene_factors[index]))
+
+    # build the map
+    if min_per_row is not None:
+        for index, row_factor in enumerate(min_per_row.tolist()):
+            index_system = list_gene_mask[index]
+            gene_name = list_system_genes[index_system]
+            map_result[gene_name] = row_factor
+
+    # if log:
+    #     print("lowest factor - got gene factor MINIMUM map of size: {} and data: {}".format(len(map_result), map_result))
+
+    logger.info("returning lowest factor (novelty) gene map is size: {}".format(len(map_result)))
+
     # return
-    return factor_labels, top_genes, top_gene_sets
+    return map_result
 
 
 def get_referenced_list_elements(list_referenced, list_index, log=False):

@@ -61,7 +61,7 @@ def post_genes():
         map_result['conf'] = map_conf
 
     # compute
-    list_factor, list_factor_genes, list_factor_gene_sets = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, p_value=0.3,
+    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_novelty = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, p_value=0.3,
                                                                                                                list_gene=list_input_translated, 
                                                                                                                list_system_genes=list_system_genes, 
                                                                                                                map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
@@ -69,11 +69,23 @@ def post_genes():
                                                                                                                log=True)
 
     # format the data
-    map_factors = cutils.group_factor_results(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, list_factor_genes=list_factor_genes)
-    map_result['data'] = map_factors
+    # map_factors = cutils.group_factor_results(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, list_factor_genes=list_factor_genes)
+    # map_result['data'] = map_factors
     map_result = gutils.gui_build_results_map(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, list_factor_genes=list_factor_genes, 
                                               map_gene_ontology=map_gene_ontology, list_input_gene_names=list_input_genes, map_gene_index=map_gene_index,
-                                              matrix_gene_sets=matrix_gene_sets)
+                                              matrix_gene_sets=matrix_gene_sets, map_gene_novelty=map_gene_novelty)
+
+
+    # return
+    return map_result
+
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=8082)
+
+
+
+
 
     # # split the genes into list
     # if phenotypes:
@@ -97,11 +109,3 @@ def post_genes():
     #     # add to map
     #     # map_result['results'] = map_disease
     #     map_result['results'] = list_disease
-
-    # return
-    return map_result
-
-
-
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8082)

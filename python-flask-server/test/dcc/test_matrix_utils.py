@@ -55,7 +55,7 @@ def test_generate_gene_vector_from_list():
     map_gene_index, list_genes = futils.load_gene_file_into_map(file_path=path_files + gene_file)
 
     # get the vector
-    vector_result = mutils.generate_gene_vector_from_list(list_gene=list_gene, map_gene_index=map_gene_index, log=True)
+    vector_result, list_input_gene_indices = mutils.generate_gene_vector_from_list(list_gene=list_gene, map_gene_index=map_gene_index, log=True)
 
     # assert
     assert map_gene_index is not None
