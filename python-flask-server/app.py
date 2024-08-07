@@ -72,7 +72,7 @@ def post_genes():
     # map_factors = cutils.group_factor_results(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, list_factor_genes=list_factor_genes)
     # map_result['data'] = map_factors
     map_result = gutils.gui_build_results_map(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, list_factor_genes=list_factor_genes, 
-                                              map_gene_ontology=map_gene_ontology, list_input_gene_names=list_input_genes, map_gene_index=map_gene_index,
+                                              map_gene_ontology=map_gene_ontology, list_input_gene_names=list_input_translated, map_gene_index=map_gene_index,
                                               matrix_gene_sets=matrix_gene_sets, map_gene_novelty=map_gene_novelty)
 
 
@@ -98,15 +98,37 @@ def post_novelty_genes():
     logger.info("got gene inputs of size: {}".format(len(list_input_genes)))
 
     # get the calculated data
-    list_factor, list_factor_genes, list_factor_gene_sets, map_gene_novelty = process_genes(list_input_genes=list_input_genes)
+    map_gene_novelty, list_input_translated = process_genes(list_input_genes=list_input_genes)
 
     # format the data
-    map_result = gutils.gui_build_novelty_results_map(map_gene_ontology=map_gene_ontology, list_input_gene_names=list_input_genes, map_gene_index=map_gene_index,
+    map_result = gutils.gui_build_novelty_results_map(map_gene_ontology=map_gene_ontology, list_input_gene_names=list_input_translated, map_gene_index=map_gene_index,
                                               matrix_gene_sets=matrix_gene_sets, map_gene_novelty=map_gene_novelty)
 
 
     # return
     return map_result
+
+
+
+@app.route("/curie_query", methods=["POST"])
+def post_gene_curies():
+    # initialize 
+    list_input_genes = []
+    sql_conn_query = sql_utils.db_sqlite_get_connection(db_path=db_file)
+
+    # get the input
+    data = request.get_json()
+    if data:
+        list_input_genes = data.get('genes')
+
+    logger.info("got request: {} with gene inputs: {}".format(request.method, list_input_genes))
+    logger.info("got gene inputs of size: {}".format(len(list_input_genes)))
+
+    # translate the genes into what the system can handle
+    list_input_translated = sql_utils.db_get_gene_curies_from_list(conn=sql_conn_query, list_input=list_input_genes)
+
+    # return
+    return list_input_translated
 
 
 def process_genes(list_input_genes, log=False):
@@ -130,7 +152,7 @@ def process_genes(list_input_genes, log=False):
                                                                                                                log=True)
 
     # return
-    return list_factor, list_factor_genes, list_factor_gene_sets, map_gene_novelty
+    return map_gene_novelty, list_input_translated
 
 
 if __name__ == '__main__':

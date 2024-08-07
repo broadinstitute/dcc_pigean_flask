@@ -10,6 +10,7 @@ import dcc.dcc_utils as dutils
 logger = dutils.get_logger(__name__)
 SQL_SELECT_ALL_GENES = "select distinct gene_name, gene_ontology_id from nmf_ontology_gene"
 SQL_SELECT_GENE_NAMES_FROM_LIST = "select distinct gene_name from nmf_ontology_gene where gene_synonym in ({})"
+SQL_SELECT_GENE_CURIES_FROM_LIST = "select distinct gene_ontology_id from nmf_ontology_gene where gene_synonym in ({})"
 
 # methods
 def db_sqlite_get_connection(db_path):
@@ -63,6 +64,31 @@ def db_get_gene_names_from_list(conn, list_input, log=True):
     # log
     if log:
         logger.info("for input list of size: {}, returning gene name list of size: {}".format(len(list_input), len(list_genes)))
+
+    # return
+    return list_genes
+
+def db_get_gene_curies_from_list(conn, list_input, log=True):
+    '''
+    returns the genes curies based on the input list of sterings
+    '''
+    list_genes = []
+    cursor = conn.cursor()
+
+    # build the query
+    placeholders = ', '.join('?' for _ in list_input)
+    sql_query = SQL_SELECT_GENE_CURIES_FROM_LIST.format(placeholders)
+
+    # query
+    cursor.execute(sql_query, list_input)
+    db_results = cursor.fetchall()
+
+    # build the results
+    list_genes = [row[0] for row in db_results]
+
+    # log
+    if log:
+        logger.info("for input list of size: {}, returning gene curie list of size: {}".format(len(list_input), len(list_genes)))
 
     # return
     return list_genes
