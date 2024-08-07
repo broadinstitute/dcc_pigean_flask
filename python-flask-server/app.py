@@ -80,6 +80,59 @@ def post_genes():
     return map_result
 
 
+@app.route("/novelty_query", methods=["POST"])
+def post_novelty_genes():
+    '''
+    will respond to the novelty score
+    '''
+    # initialize 
+    map_result = {}
+    list_input_genes = []
+
+    # get the input
+    data = request.get_json()
+    if data:
+        list_input_genes = data.get('genes')
+
+    logger.info("got request: {} with gene inputs: {}".format(request.method, list_input_genes))
+    logger.info("got gene inputs of size: {}".format(len(list_input_genes)))
+
+    # get the calculated data
+    list_factor, list_factor_genes, list_factor_gene_sets, map_gene_novelty = process_genes(list_input_genes=list_input_genes)
+
+    # format the data
+    map_result = gutils.gui_build_novelty_results_map(map_gene_ontology=map_gene_ontology, list_input_gene_names=list_input_genes, map_gene_index=map_gene_index,
+                                              matrix_gene_sets=matrix_gene_sets, map_gene_novelty=map_gene_novelty)
+
+
+    # return
+    return map_result
+
+
+def process_genes(list_input_genes, log=False):
+    '''
+    processes the input genes
+    '''
+    # initialize 
+    sql_conn_query = sql_utils.db_sqlite_get_connection(db_path=db_file)
+
+    # preprocess
+    # translate the genes into what the system can handle
+    list_input_translated = sql_utils.db_get_gene_names_from_list(conn=sql_conn_query, list_input=list_input_genes)
+    logger.info("got translated gene inputs of size: {}".format(len(list_input_translated)))
+
+    # do the calculations
+    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_novelty = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, p_value=0.3,
+                                                                                                               list_gene=list_input_translated, 
+                                                                                                               list_system_genes=list_system_genes, 
+                                                                                                               map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
+                                                                                                               mean_shifts=mean_shifts, scale_factors=scale_factors,
+                                                                                                               log=True)
+
+    # return
+    return list_factor, list_factor_genes, list_factor_gene_sets, map_gene_novelty
+
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8082)
 
