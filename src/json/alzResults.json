@@ -1,0 +1,787 @@
+{
+    "data": [
+        {
+            "gene_sets": [
+                "GOBP_AMYLOID_PRECURSOR_PROTEIN_METABOLIC_PROCESS",
+                "GOBP_AMYLOID_PRECURSOR_PROTEIN_CATABOLIC_PROCESS",
+                "GOBP_REGULATION_OF_AMYLOID_PRECURSOR_PROTEIN_CATABOLIC_PROCESS",
+                "GOBP_AMYLOID_BETA_METABOLIC_PROCESS",
+                "GOBP_NEGATIVE_REGULATION_OF_AMYLOID_PRECURSOR_PROTEIN_CATABOLIC_PROCESS"
+            ],
+            "genes": [
+                "APOE",
+                "PICALM",
+                "SORL1",
+                "CLU",
+                "BIN1"
+            ],
+            "top_set": "GOBP_AMYLOID_PRECURSOR_PROTEIN_METABOLIC_PROCESS"
+        },
+        {
+            "gene_sets": [
+                "HP_DYSGRAPHIA",
+                "HP_AGNOSIA",
+                "HP_FRONTOTEMPORAL_DEMENTIA",
+                "HP_NEUROFIBRILLARY_TANGLES",
+                "HP_ABNORMAL_BRAIN_FDG_POSITRON_EMISSION_TOMOGRAPHY"
+            ],
+            "genes": [
+                "TREM2",
+                "PSEN1",
+                "GRN",
+                "MAPT",
+                "CHMP2B"
+            ],
+            "top_set": "HP_DYSGRAPHIA"
+        },
+        {
+            "gene_sets": [
+                "HP_PARKINSONISM",
+                "HP_CEREBRAL_INCLUSION_BODIES",
+                "PMC9282724__F3_Models_of_autophagy_dysfunction_in_neurodegenerative_diseases",
+                "HP_FRONTOTEMPORAL_DEMENTIA",
+                "HP_NEUROFIBRILLARY_TANGLES"
+            ],
+            "genes": [
+                "PLA2G6",
+                "PLAU",
+                "NOS3",
+                "MPO",
+                "LRRK2"
+            ],
+            "top_set": "HP_PARKINSONISM"
+        },
+        {
+            "gene_sets": [
+                "REACTOME_NOTCH2_ACTIVATION_AND_TRANSMISSION_OF_SIGNAL_TO_THE_NUCLEUS",
+                "KEGG_MEDICUS_REFERENCE_NOTCH_PROTEOLYTIC_ACTIVATION",
+                "REACTOME_NOTCH4_ACTIVATION_AND_TRANSMISSION_OF_SIGNAL_TO_THE_NUCLEUS",
+                "REACTOME_REGULATED_PROTEOLYSIS_OF_P75NTR",
+                "GOBP_NOTCH_RECEPTOR_PROCESSING"
+            ],
+            "genes": [
+                "PSEN2",
+                "PSEN1",
+                "PSENEN",
+                "APH1A",
+                "APH1B"
+            ],
+            "top_set": "REACTOME_NOTCH2_ACTIVATION_AND_TRANSMISSION_OF_SIGNAL_TO_THE_NUCLEUS"
+        },
+        {
+            "gene_sets": [
+                "REACTOME_AMYLOID_FIBER_FORMATION",
+                "REACTOME_NOTCH2_ACTIVATION_AND_TRANSMISSION_OF_SIGNAL_TO_THE_NUCLEUS",
+                "HP_CEREBRAL_INCLUSION_BODIES",
+                "HP_CEREBRAL_AMYLOID_ANGIOPATHY",
+                "GOBP_PHOSPHOLIPID_EFFLUX"
+            ],
+            "genes": [
+                "APOE",
+                "APP",
+                "ITM2B",
+                "SORL1",
+                "UBB"
+            ],
+            "top_set": "REACTOME_AMYLOID_FIBER_FORMATION"
+        }
+    ],
+    "input_genes": [
+        "ABCA1",
+        "ABCA7",
+        "ABCG1",
+        "ABPP",
+        "ACE",
+        "ACE2",
+        "ADAM10",
+        "ADAM11",
+        "ADAMTS1",
+        "ADAMTS4",
+        "ADAMTS9",
+        "APBA2",
+        "APBB1",
+        "APBB2",
+        "APH1A",
+        "APH1B",
+        "APOE",
+        "ARID1A",
+        "BIN1",
+        "BIN2",
+        "BZRAP1",
+        "C1QTNF4",
+        "C2CD2",
+        "C3",
+        "C4B",
+        "CD2AP",
+        "CD33",
+        "CDS2",
+        "CELF1",
+        "CLU",
+        "CNN2",
+        "CNTN5",
+        "CR1",
+        "CR1L",
+        "CRB1",
+        "CSF1",
+        "CSF1R",
+        "CTNNA3",
+        "CUBN",
+        "CYFIP1",
+        "CYP27A1",
+        "CYP46A1",
+        "DAO",
+        "DAPK1",
+        "DBR1",
+        "DCXR",
+        "DMD",
+        "DSG2",
+        "EPHA1",
+        "ERCC2",
+        "FAM3C",
+        "FBXL7",
+        "FERMT2",
+        "FUS",
+        "GAB2",
+        "GGA3",
+        "GPR137B",
+        "GRN",
+        "HLA-DRB1",
+        "HLA-DRB5",
+        "IL1RAP",
+        "INPP5D",
+        "IRS1",
+        "ITM2B",
+        "LILRB2",
+        "LMNA",
+        "LRRTM4",
+        "MAPT",
+        "MEF2C",
+        "MS4A4A",
+        "MS4A6A",
+        "NGRN",
+        "NME8",
+        "PICALM",
+        "PILRA",
+        "PLCG2",
+        "PON2",
+        "PSEN1",
+        "PSEN2",
+        "PTK2B",
+        "PTPRD",
+        "RAB10",
+        "RABEP1",
+        "RIN3",
+        "SLC24A4",
+        "SORCS1",
+        "SORCS2",
+        "SORCS3",
+        "SORL1",
+        "SPI1",
+        "TOMM40",
+        "TREM2",
+        "TRIM2",
+        "TSPAN14",
+        "UNC5C",
+        "USP6NL",
+        "ZC3H3",
+        "ZCWPW1",
+        "ZNF224",
+        "ZNF423"
+    ],
+    "input_genes_map": {
+        "NCBIGene:102": {
+            "count_pathways": 567,
+            "name": "ADAM10",
+            "novelty_score": 6.354561338574187e-86,
+            "ontology_id": "NCBIGene:102"
+        },
+        "NCBIGene:10288": {
+            "count_pathways": 311,
+            "name": "LILRB2",
+            "novelty_score": 0.0,
+            "ontology_id": "NCBIGene:10288"
+        },
+        "NCBIGene:10347": {
+            "count_pathways": 367,
+            "name": "ABCA7",
+            "novelty_score": 0.059072128874235394,
+            "ontology_id": "NCBIGene:10347"
+        },
+        "NCBIGene:10447": {
+            "count_pathways": 264,
+            "name": "FAM3C",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:10447"
+        },
+        "NCBIGene:10452": {
+            "count_pathways": 279,
+            "name": "TOMM40",
+            "novelty_score": 4.142601048596515e-05,
+            "ontology_id": "NCBIGene:10452"
+        },
+        "NCBIGene:10658": {
+            "count_pathways": 280,
+            "name": "CELF1",
+            "novelty_score": 0.00016405782183937501,
+            "ontology_id": "NCBIGene:10658"
+        },
+        "NCBIGene:10858": {
+            "count_pathways": 150,
+            "name": "CYP46A1",
+            "novelty_score": 0.0,
+            "ontology_id": "NCBIGene:10858"
+        },
+        "NCBIGene:10890": {
+            "count_pathways": 421,
+            "name": "RAB10",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:10890"
+        },
+        "NCBIGene:10979": {
+            "count_pathways": 497,
+            "name": "FERMT2",
+            "novelty_score": 0.00016411272544429687,
+            "ontology_id": "NCBIGene:10979"
+        },
+        "NCBIGene:114815": {
+            "count_pathways": 148,
+            "name": "SORCS1",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:114815"
+        },
+        "NCBIGene:114900": {
+            "count_pathways": 82,
+            "name": "C1QTNF4",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:114900"
+        },
+        "NCBIGene:1191": {
+            "count_pathways": 621,
+            "name": "CLU",
+            "novelty_score": 7.138600392287851e-07,
+            "ontology_id": "NCBIGene:1191"
+        },
+        "NCBIGene:123041": {
+            "count_pathways": 264,
+            "name": "SLC24A4",
+            "novelty_score": 0.00016408369648919288,
+            "ontology_id": "NCBIGene:123041"
+        },
+        "NCBIGene:1265": {
+            "count_pathways": 276,
+            "name": "CNN2",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:1265"
+        },
+        "NCBIGene:1378": {
+            "count_pathways": 312,
+            "name": "CR1",
+            "novelty_score": 0.0,
+            "ontology_id": "NCBIGene:1378"
+        },
+        "NCBIGene:1379": {
+            "count_pathways": 107,
+            "name": "CR1L",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:1379"
+        },
+        "NCBIGene:1435": {
+            "count_pathways": 658,
+            "name": "CSF1",
+            "novelty_score": 4.40961962794188e-214,
+            "ontology_id": "NCBIGene:1435"
+        },
+        "NCBIGene:1436": {
+            "count_pathways": 615,
+            "name": "CSF1R",
+            "novelty_score": 5.619468734531452e-33,
+            "ontology_id": "NCBIGene:1436"
+        },
+        "NCBIGene:1593": {
+            "count_pathways": 543,
+            "name": "CYP27A1",
+            "novelty_score": 3.171427804626698e-66,
+            "ontology_id": "NCBIGene:1593"
+        },
+        "NCBIGene:1610": {
+            "count_pathways": 219,
+            "name": "DAO",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:1610"
+        },
+        "NCBIGene:1612": {
+            "count_pathways": 393,
+            "name": "DAPK1",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:1612"
+        },
+        "NCBIGene:1636": {
+            "count_pathways": 572,
+            "name": "ACE",
+            "novelty_score": 1.3432825809973738e-78,
+            "ontology_id": "NCBIGene:1636"
+        },
+        "NCBIGene:1756": {
+            "count_pathways": 828,
+            "name": "DMD",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:1756"
+        },
+        "NCBIGene:1829": {
+            "count_pathways": 367,
+            "name": "DSG2",
+            "novelty_score": 1.1718694621335731e-256,
+            "ontology_id": "NCBIGene:1829"
+        },
+        "NCBIGene:19": {
+            "count_pathways": 781,
+            "name": "ABCA1",
+            "novelty_score": 6.622228286668796e-52,
+            "ontology_id": "NCBIGene:19"
+        },
+        "NCBIGene:2041": {
+            "count_pathways": 245,
+            "name": "EPHA1",
+            "novelty_score": 0.0001641040866418979,
+            "ontology_id": "NCBIGene:2041"
+        },
+        "NCBIGene:2068": {
+            "count_pathways": 684,
+            "name": "ERCC2",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:2068"
+        },
+        "NCBIGene:2185": {
+            "count_pathways": 826,
+            "name": "PTK2B",
+            "novelty_score": 1.29715099551003e-06,
+            "ontology_id": "NCBIGene:2185"
+        },
+        "NCBIGene:22986": {
+            "count_pathways": 151,
+            "name": "SORCS3",
+            "novelty_score": 5.4034511885408526e-208,
+            "ontology_id": "NCBIGene:22986"
+        },
+        "NCBIGene:23090": {
+            "count_pathways": 284,
+            "name": "ZNF423",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:23090"
+        },
+        "NCBIGene:23144": {
+            "count_pathways": 92,
+            "name": "ZC3H3",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:23144"
+        },
+        "NCBIGene:23163": {
+            "count_pathways": 201,
+            "name": "GGA3",
+            "novelty_score": 1.7461732792169787e-39,
+            "ontology_id": "NCBIGene:23163"
+        },
+        "NCBIGene:23191": {
+            "count_pathways": 461,
+            "name": "CYFIP1",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:23191"
+        },
+        "NCBIGene:23194": {
+            "count_pathways": 142,
+            "name": "FBXL7",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:23194"
+        },
+        "NCBIGene:23321": {
+            "count_pathways": 382,
+            "name": "TRIM2",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:23321"
+        },
+        "NCBIGene:23418": {
+            "count_pathways": 274,
+            "name": "CRB1",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:23418"
+        },
+        "NCBIGene:23607": {
+            "count_pathways": 473,
+            "name": "CD2AP",
+            "novelty_score": 0.0,
+            "ontology_id": "NCBIGene:23607"
+        },
+        "NCBIGene:2521": {
+            "count_pathways": 521,
+            "name": "FUS",
+            "novelty_score": 7.001276236532297e-37,
+            "ontology_id": "NCBIGene:2521"
+        },
+        "NCBIGene:25966": {
+            "count_pathways": 183,
+            "name": "C2CD2",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:25966"
+        },
+        "NCBIGene:274": {
+            "count_pathways": 624,
+            "name": "BIN1",
+            "novelty_score": 2.3310255831713345e-09,
+            "ontology_id": "NCBIGene:274"
+        },
+        "NCBIGene:2896": {
+            "count_pathways": 655,
+            "name": "GRN",
+            "novelty_score": 5.943688307742769e-17,
+            "ontology_id": "NCBIGene:2896"
+        },
+        "NCBIGene:29119": {
+            "count_pathways": 223,
+            "name": "CTNNA3",
+            "novelty_score": 8.33674964424909e-257,
+            "ontology_id": "NCBIGene:29119"
+        },
+        "NCBIGene:29992": {
+            "count_pathways": 169,
+            "name": "PILRA",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:29992"
+        },
+        "NCBIGene:3123": {
+            "count_pathways": 1045,
+            "name": "HLA-DRB1",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:3123"
+        },
+        "NCBIGene:3127": {
+            "count_pathways": 202,
+            "name": "HLA-DRB5",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:3127"
+        },
+        "NCBIGene:321": {
+            "count_pathways": 153,
+            "name": "APBA2",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:321"
+        },
+        "NCBIGene:322": {
+            "count_pathways": 198,
+            "name": "APBB1",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:322"
+        },
+        "NCBIGene:323": {
+            "count_pathways": 286,
+            "name": "APBB2",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:323"
+        },
+        "NCBIGene:348": {
+            "count_pathways": 1120,
+            "name": "APOE",
+            "novelty_score": 0.04048006182203499,
+            "ontology_id": "NCBIGene:348"
+        },
+        "NCBIGene:3556": {
+            "count_pathways": 426,
+            "name": "IL1RAP",
+            "novelty_score": 0.0,
+            "ontology_id": "NCBIGene:3556"
+        },
+        "NCBIGene:3635": {
+            "count_pathways": 376,
+            "name": "INPP5D",
+            "novelty_score": 0.00016402976733307487,
+            "ontology_id": "NCBIGene:3635"
+        },
+        "NCBIGene:3667": {
+            "count_pathways": 828,
+            "name": "IRS1",
+            "novelty_score": 0.0,
+            "ontology_id": "NCBIGene:3667"
+        },
+        "NCBIGene:4000": {
+            "count_pathways": 1296,
+            "name": "LMNA",
+            "novelty_score": 2.3602653242967755e-78,
+            "ontology_id": "NCBIGene:4000"
+        },
+        "NCBIGene:4137": {
+            "count_pathways": 774,
+            "name": "MAPT",
+            "novelty_score": 2.9569636512505217e-16,
+            "ontology_id": "NCBIGene:4137"
+        },
+        "NCBIGene:4185": {
+            "count_pathways": 165,
+            "name": "ADAM11",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:4185"
+        },
+        "NCBIGene:4208": {
+            "count_pathways": 1194,
+            "name": "MEF2C",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:4208"
+        },
+        "NCBIGene:51107": {
+            "count_pathways": 226,
+            "name": "APH1A",
+            "novelty_score": 7.525835146398692e-48,
+            "ontology_id": "NCBIGene:51107"
+        },
+        "NCBIGene:51163": {
+            "count_pathways": 142,
+            "name": "DBR1",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:51163"
+        },
+        "NCBIGene:51181": {
+            "count_pathways": 216,
+            "name": "DCXR",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:51181"
+        },
+        "NCBIGene:51314": {
+            "count_pathways": 197,
+            "name": "NME8",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:51314"
+        },
+        "NCBIGene:51335": {
+            "count_pathways": 153,
+            "name": "NGRN",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:51335"
+        },
+        "NCBIGene:51338": {
+            "count_pathways": 129,
+            "name": "MS4A4A",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:51338"
+        },
+        "NCBIGene:51411": {
+            "count_pathways": 174,
+            "name": "BIN2",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:51411"
+        },
+        "NCBIGene:5336": {
+            "count_pathways": 756,
+            "name": "PLCG2",
+            "novelty_score": 7.345291707053774e-53,
+            "ontology_id": "NCBIGene:5336"
+        },
+        "NCBIGene:53942": {
+            "count_pathways": 116,
+            "name": "CNTN5",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:53942"
+        },
+        "NCBIGene:54209": {
+            "count_pathways": 916,
+            "name": "TREM2",
+            "novelty_score": 1.2903727878577024e-06,
+            "ontology_id": "NCBIGene:54209"
+        },
+        "NCBIGene:5445": {
+            "count_pathways": 288,
+            "name": "PON2",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:5445"
+        },
+        "NCBIGene:55063": {
+            "count_pathways": 151,
+            "name": "ZCWPW1",
+            "novelty_score": 0.0001640904392213417,
+            "ontology_id": "NCBIGene:55063"
+        },
+        "NCBIGene:5663": {
+            "count_pathways": 964,
+            "name": "PSEN1",
+            "novelty_score": 0.027429766498330004,
+            "ontology_id": "NCBIGene:5663"
+        },
+        "NCBIGene:5664": {
+            "count_pathways": 457,
+            "name": "PSEN2",
+            "novelty_score": 0.07200611382917466,
+            "ontology_id": "NCBIGene:5664"
+        },
+        "NCBIGene:56999": {
+            "count_pathways": 234,
+            "name": "ADAMTS9",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:56999"
+        },
+        "NCBIGene:57537": {
+            "count_pathways": 137,
+            "name": "SORCS2",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:57537"
+        },
+        "NCBIGene:5789": {
+            "count_pathways": 358,
+            "name": "PTPRD",
+            "novelty_score": 0.0,
+            "ontology_id": "NCBIGene:5789"
+        },
+        "NCBIGene:59272": {
+            "count_pathways": 446,
+            "name": "ACE2",
+            "novelty_score": 0.0,
+            "ontology_id": "NCBIGene:59272"
+        },
+        "NCBIGene:64231": {
+            "count_pathways": 248,
+            "name": "MS4A6A",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:64231"
+        },
+        "NCBIGene:6653": {
+            "count_pathways": 713,
+            "name": "SORL1",
+            "novelty_score": 0.015853640322725182,
+            "ontology_id": "NCBIGene:6653"
+        },
+        "NCBIGene:6688": {
+            "count_pathways": 594,
+            "name": "SPI1",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:6688"
+        },
+        "NCBIGene:7107": {
+            "count_pathways": 335,
+            "name": "GPR137B",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:7107"
+        },
+        "NCBIGene:718": {
+            "count_pathways": 815,
+            "name": "C3",
+            "novelty_score": 7.992983266124032e-137,
+            "ontology_id": "NCBIGene:718"
+        },
+        "NCBIGene:721": {
+            "count_pathways": 232,
+            "name": "C4B",
+            "novelty_score": 9.20335345020828e-127,
+            "ontology_id": "NCBIGene:721"
+        },
+        "NCBIGene:7767": {
+            "count_pathways": 78,
+            "name": "ZNF224",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:7767"
+        },
+        "NCBIGene:79890": {
+            "count_pathways": 230,
+            "name": "RIN3",
+            "novelty_score": 0.0,
+            "ontology_id": "NCBIGene:79890"
+        },
+        "NCBIGene:80059": {
+            "count_pathways": 131,
+            "name": "LRRTM4",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:80059"
+        },
+        "NCBIGene:8029": {
+            "count_pathways": 248,
+            "name": "CUBN",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:8029"
+        },
+        "NCBIGene:81619": {
+            "count_pathways": 204,
+            "name": "TSPAN14",
+            "novelty_score": 7.175508463784904e-307,
+            "ontology_id": "NCBIGene:81619"
+        },
+        "NCBIGene:8289": {
+            "count_pathways": 711,
+            "name": "ARID1A",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:8289"
+        },
+        "NCBIGene:8301": {
+            "count_pathways": 505,
+            "name": "PICALM",
+            "novelty_score": 0.0059265373618875745,
+            "ontology_id": "NCBIGene:8301"
+        },
+        "NCBIGene:83464": {
+            "count_pathways": 185,
+            "name": "APH1B",
+            "novelty_score": 6.471255144816161e-48,
+            "ontology_id": "NCBIGene:83464"
+        },
+        "NCBIGene:8633": {
+            "count_pathways": 231,
+            "name": "UNC5C",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:8633"
+        },
+        "NCBIGene:8760": {
+            "count_pathways": 204,
+            "name": "CDS2",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:8760"
+        },
+        "NCBIGene:9135": {
+            "count_pathways": 190,
+            "name": "RABEP1",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:9135"
+        },
+        "NCBIGene:9256": {
+            "count_pathways": 0,
+            "name": "BZRAP1",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:9256"
+        },
+        "NCBIGene:9445": {
+            "count_pathways": 363,
+            "name": "ITM2B",
+            "novelty_score": 1.1466998511241072e-05,
+            "ontology_id": "NCBIGene:9445"
+        },
+        "NCBIGene:945": {
+            "count_pathways": 255,
+            "name": "CD33",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:945"
+        },
+        "NCBIGene:9507": {
+            "count_pathways": 175,
+            "name": "ADAMTS4",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:9507"
+        },
+        "NCBIGene:9510": {
+            "count_pathways": 324,
+            "name": "ADAMTS1",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:9510"
+        },
+        "NCBIGene:9619": {
+            "count_pathways": 466,
+            "name": "ABCG1",
+            "novelty_score": 2.924459908891468e-29,
+            "ontology_id": "NCBIGene:9619"
+        },
+        "NCBIGene:9712": {
+            "count_pathways": 224,
+            "name": "USP6NL",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:9712"
+        },
+        "NCBIGene:9846": {
+            "count_pathways": 414,
+            "name": "GAB2",
+            "novelty_score": null,
+            "ontology_id": "NCBIGene:9846"
+        }
+    }
+}

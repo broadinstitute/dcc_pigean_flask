@@ -35,6 +35,12 @@ matrix_gene_sets, map_gene_set_index = mutils.load_geneset_matrix(map_gene_index
 (mean_shifts, scale_factors) = cutils._calc_X_shift_scale(X=matrix_gene_sets)
 
 
+@app.route("/heartbeat", methods=["GET"])
+def heartbeat():
+    map_result = {'message': 'yes, I am up ;>'}
+
+    return map_result
+
 
 @app.route("/query", methods=["POST"])
 def post_genes():
