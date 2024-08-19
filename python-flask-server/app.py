@@ -9,6 +9,7 @@ import dcc.dcc_utils as dutils
 import dcc.sql_utils as sql_utils
 import dcc.gui_utils as gutils
 
+import time 
 
 # constants
 DEBUG=False
@@ -33,6 +34,8 @@ map_gene_index, list_system_genes, map_gene_ontology = sql_utils.db_load_gene_ta
 matrix_gene_sets, map_gene_set_index = mutils.load_geneset_matrix(map_gene_index=map_gene_index, 
                                                                   list_gene_set_files=map_conf.get('gene_set_files'), path_gene_set_files=map_conf.get('root_dir'), log=False)
 (mean_shifts, scale_factors) = cutils._calc_X_shift_scale(X=matrix_gene_sets)
+
+print("================ Bayes App is UP! ===========================")
 
 
 @app.route("/heartbeat", methods=["GET"])
@@ -66,6 +69,9 @@ def post_genes():
     if DEBUG:
         map_result['conf'] = map_conf
 
+    # time
+    start = time.time()
+
     # compute
     list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_novelty = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, p_value=0.3,
                                                                                                                list_gene=list_input_translated, 
@@ -74,6 +80,9 @@ def post_genes():
                                                                                                                mean_shifts=mean_shifts, scale_factors=scale_factors,
                                                                                                                log=True)
 
+    # time
+    end = time.time()
+
     # format the data
     # map_factors = cutils.group_factor_results(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, list_factor_genes=list_factor_genes)
     # map_result['data'] = map_factors
@@ -81,6 +90,11 @@ def post_genes():
                                               map_gene_ontology=map_gene_ontology, list_input_gene_names=list_input_translated, map_gene_index=map_gene_index,
                                               matrix_gene_sets=matrix_gene_sets, map_gene_novelty=map_gene_novelty)
 
+
+    # add time
+    str_message = "elapsed time is: {}s".format(end-start)
+    map_result['logs'] = str_message
+    logger.info(str_message)
 
     # return
     return map_result
