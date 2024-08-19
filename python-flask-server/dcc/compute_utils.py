@@ -65,6 +65,7 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
 
     if log:
         print("step 3: got p values vector of shape: {}".format(vector_gene_set_pvalues.shape))
+        print("step 3: filtering gene sets using p_value: {}".format(p_value))
 
     # step 4: filter the gene set columns based on computed pvalue for each gene set
     matrix_gene_set_filtered_by_pvalues, selected_gene_set_indices = filter_matrix_columns(matrix_input=matrix_gene_sets_gene_original, vector_input=vector_gene_set_pvalues, 
@@ -85,8 +86,8 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
 
     if log:
         print("step 5: ===> got input gene filtered out of length: {}".format(len(list_input_genes_filtered_out_indices)))
-        print("step 5: ===> got gene filtered (rows) matrix of shape: {}".format(matrix_gene_filtered_by_remaining_gene_sets.shape))
         print("step 5: got gene filtered indices of length: {}".format(len(selected_gene_indices)))
+        print("step 5: ===> got gene filtered (rows) matrix of shape: {} to start bayes NMF".format(matrix_gene_filtered_by_remaining_gene_sets.shape))
         # print("step 5: got gene filtered indices of length: {}".format(selected_gene_indices.shape))
 
     # step 6: from this double filtered matrix, compute the factors
