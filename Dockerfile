@@ -37,6 +37,6 @@ RUN mkdir /home/CodeAplication/GeneSetNmf/python-flask-server/logs
 WORKDIR /home/CodeAplication/GeneSetNmf/python-flask-server
 
 # CMD cat /proc/version
-CMD gunicorn -w 4 --bind 0.0.0.0:5000 app:app --timeout 3600
+CMD gunicorn -w 4 --bind 0.0.0.0:8082 app:app --timeout 3600
 # CMD . /home/CodeTest/GeneticsPro/Test/echo_env.txt
 
