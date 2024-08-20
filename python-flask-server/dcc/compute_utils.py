@@ -1,4 +1,35 @@
 
+# LICENSE
+# Copyright 2024 Flannick Lab
+
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+
+# 1. Redistributions of source code must retain the above copyright
+# notice, this list of conditions and the following disclaimer.
+
+# 2. Redistributions in binary form must reproduce the above copyright
+# notice, this list of conditions and the following disclaimer in the
+# documentation and/or other materials provided with the distribution.
+
+# 3. Neither the name of the copyright holder nor the names of its
+# contributors may be used to endorse or promote products derived from
+# this software without specific prior written permission.
+
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+# FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+# COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+# BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
+# OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
+# AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
+# THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+# DAMAGE.
+
 # imports
 import scipy
 import scipy.sparse as sparse
@@ -49,6 +80,12 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
     will produce the gene set factors and gene factors
     '''
     # initialize
+    list_factor = [] 
+    list_factor_genes = []
+    list_factor_gene_sets = []
+    gene_factor = None
+    gene_set_factor = None
+    map_lowest_factor_per_gene = {}
 
     # step 1/2: get the gene vector from the gene list
     vector_gene, list_input_gene_indices = mutils.generate_gene_vector_from_list(list_gene=list_gene, map_gene_index=map_gene_index)
@@ -90,32 +127,36 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
         print("step 5: ===> got gene filtered (rows) matrix of shape: {} to start bayes NMF".format(matrix_gene_filtered_by_remaining_gene_sets.shape))
         # print("step 5: got gene filtered indices of length: {}".format(selected_gene_indices.shape))
 
-    # step 6: from this double filtered matrix, compute the factors
-    gene_factor, gene_set_factor, _, _, exp_lambda, _ = _bayes_nmf_l2(V0=matrix_gene_filtered_by_remaining_gene_sets)
-    # gene_factor, gene_set_factor = run_nmf(matrix_input=matrix_gene_filtered_by_remaining_gene_sets, log=log)
+    if not all(dim > 0 for dim in matrix_gene_filtered_by_remaining_gene_sets.shape):
+        print("step 6: ===> skipping due to pre bayes NMF matrix of shape".format(matrix_gene_filtered_by_remaining_gene_sets.shape))
 
-    if log:
-        print("step 6: got gene factor matrix of shape: {}".format(gene_factor.shape))
-        print("step 6: got gene set factor matrix of shape: {}".format(gene_set_factor.shape))
-        print("step 6: got lambda matrix of shape: {} with data: {}".format(exp_lambda.shape, exp_lambda))
+    else:
+        # step 6: from this double filtered matrix, compute the factors
+        gene_factor, gene_set_factor, _, _, exp_lambda, _ = _bayes_nmf_l2(V0=matrix_gene_filtered_by_remaining_gene_sets)
+        # gene_factor, gene_set_factor = run_nmf(matrix_input=matrix_gene_filtered_by_remaining_gene_sets, log=log)
 
-    # step 7: find and rank the gene and gene set groups
-    list_factor, list_factor_genes, list_factor_gene_sets, updated_gene_factors = rank_gene_and_gene_sets(X=None, Y=None, exp_lambdak=exp_lambda, exp_gene_factors=gene_factor, exp_gene_set_factors=gene_set_factor.T,
-                                                                     list_system_genes=list_system_genes, map_gene_set_index=map_gene_set_index, 
-                                                                     list_gene_mask=selected_gene_indices, list_gene_set_mask=selected_gene_set_indices, log=log)
+        if log:
+            print("step 6: got gene factor matrix of shape: {}".format(gene_factor.shape))
+            print("step 6: got gene set factor matrix of shape: {}".format(gene_set_factor.shape))
+            print("step 6: got lambda matrix of shape: {} with data: {}".format(exp_lambda.shape, exp_lambda))
 
-    # step 7a - get the lowest factor per gene
-    map_lowest_factor_per_gene = get_lowest_gene_factor_by_gene(exp_gene_factors=updated_gene_factors, list_system_genes=list_system_genes, list_gene_mask=selected_gene_indices, log=False)
-    # print(json.dumps(map_lowest_factor_per_gene, indent=2))
+        # step 7: find and rank the gene and gene set groups
+        list_factor, list_factor_genes, list_factor_gene_sets, updated_gene_factors = rank_gene_and_gene_sets(X=None, Y=None, exp_lambdak=exp_lambda, exp_gene_factors=gene_factor, exp_gene_set_factors=gene_set_factor.T,
+                                                                        list_system_genes=list_system_genes, map_gene_set_index=map_gene_set_index, 
+                                                                        list_gene_mask=selected_gene_indices, list_gene_set_mask=selected_gene_set_indices, log=log)
 
-    if log:
-        print("step 7: got factor list: {}".format(list_factor))
-        print("step 7: got gene list:")
-        for row in list_factor_genes: 
-            print (row)
-        print("step 7: got gene set list:")
-        for row in list_factor_gene_sets: 
-            print (row)
+        # step 7a - get the lowest factor per gene
+        map_lowest_factor_per_gene = get_lowest_gene_factor_by_gene(exp_gene_factors=updated_gene_factors, list_system_genes=list_system_genes, list_gene_mask=selected_gene_indices, log=False)
+        # print(json.dumps(map_lowest_factor_per_gene, indent=2))
+
+        if log:
+            print("step 7: got factor list: {}".format(list_factor))
+            print("step 7: got gene list:")
+            for row in list_factor_genes: 
+                print (row)
+            print("step 7: got gene set list:")
+            for row in list_factor_gene_sets: 
+                print (row)
 
 
     # only return the gene factors and gene set factors
@@ -457,30 +498,35 @@ def get_lowest_gene_factor_by_gene(exp_gene_factors, list_system_genes, list_gen
     # initialize
     map_result = {}
 
-    # log
-    if log:
-        print("lowest factor - got gene factor of shape: {}".format(exp_gene_factors.shape))
-        # print("lowest factor - got filtered gene mask of size: {} and data: \n{}".format(len(list_gene_mask), list_gene_mask))
+    if all(dim > 0 for dim in exp_gene_factors.shape):    
+        # log
+        if log:
+            print("lowest factor - got gene factor of shape: {}".format(exp_gene_factors.shape))
+            # print("lowest factor - got filtered gene mask of size: {} and data: \n{}".format(len(list_gene_mask), list_gene_mask))
 
-    # get the lowest value per row
-    min_per_row = np.min(exp_gene_factors, axis=1)
+        # get the lowest value per row
+        min_per_row = np.min(exp_gene_factors, axis=1)
 
-    if log:
-        print("lowest factor - got gene factor MINIMUM of shape: {} and type: {}".format(min_per_row.shape, type(min_per_row)))
-        for index in range(len(list_gene_mask)):
-            print("lowest factor - for gene: {} get factor : {}".format(list_system_genes[list_gene_mask[index]], exp_gene_factors[index]))
+        if log:
+            print("lowest factor - got gene factor MINIMUM of shape: {} and type: {}".format(min_per_row.shape, type(min_per_row)))
+            for index in range(len(list_gene_mask)):
+                print("lowest factor - for gene: {} get factor : {}".format(list_system_genes[list_gene_mask[index]], exp_gene_factors[index]))
 
-    # build the map
-    if min_per_row is not None:
-        for index, row_factor in enumerate(min_per_row.tolist()):
-            index_system = list_gene_mask[index]
-            gene_name = list_system_genes[index_system]
-            map_result[gene_name] = row_factor
+        # build the map
+        if min_per_row is not None:
+            for index, row_factor in enumerate(min_per_row.tolist()):
+                index_system = list_gene_mask[index]
+                gene_name = list_system_genes[index_system]
+                map_result[gene_name] = row_factor
 
-    # if log:
-    #     print("lowest factor - got gene factor MINIMUM map of size: {} and data: {}".format(len(map_result), map_result))
+        # if log:
+        #     print("lowest factor - got gene factor MINIMUM map of size: {} and data: {}".format(len(map_result), map_result))
 
-    logger.info("returning lowest factor (novelty) gene map is size: {}".format(len(map_result)))
+        logger.info("returning lowest factor (novelty) gene map is size: {}".format(len(map_result)))
+
+    else:
+        logger.info("returning empty map for exp_gene_factor of shape: {}".format(exp_gene_factors.shape))
+
 
     # return
     return map_result
