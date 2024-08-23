@@ -270,7 +270,9 @@ def finalize_regression(beta_tildes, ses, se_inflation_factors):
 
 
 
-#this code is adapted from https://github.com/gwas-partitioning/bnmf-clustering
+# NOTE - this code is adapted from https://github.com/gwas-partitioning/bnmf-clustering
+# NOTE - paper is: Smith, K., Deutsch, A.J., McGrail, C. et al. Multi-ancestry polygenic mechanisms of type 2 diabetes. Nat Med 30, 1065–1074 (2024). https://doi.org/10.1038/s41591-024-02865-3
+# 
 # def _bayes_nmf_l2(V0, n_iter=10000, a0=10, tol=1e-7, K=15, K0=15, phi=1.0):
 def _bayes_nmf_l2(V0, n_iter=10000, a0=10, tol=1e-3, K=15, K0=15, phi=1.0):
     '''
