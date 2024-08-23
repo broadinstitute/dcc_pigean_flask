@@ -20,8 +20,8 @@ app.secret_key = "test_app_gpt"
 
 logger = dutils.get_logger(__name__)
 # p_value_cutoff = 0.3
-p_value_cutoff = 0.05
-p_value_cutoff = 0.3
+P_VALUE_CUTOFF = 0.3
+# p_value_cutoff = 0.05
 
 # in memory compute variables
 map_conf = sutils.load_conf()
@@ -53,6 +53,7 @@ def post_genes():
     map_result = {}
     list_input_genes = []
     sql_conn_query = sql_utils.db_sqlite_get_connection(db_path=db_file)
+    p_value_cutoff = P_VALUE_CUTOFF
 
     # get the input
     data = request.get_json()
@@ -61,6 +62,10 @@ def post_genes():
 
     logger.info("got request: {} with gene inputs: {}".format(request.method, list_input_genes))
     logger.info("got gene inputs of size: {}".format(len(list_input_genes)))
+
+    # get the p_value
+    p_value_cutoff = process_p_value(json_request=data)
+    logger.info("got using p_value: {}".format(p_value_cutoff))
 
     # translate the genes into what the system can handle
     list_input_translated = sql_utils.db_get_gene_names_from_list(conn=sql_conn_query, list_input=list_input_genes)
@@ -75,7 +80,8 @@ def post_genes():
     start = time.time()
 
     # compute
-    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_novelty = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, p_value=p_value_cutoff,
+    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_novelty = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
+                                                                                                               p_value=p_value_cutoff,
                                                                                                                list_gene=list_input_translated, 
                                                                                                                list_system_genes=list_system_genes, 
                                                                                                                map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
@@ -110,6 +116,7 @@ def post_novelty_genes():
     # initialize 
     map_result = {}
     list_input_genes = []
+    p_value_cutoff = P_VALUE_CUTOFF
 
     # get the input
     data = request.get_json()
@@ -119,8 +126,12 @@ def post_novelty_genes():
     logger.info("got request: {} with gene inputs: {}".format(request.method, list_input_genes))
     logger.info("got gene inputs of size: {}".format(len(list_input_genes)))
 
+    # get the p_value
+    p_value_cutoff = process_p_value(json_request=data)
+    logger.info("got using p_value: {}".format(p_value_cutoff))
+    
     # get the calculated data
-    map_gene_novelty, list_input_translated = process_genes(list_input_genes=list_input_genes)
+    map_gene_novelty, list_input_translated = process_genes(list_input_genes=list_input_genes, p_value_cutoff=p_value_cutoff)
 
     # format the data
     map_result = gutils.gui_build_novelty_results_map(map_gene_ontology=map_gene_ontology, list_input_gene_names=list_input_translated, map_gene_index=map_gene_index,
@@ -153,7 +164,7 @@ def post_gene_curies():
     return list_input_translated
 
 
-def process_genes(list_input_genes, log=False):
+def process_genes(list_input_genes, p_value_cutoff, log=False):
     '''
     processes the input genes
     '''
@@ -166,7 +177,8 @@ def process_genes(list_input_genes, log=False):
     logger.info("got translated gene inputs of size: {}".format(len(list_input_translated)))
 
     # do the calculations
-    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_novelty = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, p_value=p_value_cutoff,
+    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_novelty = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
+                                                                                                               p_value=p_value_cutoff,
                                                                                                                list_gene=list_input_translated, 
                                                                                                                list_system_genes=list_system_genes, 
                                                                                                                map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
@@ -175,6 +187,36 @@ def process_genes(list_input_genes, log=False):
 
     # return
     return map_gene_novelty, list_input_translated
+
+
+def process_p_value(json_request, log=False):
+    '''
+    will extract the p_value from the request; will return the default if none
+    '''
+    # initialize
+    float_value = None
+
+    # extract the value
+    try:
+        # Retrieve the float value from the request
+        float_input = json_request.get('p_value')
+
+        # Attempt to convert the input to a float
+        if float_input is None:
+            raise ValueError("No 'p_value' field provided in the request")
+
+        float_value = float(float_input)
+
+    except ValueError as e:
+        logger.error("got error for p_value: {}".format(str(e)))
+        float_value = P_VALUE_CUTOFF
+
+    except Exception as e:
+        logger.error("got error for p_value: {}".format(str(e)))
+        float_value = P_VALUE_CUTOFF
+
+    # return
+    return float_value
 
 
 if __name__ == '__main__':
