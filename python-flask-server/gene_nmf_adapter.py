@@ -84,7 +84,7 @@ def get_gene_nmf_novelty_for_gene_list(list_input_genes, p_value_cutoff=P_VALUE_
     map_result = {}
 
     # get the calculated data
-    map_gene_novelty, list_input_translated = process_genes(list_input_genes=list_input_genes, p_value_cutoff=p_value_cutoff)
+    map_gene_novelty, list_input_translated = process_genes_novelty(list_input_genes=list_input_genes, p_value_cutoff=p_value_cutoff)
 
     # log result
     logger.info("got novelty result map of size: {}".format(len(map_gene_novelty)))
@@ -97,7 +97,30 @@ def get_gene_nmf_novelty_for_gene_list(list_input_genes, p_value_cutoff=P_VALUE_
     return map_result
 
 
-def process_genes(list_input_genes, p_value_cutoff, log=False):
+def get_gene_full_nmf_for_gene_list(list_input_genes, p_value_cutoff=P_VALUE_CUTOFF, log=False):
+    '''
+    'will process the gene nmf call for the gene list given and return the full results
+    '''
+    map_result = {}
+
+    # get the calculated data
+    list_factor, list_factor_genes, list_factor_gene_sets, map_gene_novelty, list_input_translated = process_genes_full(list_input_genes=list_input_genes, p_value_cutoff=p_value_cutoff)
+
+    # log result
+    logger.info("got novelty result map of size: {}".format(len(map_gene_novelty)))
+
+    # format the data
+    # map_result = gutils.gui_build_novelty_results_map(map_gene_ontology=map_gene_ontology, list_input_gene_names=list_input_translated, map_gene_index=map_gene_index,
+    #                                           matrix_gene_sets=matrix_gene_sets, map_gene_novelty=map_gene_novelty)
+    map_result = gutils.gui_build_results_map(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, list_factor_genes=list_factor_genes, 
+                                              map_gene_ontology=map_gene_ontology, list_input_gene_names=list_input_translated, map_gene_index=map_gene_index,
+                                              matrix_gene_sets=matrix_gene_sets, map_gene_novelty=map_gene_novelty)
+
+    # return
+    return map_result
+
+
+def process_genes_novelty(list_input_genes, p_value_cutoff, log=False):
     '''
     processes the input genes
     '''
@@ -121,6 +144,29 @@ def process_genes(list_input_genes, p_value_cutoff, log=False):
     # return
     return map_gene_novelty, list_input_translated
 
+def process_genes_full(list_input_genes, p_value_cutoff, log=False):
+    '''
+    processes the input genes
+    '''
+    # initialize 
+    sql_conn_query = sql_utils.db_sqlite_get_connection(db_path=db_file)
+
+    # preprocess
+    # translate the genes into what the system can handle
+    logger.info("got raw gene inputs of size: {}".format(len(list_input_genes)))
+    list_input_translated = sql_utils.db_get_gene_names_from_list(conn=sql_conn_query, list_input=list_input_genes)
+    logger.info("got translated gene inputs of size: {}".format(len(list_input_translated)))
+
+    # do the calculations
+    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_novelty = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
+                                                                                                               p_value=p_value_cutoff,
+                                                                                                               list_gene=list_input_translated, 
+                                                                                                               list_system_genes=list_system_genes, 
+                                                                                                               map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
+                                                                                                               mean_shifts=mean_shifts, scale_factors=scale_factors,
+                                                                                                               log=True)
+    # return
+    return list_factor, list_factor_genes, list_factor_gene_sets, map_gene_novelty, list_input_translated
 
 # main
 if __name__ == "__main__":
