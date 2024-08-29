@@ -109,7 +109,7 @@ def test_filter_matrix_columns():
     p_values = np.array([0.01, 0.2, 0.03, 0.5])
 
     # get result
-    matrix01, selected_column_indices = cutils.filter_matrix_columns(matrix_input=matrix00, vector_input=p_values, cutoff_input=cutoff, log=True)
+    matrix01, selected_column_indices = cutils.filter_matrix_columns(matrix_input=matrix00, vector_input=p_values, max_num_gene_sets=100, cutoff_input=cutoff, log=True)
 
     # test 
     assert matrix01 is not None

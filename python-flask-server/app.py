@@ -22,6 +22,7 @@ logger = dutils.get_logger(__name__)
 # p_value_cutoff = 0.3
 P_VALUE_CUTOFF = 0.3
 # p_value_cutoff = 0.05
+MAX_NUMBER_GENE_SETS_FOR_COMPUTATION=100
 
 # in memory compute variables
 map_conf = sutils.load_conf()
@@ -64,7 +65,11 @@ def post_genes():
     logger.info("got gene inputs of size: {}".format(len(list_input_genes)))
 
     # get the p_value
-    p_value_cutoff = process_p_value(json_request=data)
+    p_value_cutoff = process_numeric_value(json_request=data, name='p_value', cutoff_default=P_VALUE_CUTOFF)
+    logger.info("got using p_value: {}".format(p_value_cutoff))
+
+    # get the max gene sets
+    max_number_gene_sets = process_numeric_value(json_request=data, name='max_number_gene_sets', cutoff_default=MAX_NUMBER_GENE_SETS_FOR_COMPUTATION, is_float=False)
     logger.info("got using p_value: {}".format(p_value_cutoff))
 
     # translate the genes into what the system can handle
@@ -80,8 +85,9 @@ def post_genes():
     start = time.time()
 
     # compute
-    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_novelty = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
+    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_novelty, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
                                                                                                                p_value=p_value_cutoff,
+                                                                                                               max_num_gene_sets=max_number_gene_sets,
                                                                                                                list_gene=list_input_translated, 
                                                                                                                list_system_genes=list_system_genes, 
                                                                                                                map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
@@ -100,8 +106,9 @@ def post_genes():
 
 
     # add time
-    str_message = "elapsed time is: {}s".format(end-start)
-    map_result['logs'] = str_message
+    str_message = "total elapsed time is: {}s".format(end-start)
+    logs_process.append(str_message)
+    map_result['logs'] = logs_process
     logger.info(str_message)
 
     # return
@@ -127,9 +134,13 @@ def post_novelty_genes():
     logger.info("got gene inputs of size: {}".format(len(list_input_genes)))
 
     # get the p_value
-    p_value_cutoff = process_p_value(json_request=data)
+    p_value_cutoff = process_numeric_value(json_request=data, name='p_value', cutoff_default=P_VALUE_CUTOFF)
     logger.info("got using p_value: {}".format(p_value_cutoff))
-    
+
+    # get the max gene sets
+    max_number_gene_sets = process_numeric_value(json_request=data, name='max_number_gene_sets', cutoff_default=MAX_NUMBER_GENE_SETS_FOR_COMPUTATION)
+    logger.info("got using p_value: {}".format(p_value_cutoff))
+
     # get the calculated data
     map_gene_novelty, list_input_translated = process_genes(list_input_genes=list_input_genes, p_value_cutoff=p_value_cutoff)
 
@@ -177,46 +188,54 @@ def process_genes(list_input_genes, p_value_cutoff, log=False):
     logger.info("got translated gene inputs of size: {}".format(len(list_input_translated)))
 
     # do the calculations
-    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_novelty = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
+    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_novelty, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
                                                                                                                p_value=p_value_cutoff,
                                                                                                                list_gene=list_input_translated, 
                                                                                                                list_system_genes=list_system_genes, 
                                                                                                                map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
                                                                                                                mean_shifts=mean_shifts, scale_factors=scale_factors,
                                                                                                                log=True)
+    
+    # log
+    for row in logs_process:
+        logger.info(row)
 
     # return
     return map_gene_novelty, list_input_translated
 
 
-def process_p_value(json_request, log=False):
+def process_numeric_value(json_request, name, cutoff_default, is_float=True, log=False):
     '''
     will extract the p_value from the request; will return the default if none
     '''
     # initialize
-    float_value = None
+    numeric_value = None
 
     # extract the value
     try:
         # Retrieve the float value from the request
-        float_input = json_request.get('p_value')
+        numeric_input = json_request.get(name)
 
         # Attempt to convert the input to a float
-        if float_input is None:
-            raise ValueError("No 'p_value' field provided in the request")
+        if numeric_input is None:
+            raise ValueError("No '{}' field provided in the request".format(name))
 
-        float_value = float(float_input)
+        if is_float:
+            numeric_value = float(numeric_input)
+        else:
+            numeric_value = int(numeric_input)
+
 
     except ValueError as e:
-        logger.error("got error for p_value: {}".format(str(e)))
-        float_value = P_VALUE_CUTOFF
+        logger.error("got error for {}: {}".format(name, str(e)))
+        numeric_value = cutoff_default
 
     except Exception as e:
-        logger.error("got error for p_value: {}".format(str(e)))
-        float_value = P_VALUE_CUTOFF
+        logger.error("got error for {}: {}".format(name, str(e)))
+        numeric_value = cutoff_default
 
     # return
-    return float_value
+    return numeric_value
 
 
 if __name__ == '__main__':

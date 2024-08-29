@@ -1,0 +1,9 @@
+
+
+Steps:
+------
+
+git clone git@github.com:broadinstitute/dcc_pigean_flask.git
+cd dcc_pigean_flask
+pytest --log-cli-level=INFO --capture=no python-flask-server/test/dcc/test_gene_nmf_adapter_rummagene.py
+

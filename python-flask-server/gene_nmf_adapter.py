@@ -46,6 +46,7 @@ import dcc.gui_utils as gutils
 
 # constants
 P_VALUE_CUTOFF = 0.3
+MAX_NUMBER_GENE_SETS_FOR_COMPUTATION=100
 current_dir = os.path.dirname(os.path.abspath(__file__))
 # DIR_CONF = "conf/"
 DIR_CONF = os.path.join(current_dir, 'conf/')
@@ -120,7 +121,7 @@ def get_gene_full_nmf_for_gene_list(list_input_genes, p_value_cutoff=P_VALUE_CUT
     return map_result
 
 
-def process_genes_novelty(list_input_genes, p_value_cutoff, log=False):
+def process_genes_novelty(list_input_genes, p_value_cutoff, max_num_gene_sets=MAX_NUMBER_GENE_SETS_FOR_COMPUTATION, log=False):
     '''
     processes the input genes
     '''
@@ -134,17 +135,23 @@ def process_genes_novelty(list_input_genes, p_value_cutoff, log=False):
     logger.info("got translated gene inputs of size: {}".format(len(list_input_translated)))
 
     # do the calculations
-    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_novelty = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
+    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_novelty, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
                                                                                                                p_value=p_value_cutoff,
+                                                                                                               max_num_gene_sets=max_num_gene_sets,
                                                                                                                list_gene=list_input_translated, 
                                                                                                                list_system_genes=list_system_genes, 
                                                                                                                map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
                                                                                                                mean_shifts=mean_shifts, scale_factors=scale_factors,
                                                                                                                log=True)
+    
+    # log
+    for row in logs_process:
+        logger.info(row)
+
     # return
     return map_gene_novelty, list_input_translated
 
-def process_genes_full(list_input_genes, p_value_cutoff, log=False):
+def process_genes_full(list_input_genes, p_value_cutoff, max_num_gene_sets=MAX_NUMBER_GENE_SETS_FOR_COMPUTATION, log=False):
     '''
     processes the input genes
     '''
@@ -158,13 +165,19 @@ def process_genes_full(list_input_genes, p_value_cutoff, log=False):
     logger.info("got translated gene inputs of size: {}".format(len(list_input_translated)))
 
     # do the calculations
-    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_novelty = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
+    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_novelty, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
                                                                                                                p_value=p_value_cutoff,
+                                                                                                               max_num_gene_sets=max_num_gene_sets,
                                                                                                                list_gene=list_input_translated, 
                                                                                                                list_system_genes=list_system_genes, 
                                                                                                                map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
                                                                                                                mean_shifts=mean_shifts, scale_factors=scale_factors,
                                                                                                                log=True)
+    
+    # log
+    for row in logs_process:
+        logger.info(row)
+
     # return
     return list_factor, list_factor_genes, list_factor_gene_sets, map_gene_novelty, list_input_translated
 
