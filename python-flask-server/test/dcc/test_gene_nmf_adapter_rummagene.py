@@ -150,10 +150,10 @@ def test_get_full_gene_nmf_for_gene_list():
     """
     # initialize
     map_result = {}
-    p_value = 0.3
+    p_value = 0.5
 
     # call method
-    map_result = adapter.get_gene_full_nmf_for_gene_list(list_input_genes=list_gene_test, p_value_cutoff=p_value, log=True)
+    map_result = adapter.get_gene_full_nmf_for_gene_list(list_input_genes=list_gene_test, p_value_cutoff=p_value, max_num_gene_sets=120, log=True)
 
     # logger
     logger.info("got map result of size: {}".format(len(map_result.get('data'))))

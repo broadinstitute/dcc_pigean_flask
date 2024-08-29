@@ -78,14 +78,14 @@ print("================ Bayes NMF data structures LOADED! ======================
 
 
 # methods
-def get_gene_nmf_novelty_for_gene_list(list_input_genes, p_value_cutoff=P_VALUE_CUTOFF, log=False):
+def get_gene_nmf_novelty_for_gene_list(list_input_genes, p_value_cutoff=P_VALUE_CUTOFF, max_num_gene_sets=MAX_NUMBER_GENE_SETS_FOR_COMPUTATION, log=False):
     '''
     'will process the gene nmf call for the gene list given and return the gene novelty
     '''
     map_result = {}
 
     # get the calculated data
-    map_gene_novelty, list_input_translated = process_genes_novelty(list_input_genes=list_input_genes, p_value_cutoff=p_value_cutoff)
+    map_gene_novelty, list_input_translated = process_genes_novelty(list_input_genes=list_input_genes, p_value_cutoff=p_value_cutoff, max_num_gene_sets=max_num_gene_sets)
 
     # log result
     logger.info("got novelty result map of size: {}".format(len(map_gene_novelty)))
@@ -98,14 +98,16 @@ def get_gene_nmf_novelty_for_gene_list(list_input_genes, p_value_cutoff=P_VALUE_
     return map_result
 
 
-def get_gene_full_nmf_for_gene_list(list_input_genes, p_value_cutoff=P_VALUE_CUTOFF, log=False):
+def get_gene_full_nmf_for_gene_list(list_input_genes, p_value_cutoff=P_VALUE_CUTOFF, max_num_gene_sets=MAX_NUMBER_GENE_SETS_FOR_COMPUTATION, log=False):
     '''
     'will process the gene nmf call for the gene list given and return the full results
     '''
     map_result = {}
 
     # get the calculated data
-    list_factor, list_factor_genes, list_factor_gene_sets, map_gene_novelty, list_input_translated = process_genes_full(list_input_genes=list_input_genes, p_value_cutoff=p_value_cutoff)
+    list_factor, list_factor_genes, list_factor_gene_sets, map_gene_novelty, list_input_translated = process_genes_full(list_input_genes=list_input_genes, 
+                                                                                                                        p_value_cutoff=p_value_cutoff,
+                                                                                                                        max_num_gene_sets=max_num_gene_sets)
 
     # log result
     logger.info("got novelty result map of size: {}".format(len(map_gene_novelty)))
@@ -121,7 +123,7 @@ def get_gene_full_nmf_for_gene_list(list_input_genes, p_value_cutoff=P_VALUE_CUT
     return map_result
 
 
-def process_genes_novelty(list_input_genes, p_value_cutoff, max_num_gene_sets=MAX_NUMBER_GENE_SETS_FOR_COMPUTATION, log=False):
+def process_genes_novelty(list_input_genes, p_value_cutoff, max_num_gene_sets, log=False):
     '''
     processes the input genes
     '''
@@ -151,7 +153,7 @@ def process_genes_novelty(list_input_genes, p_value_cutoff, max_num_gene_sets=MA
     # return
     return map_gene_novelty, list_input_translated
 
-def process_genes_full(list_input_genes, p_value_cutoff, max_num_gene_sets=MAX_NUMBER_GENE_SETS_FOR_COMPUTATION, log=False):
+def process_genes_full(list_input_genes, p_value_cutoff, max_num_gene_sets, log=False):
     '''
     processes the input genes
     '''

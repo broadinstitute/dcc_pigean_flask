@@ -38,6 +38,8 @@ import sys
 logging.basicConfig(level=logging.INFO, format=f'[%(asctime)s] - %(levelname)s - %(name)s %(threadName)s : %(message)s')
 handler = logging.StreamHandler(sys.stdout)
 
+# constants
+VERSION_CODE = "20240829a_logs"
 
 # methods
 def get_logger(name): 
@@ -47,3 +49,9 @@ def get_logger(name):
 
     # return
     return logger 
+
+def get_code_version():
+    '''
+    returns the code version
+    '''
+    return VERSION_CODE

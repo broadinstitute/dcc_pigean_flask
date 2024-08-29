@@ -108,6 +108,7 @@ def post_genes():
     # add time
     str_message = "total elapsed time is: {}s".format(end-start)
     logs_process.append(str_message)
+    logs_process.append("code version is: {}".format(dutils.get_code_version()))
     map_result['logs'] = logs_process
     logger.info(str_message)
 
