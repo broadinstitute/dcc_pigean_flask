@@ -17,6 +17,7 @@ DEBUG=False
 # variables
 app = Flask(__name__)
 app.secret_key = "test_app_gpt"
+map_gene_set_families = {}
 
 logger = dutils.get_logger(__name__)
 # p_value_cutoff = 0.3
@@ -33,17 +34,22 @@ logger.info("loading database file: {}".format(db_file))
 sql_connection = sql_utils.db_sqlite_get_connection(db_path=db_file)
 
 # map_gene_index, list_system_genes = futils.load_gene_file_into_map(file_path=map_conf.get('root_dir') + map_conf.get('gene_file'))
+# load the genes - common data across gene sets
 map_gene_index, list_system_genes, map_gene_ontology = sql_utils.db_load_gene_table_into_map(conn=sql_connection)
 matrix_gene_sets, map_gene_set_index = mutils.load_geneset_matrix(map_gene_index=map_gene_index, 
                                                                   list_gene_set_files=map_conf.get('gene_set_files'), path_gene_set_files=map_conf.get('root_dir'), log=False)
 (mean_shifts, scale_factors) = cutils._calc_X_shift_scale(X=matrix_gene_sets)
 
-print("================ Bayes App is UP! ===========================")
+logger.info("================ Bayes App is UP! ===========================")
 
+# test 
+map_gene_set_families = sutils.load_gene_set_family_map(map_conf=map_conf, map_gene_index=map_gene_index, log=False)
+
+logger.info("================ Test App is UP! ===========================")
 
 @app.route("/heartbeat", methods=["GET"])
 def heartbeat():
-    map_result = {'message': 'yes, I am up ;>'}
+    map_result = {'message': 'yes, I am up ;>', 'gene_sets': map_gene_set_families.keys()}
 
     return map_result
 

@@ -41,6 +41,12 @@ handler = logging.StreamHandler(sys.stdout)
 # constants
 VERSION_CODE = "20240904_yvar_fix"
 
+KEY_DEFAULT_GENE_SET_FAMILY = "default"
+KEY_GENE_SET_FILES = "gene_set_files"
+KEY_FILE_ROOT_DIR = "root_dir"
+KEY_GENE_SET_FAMILIES = "gene_set_families"
+KEY_NAME_GENE_SET_FAMILY = "name"
+
 # methods
 def get_logger(name): 
     # get the logger
@@ -56,13 +62,5 @@ def get_code_version():
     '''
     return VERSION_CODE
 
-class GeneSetFamily:
-    def __init__(self, name, matrix_gene_sets, map_gene_set_index, list_gene_sets, mean_shifts, scale_factors):
-        self.name = name
-        self.matrix_gene_sets = matrix_gene_sets
-        self.map_gene_set_index = map_gene_set_index
-        self.list_gene_sets = list_gene_sets
-        self.mean_shifts = mean_shifts
-        self.scale_factors = scale_factors
 
 
