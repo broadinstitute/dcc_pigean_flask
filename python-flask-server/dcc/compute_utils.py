@@ -716,7 +716,7 @@ def filter_matrix_columns(matrix_input, vector_input, cutoff_input, max_num_gene
         selected_column_indices = np.argsort(min_values)[:max_num_gene_sets]
     else:
         if log:
-            logger.info("filtered gene sets of size: {} is SMALLER than the max: {}, so taking keep them".format(len(selected_column_indices), max_num_gene_sets))
+            logger.info("filtered gene sets of size: {} is SMALLER than the max: {}, so keep the result as is".format(len(selected_column_indices), max_num_gene_sets))
 
 
     # filter the reference gene/gene sets matrix down
