@@ -41,11 +41,19 @@ handler = logging.StreamHandler(sys.stdout)
 # constants
 VERSION_CODE = "20240904_yvar_fix"
 
+# startup keys
 KEY_DEFAULT_GENE_SET_FAMILY = "default"
 KEY_GENE_SET_FILES = "gene_set_files"
 KEY_FILE_ROOT_DIR = "root_dir"
 KEY_GENE_SET_FAMILIES = "gene_set_families"
 KEY_NAME_GENE_SET_FAMILY = "name"
+
+# app keys
+KEY_REST_GENES = "genes"
+KEY_REST_P_VALUE = "p_value"
+KEY_REST_MAX_NUMBER_GENE_SETS = "max_number_gene_sets"
+KEY_REST_GENE_SET = "gene_sets"
+
 
 # methods
 def get_logger(name): 
