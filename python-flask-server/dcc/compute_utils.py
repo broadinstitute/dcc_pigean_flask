@@ -784,13 +784,137 @@ def run_nmf(matrix_input, num_components=15, log=False):
     return W, H
 
 
+def _prune_gene_sets(X_input, mean_shifts, scale_factors, prune_value=0.8, max_size=5000, keep_missing=False, ignore_missing=False, skip_V=False, log=True):
+    '''
+    method to prune the gene set file to only keep non correlated gene sets
+    NOTE: use 0.8 correlation factor from priors.py code
+    '''
+    # log
+    logger.info("pruning gene/geneset matrix of shape: {}".format(X.shape))
+
+    # initialize
+    # keep_mask = np.array([False] * len(self.gene_sets))
+    keep_mask = np.array([False] * X_input.shape[1])
+    remove_gene_sets = set()
+    batch_size = int(max_size ** 2 / X_input.shape[1])
+    num_batches = int(X_input.shape[1] / batch_size) + 1
+
+    # iterate
+    for batch in range(num_batches):
+        begin = batch * batch_size
+        end = (batch + 1) * batch_size
+        if end > X_input.shape[1]:
+            end = X_input.shape[1]
+
+        X_b1  = X_input[:,begin:end]
+
+        V_block = _compute_V(X_input[:,begin:end], mean_shifts[begin:end], scale_factors[begin:end], X_orig2=X_input, mean_shifts2=mean_shifts, scale_factors2=scale_factors)
+
+        # sort the gene sets
+        # TODO - took out pvalue sort since no pvalues yet
+        gene_set_key = lambda i: np.abs(X_b1[:,i]).sum(axis=0)
+
+        for gene_set_ind in sorted(range(len(self.gene_sets[begin:end])), key=gene_set_key):
+            absolute_ind = gene_set_ind + begin
+            if absolute_ind in remove_gene_sets:
+                continue
+            keep_mask[absolute_ind] = True
+            remove_gene_sets.update(np.where(np.abs(V_block[gene_set_ind,:]) > prune_value)[0])
+
+    if np.sum(~keep_mask) > 0:
+        self._subset_gene_sets(keep_mask, keep_missing=keep_missing, ignore_missing=ignore_missing, skip_V=skip_V)
+        logger.info("Pruning at %.3g resulted in %d gene sets" % (prune_value, len(self.gene_sets)))
+
+
+def _compute_V(X_input, mean_shifts, scale_factors, rows = None, X_orig2 = None, mean_shifts2 = None, scale_factors2 = None):
+    if X_orig2 is None:
+        X_orig2 = X_input
+    if mean_shifts2 is None:
+        mean_shifts2 = mean_shifts
+    if scale_factors2 is None:
+        scale_factors2 = scale_factors
+    if rows is None:
+        if type(X_input) is np.ndarray or type(X_orig2) is np.ndarray:
+            dot_product = X_input.T.dot(X_orig2)                
+        else:
+            dot_product = X_input.T.dot(X_orig2).toarray().astype(float)
+    else:
+        if type(X_input) is np.ndarray or type(X_orig2) is np.ndarray:
+            dot_product = X_input[:,rows].T.dot(X_orig2)
+        else:
+            dot_product = X_input[:,rows].T.dot(X_orig2).toarray().astype(float)
+        mean_shifts = mean_shifts[rows]
+        scale_factors = scale_factors[rows]
+
+    return (dot_product/X_input.shape[0] - np.outer(mean_shifts, mean_shifts2)) / np.outer(scale_factors, scale_factors2)
+
+
 # main
 if __name__ == "__main__":
     pass
 
 
+    # def _compute_V(self, X_orig, mean_shifts, scale_factors, rows = None, X_orig2 = None, mean_shifts2 = None, scale_factors2 = None):
+    #     if X_orig2 is None:
+    #         X_orig2 = X_orig
+    #     if mean_shifts2 is None:
+    #         mean_shifts2 = mean_shifts
+    #     if scale_factors2 is None:
+    #         scale_factors2 = scale_factors
+    #     if rows is None:
+    #         if type(X_orig) is np.ndarray or type(X_orig2) is np.ndarray:
+    #             dot_product = X_orig.T.dot(X_orig2)                
+    #         else:
+    #             dot_product = X_orig.T.dot(X_orig2).toarray().astype(float)
+    #     else:
+    #         if type(X_orig) is np.ndarray or type(X_orig2) is np.ndarray:
+    #             dot_product = X_orig[:,rows].T.dot(X_orig2)
+    #         else:
+    #             dot_product = X_orig[:,rows].T.dot(X_orig2).toarray().astype(float)
+    #         mean_shifts = mean_shifts[rows]
+    #         scale_factors = scale_factors[rows]
+
+    #     return (dot_product/X_orig.shape[0] - np.outer(mean_shifts, mean_shifts2)) / np.outer(scale_factors, scale_factors2)
 
 
+    # def _prune_gene_sets(self, prune_value, max_size=5000, keep_missing=False, ignore_missing=False, skip_V=False):
+    #     if self.gene_sets is None or len(self.gene_sets) == 0:
+    #         return
+    #     if self.X_orig is None:
+    #         return
+
+    #     keep_mask = np.array([False] * len(self.gene_sets))
+    #     remove_gene_sets = set()
+
+    #     #keep total to batch_size ** 2
+
+    #     batch_size = int(max_size ** 2 / self.X_orig.shape[1])
+    #     num_batches = int(self.X_orig.shape[1] / batch_size) + 1
+
+    #     for batch in range(num_batches):
+    #         begin = batch * batch_size
+    #         end = (batch + 1) * batch_size
+    #         if end > self.X_orig.shape[1]:
+    #             end = self.X_orig.shape[1]
+
+    #         X_b1  = self.X_orig[:,begin:end]
+
+    #         V_block = self._compute_V(self.X_orig[:,begin:end], self.mean_shifts[begin:end], self.scale_factors[begin:end], X_orig2=self.X_orig, mean_shifts2=self.mean_shifts, scale_factors2=self.scale_factors)
+
+    #         if self.p_values is not None and False:
+    #             gene_set_key = lambda i: self.p_values[i]
+    #         else:
+    #             gene_set_key = lambda i: np.abs(X_b1[:,i]).sum(axis=0)
+
+    #         for gene_set_ind in sorted(range(len(self.gene_sets[begin:end])), key=gene_set_key):
+    #             absolute_ind = gene_set_ind + begin
+    #             if absolute_ind in remove_gene_sets:
+    #                 continue
+    #             keep_mask[absolute_ind] = True
+    #             remove_gene_sets.update(np.where(np.abs(V_block[gene_set_ind,:]) > prune_value)[0])
+    #     if np.sum(~keep_mask) > 0:
+    #         self._subset_gene_sets(keep_mask, keep_missing=keep_missing, ignore_missing=ignore_missing, skip_V=skip_V)
+    #         log("Pruning at %.3g resulted in %d gene sets" % (prune_value, len(self.gene_sets)))
 
 
 
