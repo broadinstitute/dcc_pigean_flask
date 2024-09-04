@@ -39,7 +39,7 @@ logging.basicConfig(level=logging.INFO, format=f'[%(asctime)s] - %(levelname)s -
 handler = logging.StreamHandler(sys.stdout)
 
 # constants
-VERSION_CODE = "20240829a_logs"
+VERSION_CODE = "20240904_yvar_fix"
 
 # methods
 def get_logger(name): 
