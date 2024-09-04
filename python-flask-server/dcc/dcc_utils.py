@@ -55,3 +55,14 @@ def get_code_version():
     returns the code version
     '''
     return VERSION_CODE
+
+class GeneSetFamily:
+    def __init__(self, name, matrix_gene_sets, map_gene_set_index, list_gene_sets, mean_shifts, scale_factors):
+        self.name = name
+        self.matrix_gene_sets = matrix_gene_sets
+        self.map_gene_set_index = map_gene_set_index
+        self.list_gene_sets = list_gene_sets
+        self.mean_shifts = mean_shifts
+        self.scale_factors = scale_factors
+
+

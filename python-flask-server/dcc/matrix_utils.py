@@ -73,7 +73,7 @@ def load_geneset_matrix(map_gene_index, list_gene_set_files, path_gene_set_files
         for gene_set_from_file, list_genes_from_file in map_gene_set.items():
             # log
             if log:
-                print("\nfor set: {}, got geneset list: {}".format(gene_set_from_file, list_genes_from_file))
+                logger.info("\nfor set: {}, got geneset list: {}".format(gene_set_from_file, list_genes_from_file))
 
             # for each gene, add data
             for gene in list_genes_from_file:
@@ -84,11 +84,11 @@ def load_geneset_matrix(map_gene_index, list_gene_set_files, path_gene_set_files
 
                     # log
                     if log:
-                        print("adding gene: {} for row: {} and column: {}".format(gene, map_gene_index.get(gene), count_column))
+                        logger.info("adding gene: {} for row: {} and column: {}".format(gene, map_gene_index.get(gene), count_column))
                 
                 else:
                     if log:
-                        print("NOT adding gene: {} for row: {} and column: {}".format(gene, map_gene_index.get(gene), count_column))
+                        logger.info("NOT adding gene: {} for row: {} and column: {}".format(gene, map_gene_index.get(gene), count_column))
 
         
             # add the gene set to the list
@@ -103,9 +103,9 @@ def load_geneset_matrix(map_gene_index, list_gene_set_files, path_gene_set_files
         logger.info("cols: {}".format(list_columns))
         logger.info("data: {}".format(list_data))
 
-        print("\nrows: {}".format(list_row))
-        print("cols: {}".format(list_columns))
-        print("data: {}".format(list_data))
+        # print("\nrows: {}".format(list_row))
+        # print("cols: {}".format(list_columns))
+        # print("data: {}".format(list_data))
 
     # create the matrix
     # NOTE - remove toarray due to errors in compute_utils._calc_X_shift_scale() for .A1 and .power()

@@ -55,12 +55,18 @@ def read_tab_delimited_file(file_path, log=False):
             fields = line.strip().split('\t')
             stripped_list = [item.strip() for item in fields]
 
+                
+            # get gene set name and member genes
             key = fields[0]
             values = stripped_list[1:]
+
+            # strip any weights for all entries
+            values = [item.split(":")[0] for item in values]
+                                
             if key in result:
-                result[key].extend(values)
-            else:
-                result[key] = values
+                logger.error("gene set: {} already loaded, also in this file: {}; overwriting".format(key, file_path))
+                # result[key].extend(values)
+            result[key] = values
 
     # return
     return result
