@@ -854,6 +854,249 @@ if __name__ == "__main__":
     pass
 
 
+    # #subset the current state of the class to a reduced set of gene sets
+    # def _subset_gene_sets(self, subset_mask, keep_missing=True, ignore_missing=False, skip_V=False, skip_scale_factors=False):
+
+    #     if subset_mask is None or np.sum(~subset_mask) == 0:
+    #         return
+    #     if self.gene_sets is None:
+    #         return
+
+    #     log("Subsetting gene sets", TRACE)
+
+    #     remove_mask = np.logical_not(subset_mask)
+
+    #     if ignore_missing:
+    #         keep_missing = False
+
+    #         if self.gene_sets is not None:
+    #             if self.gene_sets_ignored is None:
+    #                 self.gene_sets_ignored = []
+    #             self.gene_sets_ignored = self.gene_sets_ignored + [self.gene_sets[i] for i in range(len(self.gene_sets)) if remove_mask[i]]
+
+    #         if self.gene_set_labels is not None:
+    #             if self.gene_set_labels_ignored is None:
+    #                 self.gene_set_labels_ignored = []
+    #             self.gene_set_labels_ignored = np.append(self.gene_set_labels_ignored, self.gene_set_labels[remove_mask])
+
+    #         if self.scale_factors is not None:
+    #             if self.scale_factors_ignored is None:
+    #                 self.scale_factors_ignored = np.array([])
+    #             self.scale_factors_ignored = np.append(self.scale_factors_ignored, self.scale_factors[remove_mask])
+
+    #         if self.mean_shifts is not None:
+    #             if self.mean_shifts_ignored is None:
+    #                 self.mean_shifts_ignored = np.array([])
+    #             self.mean_shifts_ignored = np.append(self.mean_shifts_ignored, self.mean_shifts[remove_mask])
+
+    #         if self.beta_tildes is not None:
+    #             if self.beta_tildes_ignored is None:
+    #                 self.beta_tildes_ignored = np.array([])
+    #             self.beta_tildes_ignored = np.append(self.beta_tildes_ignored, self.beta_tildes[remove_mask])
+
+    #         if self.p_values is not None:
+    #             if self.p_values_ignored is None:
+    #                 self.p_values_ignored = np.array([])
+    #             self.p_values_ignored = np.append(self.p_values_ignored, self.p_values[remove_mask])
+
+    #         if self.ses is not None:
+    #             if self.ses_ignored is None:
+    #                 self.ses_ignored = np.array([])
+    #             self.ses_ignored = np.append(self.ses_ignored, self.ses[remove_mask])
+
+    #         if self.z_scores is not None:
+    #             if self.z_scores_ignored is None:
+    #                 self.z_scores_ignored = np.array([])
+    #             self.z_scores_ignored = np.append(self.z_scores_ignored, self.z_scores[remove_mask])
+
+    #         if self.se_inflation_factors is not None:
+    #             if self.se_inflation_factors_ignored is None:
+    #                 self.se_inflation_factors_ignored = np.array([])
+    #             self.se_inflation_factors_ignored = np.append(self.se_inflation_factors_ignored, self.se_inflation_factors[remove_mask])
+
+    #         if self.huge_gene_covariates is not None:
+    #             if self.total_qc_metrics_ignored is None:
+    #                 self.total_qc_metrics_ignored = self.total_qc_metrics[remove_mask,:]
+    #                 self.mean_qc_metrics_ignored = self.mean_qc_metrics[remove_mask]
+    #             else:
+    #                 self.total_qc_metrics_ignored = np.vstack((self.total_qc_metrics_ignored, self.total_qc_metrics[remove_mask,:]))
+    #                 self.mean_qc_metrics_ignored = np.append(self.mean_qc_metrics_ignored, self.mean_qc_metrics[remove_mask])
+
+    #         #need to record how many ignored
+    #         if self.X_orig is not None:
+    #             if self.col_sums_ignored is None:
+    #                 self.col_sums_ignored = np.array([])
+    #             self.col_sums_ignored = np.append(self.col_sums_ignored, self.get_col_sums(self.X_orig[:,remove_mask]))
+
+    #             gene_ignored_N = self.get_col_sums(self.X_orig[:,remove_mask], axis=1)
+    #             if self.gene_ignored_N is None:
+    #                 self.gene_ignored_N = gene_ignored_N
+    #             else:
+    #                 self.gene_ignored_N += gene_ignored_N
+    #             if self.gene_N is not None:
+    #                 self.gene_N -= gene_ignored_N
+
+    #     elif keep_missing:
+    #         self.gene_sets_missing = [self.gene_sets[i] for i in range(len(self.gene_sets)) if remove_mask[i]]
+
+    #         if self.beta_tildes is not None:
+    #             self.beta_tildes_missing = self.beta_tildes[remove_mask]
+    #         if self.p_values is not None:
+    #             self.p_values_missing = self.p_values[remove_mask]
+    #         if self.z_scores is not None:
+    #             self.z_scores_missing = self.z_scores[remove_mask]
+    #         if self.ses is not None:
+    #             self.ses_missing = self.ses[remove_mask]
+    #         if self.se_inflation_factors is not None:
+    #             self.se_inflation_factors_missing = self.se_inflation_factors[remove_mask]
+    #         if self.beta_tildes_orig is not None:
+    #             self.beta_tildes_missing_orig = self.beta_tildes_orig[remove_mask]
+    #         if self.p_values_orig is not None:
+    #             self.p_values_missing_orig = self.p_values_orig[remove_mask]
+    #         if self.z_scores_orig is not None:
+    #             self.z_scores_missing_orig = self.z_scores_orig[remove_mask]
+    #         if self.ses_orig is not None:
+    #             self.ses_missing_orig = self.ses_orig[remove_mask]
+
+    #         if self.total_qc_metrics is not None:
+    #             self.total_qc_metrics_missing = self.total_qc_metrics[remove_mask]
+
+    #         if self.mean_qc_metrics is not None:
+    #             self.mean_qc_metrics_missing = self.mean_qc_metrics[remove_mask]
+
+    #         if self.inf_betas is not None:
+    #             self.inf_betas_missing = self.inf_betas[remove_mask]
+
+    #         if self.betas_uncorrected is not None:
+    #             self.betas_uncorrected_missing = self.betas_uncorrected[remove_mask]
+
+    #         if self.betas is not None:
+    #             self.betas_missing = self.betas[remove_mask]
+    #         if self.non_inf_avg_cond_betas is not None:
+    #             self.non_inf_avg_cond_betas_missing = self.non_inf_avg_cond_betas[remove_mask]
+    #         if self.non_inf_avg_postps is not None:
+    #             self.non_inf_avg_postps_missing = self.non_inf_avg_postps[remove_mask]
+
+    #         if self.inf_betas_orig is not None:
+    #             self.inf_betas_missing_orig = self.inf_betas_orig[remove_mask]
+    #         if self.betas_orig is not None:
+    #             self.betas_missing_orig = self.betas_orig[remove_mask]
+    #         if self.betas_uncorrected_orig is not None:
+    #             self.betas_uncorrected_missing_orig = self.betas_uncorrected_orig[remove_mask]
+    #         if self.non_inf_avg_cond_betas_orig is not None:
+    #             self.non_inf_avg_cond_betas_missing_orig = self.non_inf_avg_cond_betas_orig[remove_mask]
+    #         if self.non_inf_avg_postps_orig is not None:
+    #             self.non_inf_avg_postps_missing_orig = self.non_inf_avg_postps_orig[remove_mask]
+
+    #         if self.is_dense_gene_set is not None:
+    #             self.is_dense_gene_set_missing = self.is_dense_gene_set[remove_mask]
+
+    #         if self.gene_set_batches is not None:
+    #             self.gene_set_batches_missing = self.gene_set_batches[remove_mask]
+
+    #         if self.gene_set_labels is not None:
+    #             self.gene_set_labels_missing = self.gene_set_labels[remove_mask]
+
+    #         if self.ps is not None:
+    #             self.ps_missing = self.ps[remove_mask]
+    #         if self.sigma2s is not None:
+    #             self.sigma2s_missing = self.sigma2s[remove_mask]
+
+
+    #         if self.X_orig is not None:
+    #             #store the removed gene sets for later
+    #             if keep_missing:
+    #                 self.X_orig_missing_gene_sets = self.X_orig[:,remove_mask]
+    #                 self.mean_shifts_missing = self.mean_shifts[remove_mask]
+    #                 self.scale_factors_missing = self.scale_factors[remove_mask]
+
+    #     #now do the subsetting to keep
+
+    #     if self.beta_tildes is not None:
+    #         self.beta_tildes = self.beta_tildes[subset_mask]
+    #     if self.p_values is not None:
+    #         self.p_values = self.p_values[subset_mask]
+    #     if self.z_scores is not None:
+    #         self.z_scores = self.z_scores[subset_mask]
+    #     if self.ses is not None:
+    #         self.ses = self.ses[subset_mask]
+    #     if self.se_inflation_factors is not None:
+    #         self.se_inflation_factors = self.se_inflation_factors[subset_mask]
+
+    #     if self.beta_tildes_orig is not None:
+    #         self.beta_tildes_orig = self.beta_tildes_orig[subset_mask]
+    #     if self.p_values_orig is not None:
+    #         self.p_values_orig = self.p_values_orig[subset_mask]
+    #     if self.z_scores_orig is not None:
+    #         self.z_scores_orig = self.z_scores_orig[subset_mask]
+    #     if self.ses_orig is not None:
+    #         self.ses_orig = self.ses_orig[subset_mask]
+
+
+    #     if self.total_qc_metrics is not None:
+    #         self.total_qc_metrics = self.total_qc_metrics[subset_mask]
+
+    #     if self.mean_qc_metrics is not None:
+    #         self.mean_qc_metrics = self.mean_qc_metrics[subset_mask]
+
+    #     if self.inf_betas is not None:
+    #         self.inf_betas = self.inf_betas[subset_mask]
+
+    #     if self.betas_uncorrected is not None:
+    #         self.betas_uncorrected = self.betas_uncorrected[subset_mask]
+
+    #     if self.betas is not None:
+    #         self.betas = self.betas[subset_mask]
+    #     if self.non_inf_avg_cond_betas is not None:
+    #         self.non_inf_avg_cond_betas = self.non_inf_avg_cond_betas[subset_mask]
+    #     if self.non_inf_avg_postps is not None:
+    #         self.non_inf_avg_postps = self.non_inf_avg_postps[subset_mask]
+
+    #     if self.inf_betas_orig is not None:
+    #         self.inf_betas_orig = self.inf_betas_orig[subset_mask]
+    #     if self.betas_orig is not None:
+    #         self.betas_orig = self.betas_orig[subset_mask]
+    #     if self.betas_uncorrected_orig is not None:
+    #         self.betas_uncorrected_orig = self.betas_uncorrected_orig[subset_mask]
+    #     if self.non_inf_avg_cond_betas_orig is not None:
+    #         self.non_inf_avg_cond_betas_orig = self.non_inf_avg_cond_betas_orig[subset_mask]
+    #     if self.non_inf_avg_postps_orig is not None:
+    #         self.non_inf_avg_postps_orig = self.non_inf_avg_postps_orig[subset_mask]
+
+    #     if self.is_dense_gene_set is not None:
+    #         self.is_dense_gene_set = self.is_dense_gene_set[subset_mask]
+
+    #     if self.gene_set_batches is not None:
+    #         self.gene_set_batches = self.gene_set_batches[subset_mask]
+
+    #     if self.gene_set_labels is not None:
+    #         self.gene_set_labels = self.gene_set_labels[subset_mask]
+
+    #     if self.ps is not None:
+    #         self.ps = self.ps[subset_mask]
+    #     if self.sigma2s is not None:
+    #         self.sigma2s = self.sigma2s[subset_mask]
+
+    #     self.gene_sets = list(itertools.compress(self.gene_sets, subset_mask))
+    #     self.gene_set_to_ind = self._construct_map_to_ind(self.gene_sets)
+
+    #     if self.X_orig is not None:
+    #         #never update V; if it exists it will be updated below
+    #         self._set_X(self.X_orig[:,subset_mask], self.genes, self.gene_sets, skip_V=True, skip_scale_factors=skip_scale_factors, skip_N=True)
+
+    #     if self.X_orig_missing_genes is not None:
+    #         #if we've already removed genes, then we need to remove the gene sets from them
+    #         if keep_missing:
+    #             self.X_orig_missing_genes_missing_gene_sets = self.X_orig_missing_genes[:,remove_mask]
+    #         self.X_orig_missing_genes = self.X_orig_missing_genes[:,subset_mask]
+
+    #     #need to update the scale factor for sigma2
+    #     #sigma2 is always relative to just the non missing gene sets
+    #     if self.sigma2 is not None:
+    #         self.set_sigma(self.sigma2, self.sigma_power, sigma2_osc=self.sigma2_osc)
+    #     if self.p is not None:
+    #         self.set_p(self.p)
+
     # def _compute_V(self, X_orig, mean_shifts, scale_factors, rows = None, X_orig2 = None, mean_shifts2 = None, scale_factors2 = None):
     #     if X_orig2 is None:
     #         X_orig2 = X_orig
