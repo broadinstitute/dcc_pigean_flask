@@ -97,7 +97,7 @@ def load_gene_set_family_map(map_conf, map_gene_index, log=False):
             path_gene_set_files=dir_root, map_gene_index=map_gene_index, log=log)
 
     # log
-    logger.info("loaded gene set family list of size: {} with name: {}".format(len(map_gene_set_family), map_gene_set_family.keys()))
+    logger.info("loaded gene set family list of size: {} with name: {}".format(len(map_gene_set_family), list(map_gene_set_family.keys())))
 
     # return
     return map_gene_set_family
