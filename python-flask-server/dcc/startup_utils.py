@@ -89,6 +89,7 @@ def load_gene_set_family_map(map_conf, map_gene_index, log=False):
 
     # load the extra data
     # make sure there is a gene set family value
+    # TODO - for gene set families, cat FileNotFoundError and do not load family if error
     list_gene_set_families_config = map_conf.get(dutils.KEY_GENE_SET_FAMILIES)
     if list_gene_set_families_config:
         for item in list_gene_set_families_config:
