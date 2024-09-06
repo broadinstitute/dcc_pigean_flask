@@ -18,13 +18,6 @@
     ],
     "gene_set_families": [
         {
-            "name": "mouse",
-            "gene_set_files": [
-                "gene_set_list_mouse_2024.txt"
-            ]
-        
-        },
-        {
             "name": "knockdown",
             "gene_set_files": [
                 "LINCS_XMT_2022-12-13_LINCS_L1000_CRISPR_KO_Consensus_Sigs.gmt",

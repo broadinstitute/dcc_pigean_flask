@@ -87,7 +87,7 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
     list_factor_gene_sets = []
     gene_factor = None
     gene_set_factor = None
-    map_lowest_factor_per_gene = {}
+    map_factor_data_per_gene = {}
     logs_process = []
 
     # start time counter 
