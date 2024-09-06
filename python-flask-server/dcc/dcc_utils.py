@@ -53,6 +53,10 @@ KEY_REST_GENES = "genes"
 KEY_REST_P_VALUE = "p_value"
 KEY_REST_MAX_NUMBER_GENE_SETS = "max_number_gene_sets"
 KEY_REST_GENE_SET = "gene_sets"
+KEY_INTERNAL_LOWEST_FACTOR_SCORE = "lowest_factor_score"
+KEY_INTERNAL_HIGHEST_FACTOR_NAME = "highest_factor_name"
+KEY_INTERNAL_HIGHEST_FACTOR_SCORE = "highest_factor_score"
+
 
 
 # methods

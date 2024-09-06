@@ -130,7 +130,7 @@ def post_genes():
         #                                         matrix_gene_sets=matrix_gene_sets, map_gene_novelty=map_gene_novelty)
 
         list_factor, list_factor_genes, list_factor_gene_sets, \
-            gene_factor, gene_set_factor, map_gene_novelty, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 
+            gene_factor, gene_set_factor, map_gene_factor_data, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 
                                                                                                     p_value=p_value_cutoff,
                                                                                                     max_num_gene_sets=max_number_gene_sets,
                                                                                                     list_gene=list_input_translated, 
@@ -154,7 +154,7 @@ def post_genes():
                                                     list_input_gene_names=list_input_translated, 
                                                     map_gene_index=map_gene_index,
                                                     matrix_gene_sets=gene_set_family_object.matrix_gene_sets, 
-                                                    map_gene_novelty=map_gene_novelty)
+                                                    map_gene_factor_data=map_gene_factor_data)
 
 
         # add time
@@ -197,11 +197,11 @@ def post_novelty_genes():
     logger.info("got using p_value: {}".format(p_value_cutoff))
 
     # get the calculated data
-    map_gene_novelty, list_input_translated = process_genes(list_input_genes=list_input_genes, p_value_cutoff=p_value_cutoff)
+    map_gene_factor_data, list_input_translated = process_genes(list_input_genes=list_input_genes, p_value_cutoff=p_value_cutoff)
 
     # format the data
     map_result = gutils.gui_build_novelty_results_map(map_gene_ontology=map_gene_ontology, list_input_gene_names=list_input_translated, map_gene_index=map_gene_index,
-                                              matrix_gene_sets=matrix_gene_sets, map_gene_novelty=map_gene_novelty)
+                                              matrix_gene_sets=matrix_gene_sets, map_gene_factor_data=map_gene_factor_data)
 
 
     # return
@@ -243,7 +243,7 @@ def process_genes(list_input_genes, p_value_cutoff, log=False):
     logger.info("got translated gene inputs of size: {}".format(len(list_input_translated)))
 
     # do the calculations
-    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_novelty, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
+    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_factor_data, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
                                                                                                                p_value=p_value_cutoff,
                                                                                                                list_gene=list_input_translated, 
                                                                                                                list_system_genes=list_system_genes, 
@@ -256,7 +256,7 @@ def process_genes(list_input_genes, p_value_cutoff, log=False):
         logger.info(row)
 
     # return
-    return map_gene_novelty, list_input_translated
+    return map_gene_factor_data, list_input_translated
 
 
 def process_numeric_value(json_request, name, cutoff_default, is_float=True, log=False):

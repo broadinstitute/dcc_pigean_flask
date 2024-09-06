@@ -41,7 +41,7 @@ logger = dutils.get_logger(__name__)
 
 
 # methods
-def gui_build_results_map(list_factor, list_factor_genes, list_factor_gene_sets, map_gene_ontology, list_input_gene_names, map_gene_index, matrix_gene_sets, map_gene_novelty, log=False):
+def gui_build_results_map(list_factor, list_factor_genes, list_factor_gene_sets, map_gene_ontology, list_input_gene_names, map_gene_index, matrix_gene_sets, map_gene_factor_data, log=False):
     '''
     builds the map results
     '''
@@ -76,17 +76,23 @@ def gui_build_results_map(list_factor, list_factor_genes, list_factor_gene_sets,
                 count_pathways = mutils.sum_of_gene_row(sparse_matrix=matrix_gene_sets, gene_index=index_gene).item()
                 map_result_genes.get(ontology_id)['count_pathways'] = count_pathways
 
-                # add the novelty score to the gene
-                novelty_score = map_gene_novelty.get(gene_name)
-                if not novelty_score:
-                    novelty_score = 0.0
-                map_result_genes.get(ontology_id)['novelty_score'] = novelty_score
+                # add the novelty score, hightest factor name and highest factor score to the gene
+                gene_factor_data_map = map_gene_factor_data.get(gene_name)
+                if not gene_factor_data_map:
+                    map_result_genes.get(ontology_id)['novelty_score'] = 0.0
+                    map_result_genes.get(ontology_id)[dutils.KEY_INTERNAL_HIGHEST_FACTOR_NAME] = None
+                    map_result_genes.get(ontology_id)[dutils.KEY_INTERNAL_HIGHEST_FACTOR_SCORE] = None
+                else:
+                    map_result_genes.get(ontology_id)['novelty_score'] = gene_factor_data_map.get(dutils.KEY_INTERNAL_LOWEST_FACTOR_SCORE)
+                    map_result_genes.get(ontology_id)[dutils.KEY_INTERNAL_HIGHEST_FACTOR_NAME] = gene_factor_data_map.get(dutils.KEY_INTERNAL_HIGHEST_FACTOR_NAME)
+                    map_result_genes.get(ontology_id)[dutils.KEY_INTERNAL_HIGHEST_FACTOR_SCORE] = gene_factor_data_map.get(dutils.KEY_INTERNAL_HIGHEST_FACTOR_SCORE)
+
 
                 if log:
-                    logger.info("for gene: {}, got index: {}, pathway count: {}, novelty score: {}".format(gene_name, index_gene, count_pathways, novelty_score))
+                    logger.info("for gene: {}, got index: {}, pathway count: {}, novelty score: {}".format(gene_name, index_gene, count_pathways, map_result_genes.get(ontology_id).get('novelty_score')))
 
 
-    logger.info("got novelty gene map of size: {}".format(len(map_gene_novelty)))
+    logger.info("got novelty gene map of size: {}".format(len(map_gene_factor_data)))
     logger.info("returning result gene map of size: {}".format(len(map_result_genes)))
 
     # add the input genes to the map
@@ -96,7 +102,7 @@ def gui_build_results_map(list_factor, list_factor_genes, list_factor_gene_sets,
     # return
     return map_result
 
-def gui_build_novelty_results_map(map_gene_ontology, list_input_gene_names, map_gene_index, matrix_gene_sets, map_gene_novelty, log=False):
+def gui_build_novelty_results_map(map_gene_ontology, list_input_gene_names, map_gene_index, matrix_gene_sets, map_gene_factor_data, log=False):
     '''
     builds the map results
     '''
@@ -119,7 +125,7 @@ def gui_build_novelty_results_map(map_gene_ontology, list_input_gene_names, map_
                 map_result_genes.get(ontology_id)['count_pathways'] = count_pathways
 
                 # add the novelty score to the gene
-                novelty_score = map_gene_novelty.get(gene_name)
+                novelty_score = map_gene_factor_data.get(gene_name).get(dutils.KEY_INTERNAL_LOWEST_FACTOR_SCORE)
                 if not novelty_score:
                     novelty_score = 0.0
                 map_result_genes.get(ontology_id)['novelty_score'] = novelty_score
@@ -128,7 +134,7 @@ def gui_build_novelty_results_map(map_gene_ontology, list_input_gene_names, map_
                     logger.info("for gene: {}, got index: {}, pathway count: {}, novelty score: {}".format(gene_name, index_gene, count_pathways, novelty_score))
 
 
-    logger.info("got novelty gene map of size: {}".format(len(map_gene_novelty)))
+    logger.info("got novelty gene map of size: {}".format(len(map_gene_factor_data)))
     logger.info("returning result gene map of size: {}".format(len(map_result_genes)))
 
     # add the input genes to the map

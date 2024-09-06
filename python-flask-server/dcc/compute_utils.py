@@ -155,7 +155,8 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
                                                                         list_gene_mask=selected_gene_indices, list_gene_set_mask=selected_gene_set_indices, log=log)
 
         # step 7a - get the lowest factor per gene
-        map_lowest_factor_per_gene = get_lowest_gene_factor_by_gene(exp_gene_factors=updated_gene_factors, list_system_genes=list_system_genes, list_gene_mask=selected_gene_indices, log=False)
+        map_factor_data_per_gene = get_gene_factor_data_by_gene(exp_gene_factors=updated_gene_factors, list_system_genes=list_system_genes, 
+                                                                  list_gene_mask=selected_gene_indices, list_factor_labels=list_factor, log=False)
         # print(json.dumps(map_lowest_factor_per_gene, indent=2))
 
         if log:
@@ -179,7 +180,7 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
         logger.info(row)
 
     # only return the gene factors and gene set factors
-    return list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_lowest_factor_per_gene, logs_process
+    return list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_factor_data_per_gene, logs_process
 
 
 def group_factor_results(list_factor, list_factor_genes, list_factor_gene_sets, log=False):
@@ -246,7 +247,7 @@ def compute_beta_tildes(X, Y, scale_factors, mean_shifts, y_var=1, resid_correla
 
         # SEs and betas are stored in units of centered and scaled X
         # we do not need to scale X here, however, because cor_variances will then be in units of unscaled X
-        # since variances are also in units of unscaled X, these will cancel out
+        # since variances are also in units of unscalAPOEed X, these will cancel out
 
         r_X = resid_correlation_matrix.dot(X)
         r_X_col_means = r_X.multiply(X).sum(axis=0).A1 / X.shape[0]
@@ -511,11 +512,14 @@ def rank_gene_and_gene_sets(X, Y, exp_lambdak, exp_gene_factors, exp_gene_set_fa
         factor_labels.append(top_gene_sets[i][0] if len(top_gene_sets[i]) > 0 else "")
         factor_prompts.append(",".join(top_gene_sets[i]))
 
+    if log:
+        logger.info("got factor labels of size: {} and data: {}".format(len(factor_labels), factor_labels))
+
     # return the 3 grouping data structures, then the updated (filtered) gene factors
     return factor_labels, top_genes, top_gene_sets, exp_gene_factors
 
 
-def get_lowest_gene_factor_by_gene(exp_gene_factors, list_system_genes, list_gene_mask, log=False):
+def get_gene_factor_data_by_gene(exp_gene_factors, list_system_genes, list_gene_mask, list_factor_labels, log=False):
     '''
     will return the lowest factor per gene - to be used as novelty calculation for ARS
     '''
@@ -541,12 +545,22 @@ def get_lowest_gene_factor_by_gene(exp_gene_factors, list_system_genes, list_gen
             for index, row_factor in enumerate(min_per_row.tolist()):
                 index_system = list_gene_mask[index]
                 gene_name = list_system_genes[index_system]
-                map_result[gene_name] = row_factor
+                map_result[gene_name] = {dutils.KEY_INTERNAL_LOWEST_FACTOR_SCORE: row_factor}
 
-        # if log:
-        #     print("lowest factor - got gene factor MINIMUM map of size: {} and data: {}".format(len(map_result), map_result))
 
-        logger.info("returning lowest factor (novelty) gene map is size: {}".format(len(map_result)))
+        # for each gene, get the factor with the highest score
+        top_factor_indices_per_gene = np.argmax(exp_gene_factors, axis=1)
+        if top_factor_indices_per_gene is not None:
+            for index, row_factor_index in enumerate(top_factor_indices_per_gene.tolist()):
+                index_system = list_gene_mask[index]
+                gene_name = list_system_genes[index_system]
+                map_result[gene_name][dutils.KEY_INTERNAL_HIGHEST_FACTOR_NAME] = list_factor_labels[row_factor_index]
+                map_result[gene_name][dutils.KEY_INTERNAL_HIGHEST_FACTOR_SCORE] = exp_gene_factors[index, row_factor_index]
+
+
+        # log
+        logger.info("data: {}".format(map_result.get('APOE')))
+        logger.info("returning lowest factor (novelty) and other data gene map of size: {}".format(len(map_result)))
 
     else:
         logger.info("returning empty map for exp_gene_factor of shape: {}".format(exp_gene_factors.shape))
