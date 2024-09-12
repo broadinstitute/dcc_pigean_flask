@@ -49,7 +49,7 @@ logger.info("================ Test App is UP! ===========================")
 
 @app.route("/heartbeat", methods=["GET"])
 def heartbeat():
-    map_result = {'message': 'yes, I am up ;>', 'gene_sets': map_gene_set_families.keys()}
+    map_result = {'message': 'yes, I am up ;>', 'gene_sets': list(map_gene_set_families.keys())}
 
     return map_result
 
