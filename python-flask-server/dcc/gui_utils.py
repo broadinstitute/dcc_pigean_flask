@@ -170,12 +170,13 @@ def build_pigean_factor_results_map(list_factor, list_factor_genes, list_factor_
     # loop through the factors
     for index, row in enumerate(list_factor):
         name = "Factor{}".format(index)
-        map_temp = {'cluster': name, 'factor': name, 'label': row}
+        map_temp = {'cluster': name, 'factor': name, 'label': row['gene_set']}
 
         # create top genes and gene sets as ; delimited string
         map_temp['top_genes'] = ';'.join([item['gene'] for item in list_factor_genes[index]])
-        map_temp['top_gene_sets'] = ';'.join(list_factor_gene_sets[index])
+        map_temp['top_gene_sets'] = ';'.join(item['gene_set'] for item in list_factor_gene_sets[index])
         map_temp['gene_score'] = max([item['score'] for item in list_factor_genes[index]])
+        map_temp['gene_set_score'] = max([item['score'] for item in list_factor_gene_sets[index]])
 
         # add to list
         list_result.append(map_temp)

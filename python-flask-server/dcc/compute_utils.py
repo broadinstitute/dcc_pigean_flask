@@ -496,12 +496,19 @@ def rank_gene_and_gene_sets(X, Y, exp_lambdak, exp_gene_factors, exp_gene_set_fa
         #     print("got gene indexes: {}".format(list_gene_index_factor))
 
         # build the list of groupings of gene sets
-        top_gene_sets.append([map_gene_set_index.get(gs_index) for gs_index in list_gene_set_index_factor])
+        list_temp = []
+        for index_local, gs_index in enumerate(list_gene_set_index_factor):
+            score_gene = exp_gene_set_factors[top_gene_set_inds[index_local, i], i]
+            if score_gene > 0.01:
+                list_temp.append({'gene_set': map_gene_set_index.get(gs_index), 'score': score_gene})
+        top_gene_sets.append(list_temp)
+        # top_gene_sets.append([map_gene_set_index.get(gs_index) for gs_index in list_gene_set_index_factor])
 
         # build the list of groupings of genes (cutoff of 0.01)
         # top_genes.append([list_system_genes[g_index] for g_index in list_gene_index_factor])
         # top_genes.append([list_system_genes[g_index] for index_local, g_index in enumerate(list_gene_index_factor) if exp_gene_factors[top_gene_inds[index_local], i] > 0.01])
  
+        # adding genes and their scores to the factor list
         list_temp = []
         for index_local, g_index in enumerate(list_gene_index_factor):
             score_gene = exp_gene_factors[top_gene_inds[index_local, i], i]
@@ -510,7 +517,11 @@ def rank_gene_and_gene_sets(X, Y, exp_lambdak, exp_gene_factors, exp_gene_set_fa
         top_genes.append(list_temp)
 
         factor_labels.append(top_gene_sets[i][0] if len(top_gene_sets[i]) > 0 else "")
-        factor_prompts.append(",".join(top_gene_sets[i]))
+
+        # build the prompt
+        factor_prompts.append(",".join(item['gene_set'] for item in top_gene_sets[i]))
+        # ';'.join([item['gene'] for item in list_factor_genes[index]])
+        # factor_prompts.append(",".join(top_gene_sets[i]))
 
     if log:
         logger.info("got factor labels of size: {} and data: {}".format(len(factor_labels), factor_labels))
@@ -533,7 +544,8 @@ def get_gene_factor_data_by_gene(exp_gene_factors, list_system_genes, list_gene_
             # print("lowest factor - got filtered gene mask of size: {} and data: \n{}".format(len(list_gene_mask), list_gene_mask))
 
         # get the lowest value per row
-        min_per_row = np.min(exp_gene_factors, axis=1)
+        # BUG - fixed for best factor per gene
+        min_per_row = np.max(exp_gene_factors, axis=1)
 
         if log:
             logger.info("lowest factor - got gene factor MINIMUM of shape: {} and type: {}".format(min_per_row.shape, type(min_per_row)))
