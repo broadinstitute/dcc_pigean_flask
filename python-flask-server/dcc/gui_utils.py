@@ -143,6 +143,49 @@ def gui_build_novelty_results_map(map_gene_ontology, list_input_gene_names, map_
     # return
     return map_result
 
+def gui_build_pigean_app_results_map(list_factor, list_factor_genes, list_factor_gene_sets, map_gene_ontology, list_input_gene_names, map_gene_index, matrix_gene_sets, map_gene_novelty, log=False):
+    '''
+    root method to build the pigean app results 
+    '''
+    # initialize
+    map_result = {}
+
+    # build the subsets of the data
+    pigean_factor_map = build_pigean_factor_results_map(list_factor=list_factor, list_factor_genes=list_factor_genes, list_factor_gene_sets=list_factor_gene_sets, 
+            map_gene_index=map_gene_index, matrix_gene_sets=matrix_gene_sets, map_gene_novelty=map_gene_novelty, log=log)
+    map_result['pigean-factor'] = pigean_factor_map
+
+    # return
+    return map_result
+
+
+def build_pigean_factor_results_map(list_factor, list_factor_genes, list_factor_gene_sets, map_gene_index, matrix_gene_sets, map_gene_novelty, log=False):
+    '''
+    builds the map results for the pigean app factor subset
+    '''
+    # initialize
+    map_result = {}
+    list_result = []
+
+    # loop through the factors
+    for index, row in enumerate(list_factor):
+        name = "Factor{}".format(index)
+        map_temp = {'cluster': name, 'factor': name, 'label': row}
+
+        # create top genes and gene sets as ; delimited string
+        map_temp['top_genes'] = ';'.join([item['gene'] for item in list_factor_genes[index]])
+        map_temp['top_gene_sets'] = ';'.join(list_factor_gene_sets[index])
+        map_temp['gene_score'] = max([item['score'] for item in list_factor_genes[index]])
+
+        # add to list
+        list_result.append(map_temp)
+
+    # add the factors to the map
+    map_result['data'] = list_result
+
+    # return
+    return map_result
+
 
 # main
 if __name__ == "__main__":
