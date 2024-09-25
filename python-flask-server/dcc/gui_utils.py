@@ -47,13 +47,14 @@ def gui_build_results_map(list_factor, list_factor_genes, list_factor_gene_sets,
     '''
     # initialize
     map_result = {}
+    num_results = dutils.NUMBER_RETURNED_PER_FACTOR
 
     # add the data
     list_result = []
 
     # loop through the factors
     for index, row in enumerate(list_factor):
-        list_result.append({'top_set': row, 'gene_sets': list_factor_gene_sets[index], 'genes': list_factor_genes[index]})
+        list_result.append({'top_set': row, 'gene_sets': list_factor_gene_sets[index][:num_results], 'genes': list_factor_genes[index][:num_results]})
 
     # add the factors to the map
     map_result['data'] = list_result
@@ -143,7 +144,7 @@ def gui_build_novelty_results_map(map_gene_ontology, list_input_gene_names, map_
     # return
     return map_result
 
-def gui_build_pigean_app_results_map(list_factor, list_factor_genes, list_factor_gene_sets, map_gene_ontology, list_input_gene_names, map_gene_index, matrix_gene_sets, map_gene_novelty, log=False):
+def gui_build_pigean_app_results_map(list_factor, list_factor_genes, list_factor_gene_sets, max_num_per_factor=dutils.NUMBER_RETURNED_PER_FACTOR, log=False):
     '''
     root method to build the pigean app results 
     '''
@@ -152,14 +153,14 @@ def gui_build_pigean_app_results_map(list_factor, list_factor_genes, list_factor
 
     # build the subsets of the data
     pigean_factor_map = build_pigean_factor_results_map(list_factor=list_factor, list_factor_genes=list_factor_genes, list_factor_gene_sets=list_factor_gene_sets, 
-            map_gene_index=map_gene_index, matrix_gene_sets=matrix_gene_sets, map_gene_novelty=map_gene_novelty, log=log)
+            max_num_per_factor=max_num_per_factor, log=log)
     map_result['pigean-factor'] = pigean_factor_map
 
     # return
     return map_result
 
 
-def build_pigean_factor_results_map(list_factor, list_factor_genes, list_factor_gene_sets, map_gene_index, matrix_gene_sets, map_gene_novelty, log=False):
+def build_pigean_factor_results_map(list_factor, list_factor_genes, list_factor_gene_sets, max_num_per_factor, log=False):
     '''
     builds the map results for the pigean app factor subset
     '''
@@ -173,8 +174,8 @@ def build_pigean_factor_results_map(list_factor, list_factor_genes, list_factor_
         map_temp = {'cluster': name, 'factor': name, 'label': row['gene_set']}
 
         # create top genes and gene sets as ; delimited string
-        map_temp['top_genes'] = ';'.join([item['gene'] for item in list_factor_genes[index]])
-        map_temp['top_gene_sets'] = ';'.join(item['gene_set'] for item in list_factor_gene_sets[index])
+        map_temp['top_genes'] = ';'.join([item['gene'] for item in list_factor_genes[index][:max_num_per_factor]])
+        map_temp['top_gene_sets'] = ';'.join(item['gene_set'] for item in list_factor_gene_sets[index][:max_num_per_factor])
         map_temp['gene_score'] = max([item['score'] for item in list_factor_genes[index]])
         map_temp['gene_set_score'] = max([item['score'] for item in list_factor_gene_sets[index]])
 

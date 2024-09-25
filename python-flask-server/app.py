@@ -222,9 +222,7 @@ def post_pigean_genes():
     # format the data
     # map_factors = cutils.group_factor_results(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, list_factor_genes=list_factor_genes)
     # map_result['data'] = map_factors
-    map_result = gutils.gui_build_pigean_app_results_map(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, list_factor_genes=list_factor_genes, 
-                                              map_gene_ontology=map_gene_ontology, list_input_gene_names=list_input_translated, map_gene_index=map_gene_index,
-                                              matrix_gene_sets=matrix_gene_sets, map_gene_novelty=map_gene_novelty)
+    map_result = gutils.gui_build_pigean_app_results_map(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, list_factor_genes=list_factor_genes)
 
 
     # add time

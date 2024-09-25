@@ -1,0 +1,144 @@
+{
+    "profile": {
+        "fetch": 0.3079773560166359,
+        "query": 0.002885788679122925
+    },
+    "index": "pigean-factor",
+    "q": [
+        "HBA1C",
+        "2",
+        "small"
+    ],
+    "count": 10,
+    "restricted": 0,
+    "progress": {
+        "bytes_read": 4099,
+        "bytes_total": 4089
+    },
+    "page": 1,
+    "limit": 1000,
+    "data": [
+        {
+            "factor": "Factor1",
+            "gene_score": 0.29,
+            "gene_set_score": 4.95,
+            "gene_set_size": "small",
+            "label": "Fetal Erythroblasts Group",
+            "phenotype": "HBA1C",
+            "sigma": 2,
+            "top_gene_sets": "DESCARTES_MAIN_FETAL_ERYTHROBLASTS;HE_LIM_SUN_FETAL_LUNG_C3_CYCLING_DEFINITIVE_ERYTHROBLAST;DESCARTES_FETAL_INTESTINE_ERYTHROBLASTS;DESCARTES_FETAL_KIDNEY_ERYTHROBLASTS;DESCARTES_FETAL_PANCREAS_ERYTHROBLASTS",
+            "top_genes": "C17orf99;HEMGN;CPOX;HBZ;HBB",
+            "cluster": "Factor1"
+        },
+        {
+            "factor": "Factor2",
+            "gene_score": 0.217,
+            "gene_set_score": 4.03,
+            "gene_set_size": "small",
+            "label": "Glucose and Insulin Regulation",
+            "phenotype": "HBA1C",
+            "sigma": 2,
+            "top_gene_sets": "mp_impaired_glucose_tolerance;mp_decreased_insulin_secretion;mp_decreased_circulating_insulin_level;mp_abnormal_pancreatic_islet_morphology;mp_increased_circulating_glucose_level",
+            "top_genes": "PDX1;GCK;INS;WFS1;LEPR",
+            "cluster": "Factor2"
+        },
+        {
+            "factor": "Factor3",
+            "gene_score": 0.22,
+            "gene_set_score": 3.82,
+            "gene_set_size": "small",
+            "label": "Heme Metabolism Factors",
+            "phenotype": "HBA1C",
+            "sigma": 2,
+            "top_gene_sets": "HALLMARK_HEME_METABOLISM;GNF2_TAL1;GNF2_BNIP3L;GNF2_CDC27;GNF2_PCAF",
+            "top_genes": "RHAG;FECH;SLC4A1;ALAS2;HMBS",
+            "cluster": "Factor3"
+        },
+        {
+            "factor": "Factor4",
+            "gene_score": 0.137,
+            "gene_set_score": 2.45,
+            "gene_set_size": "small",
+            "label": "Nutrient Response Processes",
+            "phenotype": "HBA1C",
+            "sigma": 2,
+            "top_gene_sets": "GOBP_RESPONSE_TO_EXTRACELLULAR_STIMULUS;GOBP_RESPONSE_TO_NUTRIENT;GOBP_CELLULAR_RESPONSE_TO_NUTRIENT;GOBP_RESPONSE_TO_MONOSACCHARIDE;GOBP_VASCULAR_PROCESS_IN_CIRCULATORY_SYSTEM",
+            "top_genes": "LPL;CDKN2B;XBP1;ABCG8;ABCG5",
+            "cluster": "Factor4"
+        },
+        {
+            "factor": "Factor5",
+            "gene_score": 0.154,
+            "gene_set_score": 2.01,
+            "gene_set_size": "small",
+            "label": "Negative Regulation of Transport",
+            "phenotype": "HBA1C",
+            "sigma": 2,
+            "top_gene_sets": "GOBP_NEGATIVE_REGULATION_OF_TRANSPORT;GOBP_NEGATIVE_REGULATION_OF_SECRETION;GOBP_NEGATIVE_REGULATION_OF_ESTABLISHMENT_OF_PROTEIN_LOCALIZATION;GOBP_NEGATIVE_REGULATION_OF_PROTEIN_SECRETION;GOBP_REGULATION_OF_SECRETION",
+            "top_genes": "GHSR;REST;SREBF1;SIRT4;HADH",
+            "cluster": "Factor5"
+        },
+        {
+            "factor": "Factor6",
+            "gene_score": 0.133,
+            "gene_set_score": 1.67,
+            "gene_set_size": "small",
+            "label": "Carbohydrate Response Mechanisms",
+            "phenotype": "HBA1C",
+            "sigma": 2,
+            "top_gene_sets": "GOBP_RESPONSE_TO_MONOSACCHARIDE;GOBP_CELLULAR_RESPONSE_TO_CARBOHYDRATE_STIMULUS;GOBP_CARBOHYDRATE_HOMEOSTASIS;GOBP_REGULATION_OF_INSULIN_SECRETION_INVOLVED_IN_CELLULAR_RESPONSE_TO_GLUCOSE_STIMULUS;GOBP_PEPTIDE_TRANSPORT",
+            "top_genes": "ABCA12;SIDT2;ADCY5;BRSK2;STXBP4",
+            "cluster": "Factor6"
+        },
+        {
+            "factor": "Factor7",
+            "gene_score": 0.168,
+            "gene_set_score": 1.27,
+            "gene_set_size": "small",
+            "label": "Positive Regulation of Secretion",
+            "phenotype": "HBA1C",
+            "sigma": 2,
+            "top_gene_sets": "GOBP_POSITIVE_REGULATION_OF_SECRETION;GOBP_POSITIVE_REGULATION_OF_ESTABLISHMENT_OF_PROTEIN_LOCALIZATION;GOBP_POSITIVE_REGULATION_OF_PROTEIN_SECRETION;GOBP_POSITIVE_REGULATION_OF_HORMONE_SECRETION;GOBP_REGULATION_OF_SECRETION",
+            "top_genes": "GCK;PFKM;RBP4;PFKFB2;TCF7L2",
+            "cluster": "Factor7"
+        },
+        {
+            "factor": "Factor8",
+            "gene_score": 0.189,
+            "gene_set_score": 1.26,
+            "gene_set_size": "small",
+            "label": "Anemia and Hematologic Disorders",
+            "phenotype": "HBA1C",
+            "sigma": 2,
+            "top_gene_sets": "mp_anemia;mp_enlarged_spleen;mp_decreased_hematocrit;mp_decreased_erythrocyte_cell_number;mp_decreased_hemoglobin_content",
+            "top_genes": "ANK1;JAK2;SPTA1;GATA1;SLC11A2",
+            "cluster": "Factor8"
+        },
+        {
+            "factor": "Factor9",
+            "gene_score": 0.165,
+            "gene_set_score": 0.834,
+            "gene_set_size": "small",
+            "label": "Metabolic Dysregulation in Liver",
+            "phenotype": "HBA1C",
+            "sigma": 2,
+            "top_gene_sets": "mp_hepatic_steatosis;GOBP_REGULATION_OF_SMALL_MOLECULE_METABOLIC_PROCESS;mp_increased_circulating_triglyceride_level;mp_increased_circulating_insulin_level;mp_abnormal_glucose_homeostasis",
+            "top_genes": "PPARG;APOE;LEP;IRS2;LEPR",
+            "cluster": "Factor9"
+        },
+        {
+            "factor": "Factor10",
+            "gene_score": 0.0801,
+            "gene_set_score": 0.589,
+            "gene_set_size": "small",
+            "label": "Cellular Export and Signaling",
+            "phenotype": "HBA1C",
+            "sigma": 2,
+            "top_gene_sets": "GOBP_EXPORT_FROM_CELL;GOBP_SIGNAL_RELEASE;GOBP_REGULATION_OF_HORMONE_LEVELS;mp_hepatic_steatosis;mp_enlarged_liver",
+            "top_genes": "CYP19A1;TNF;HNF1A;TNFRSF1A;HNF1B",
+            "cluster": "Factor10"
+        }
+    ],
+    "continuation": null,
+    "nonce": "KW_XRFkogEMiA8UTS2xuLWJHBzK9hrm423XToRI-OHg"
+}

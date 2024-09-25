@@ -137,7 +137,7 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
         # print("step 5: got gene filtered indices of length: {}".format(selected_gene_indices.shape))
 
     if not all(dim > 0 for dim in matrix_gene_filtered_by_remaining_gene_sets.shape):
-        logger.info("step 6: ===> skipping due to pre bayes NMF matrix of shape".format(matrix_gene_filtered_by_remaining_gene_sets.shape))
+        logger.info("step 6: ===> skipping rest of compute steps due to pre bayes NMF matrix of shape too small: {}".format(matrix_gene_filtered_by_remaining_gene_sets.shape))
 
     else:
         # step 6: from this double filtered matrix, compute the factors
@@ -458,7 +458,7 @@ def rank_gene_and_gene_sets(X, Y, exp_lambdak, exp_gene_factors, exp_gene_set_fa
     # gene_factor_gene_inds = np.where(self.gene_factor_gene_mask)[0]
 
     # TODO - could make top count factors returned a variable; currently constant in code
-    num_top = 5
+    num_top = 10
 
     # get the top count for gene set and genes
     top_gene_inds = np.argsort(-exp_gene_factors, axis=0)[:num_top,:]               # not used

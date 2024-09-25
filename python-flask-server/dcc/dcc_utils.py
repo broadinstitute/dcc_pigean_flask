@@ -40,6 +40,7 @@ handler = logging.StreamHandler(sys.stdout)
 
 # constants
 VERSION_CODE = "20240904_yvar_fix"
+NUMBER_RETURNED_PER_FACTOR=5
 
 # startup keys
 KEY_DEFAULT_GENE_SET_FAMILY = "default"
@@ -56,6 +57,13 @@ KEY_REST_GENE_SET = "gene_sets"
 KEY_INTERNAL_LOWEST_FACTOR_SCORE = "lowest_factor_score"
 KEY_INTERNAL_HIGHEST_FACTOR_NAME = "highest_factor_name"
 KEY_INTERNAL_HIGHEST_FACTOR_SCORE = "highest_factor_score"
+
+# app call keys
+KEY_APP_QUERY=1
+KEY_APP_NOVELTY=2
+KEY_APP_PIGEAN=3
+
+# pigean app keys
 
 
 
