@@ -458,7 +458,7 @@ def rank_gene_and_gene_sets(X, Y, exp_lambdak, exp_gene_factors, exp_gene_set_fa
     # gene_factor_gene_inds = np.where(self.gene_factor_gene_mask)[0]
 
     # TODO - could make top count factors returned a variable; currently constant in code
-    num_top = 10
+    num_top = 100
 
     # get the top count for gene set and genes
     top_gene_inds = np.argsort(-exp_gene_factors, axis=0)[:num_top,:]               # not used
