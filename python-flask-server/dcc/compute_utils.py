@@ -476,7 +476,7 @@ def rank_gene_and_gene_sets(X, Y, exp_lambdak, exp_gene_factors, exp_gene_set_fa
         logger.info("got top gene ids: {}".format(top_gene_inds))
 
     for i in range(len(factor_gene_set_scores)):
-        # orginal for reference
+        # NOT - orginal for reference
         # top_gene_sets.append([self.gene_sets[i] for i in np.where(self.gene_set_factor_gene_set_mask)[0][top_gene_set_inds[:,i]]])
         # top_genes.append([self.genes[i] for i in np.where(self.gene_factor_gene_mask)[0][top_gene_inds[:,i]]])
         
@@ -496,12 +496,11 @@ def rank_gene_and_gene_sets(X, Y, exp_lambdak, exp_gene_factors, exp_gene_set_fa
         #     print("got gene indexes: {}".format(list_gene_index_factor))
 
         # build the list of groupings of gene sets
-        list_temp = []
+        list_temp_gene_sets = []
         for index_local, gs_index in enumerate(list_gene_set_index_factor):
             score_gene = exp_gene_set_factors[top_gene_set_inds[index_local, i], i]
             if score_gene > 0.01:
-                list_temp.append({'gene_set': map_gene_set_index.get(gs_index), 'score': score_gene})
-        top_gene_sets.append(list_temp)
+                list_temp_gene_sets.append({'gene_set': map_gene_set_index.get(gs_index), 'score': score_gene})
         # top_gene_sets.append([map_gene_set_index.get(gs_index) for gs_index in list_gene_set_index_factor])
 
         # build the list of groupings of genes (cutoff of 0.01)
@@ -509,17 +508,21 @@ def rank_gene_and_gene_sets(X, Y, exp_lambdak, exp_gene_factors, exp_gene_set_fa
         # top_genes.append([list_system_genes[g_index] for index_local, g_index in enumerate(list_gene_index_factor) if exp_gene_factors[top_gene_inds[index_local], i] > 0.01])
  
         # adding genes and their scores to the factor list
-        list_temp = []
+        list_temp_genes = []
         for index_local, g_index in enumerate(list_gene_index_factor):
             score_gene = exp_gene_factors[top_gene_inds[index_local, i], i]
             if score_gene > 0.01:
-                list_temp.append({'gene': list_system_genes[g_index], 'score': score_gene})
-        top_genes.append(list_temp)
+                list_temp_genes.append({'gene': list_system_genes[g_index], 'score': score_gene})
 
-        factor_labels.append(top_gene_sets[i][0] if len(top_gene_sets[i]) > 0 else "")
+        # BUG - only add to factor_labels, top_genes and top_gene_sets if list_temp > 0
+        # factor_labels.append(top_gene_sets[i][0] if len(top_gene_sets[i]) > 0 else "")
+        if len(list_temp_gene_sets) > 0 and len(list_temp_genes) > 0:
+            top_gene_sets.append(list_temp_gene_sets)
+            top_genes.append(list_temp_genes)
+            factor_labels.append(list_temp_gene_sets[0])
 
         # build the prompt
-        factor_prompts.append(",".join(item['gene_set'] for item in top_gene_sets[i]))
+        # factor_prompts.append(",".join(item['gene_set'] for item in top_gene_sets[i]))
         # ';'.join([item['gene'] for item in list_factor_genes[index]])
         # factor_prompts.append(",".join(top_gene_sets[i]))
 
@@ -561,13 +564,14 @@ def get_gene_factor_data_by_gene(exp_gene_factors, list_system_genes, list_gene_
 
 
         # for each gene, get the factor with the highest score
-        top_factor_indices_per_gene = np.argmax(exp_gene_factors, axis=1)
-        if top_factor_indices_per_gene is not None:
-            for index, row_factor_index in enumerate(top_factor_indices_per_gene.tolist()):
-                index_system = list_gene_mask[index]
-                gene_name = list_system_genes[index_system]
-                map_result[gene_name][dutils.KEY_INTERNAL_HIGHEST_FACTOR_NAME] = list_factor_labels[row_factor_index]
-                map_result[gene_name][dutils.KEY_INTERNAL_HIGHEST_FACTOR_SCORE] = exp_gene_factors[index, row_factor_index]
+        if len(list_factor_labels) > 0:
+                top_factor_indices_per_gene = np.argmax(exp_gene_factors, axis=1)
+                if top_factor_indices_per_gene is not None:
+                    for index, row_factor_index in enumerate(top_factor_indices_per_gene.tolist()):
+                        index_system = list_gene_mask[index]
+                        gene_name = list_system_genes[index_system]
+                        map_result[gene_name][dutils.KEY_INTERNAL_HIGHEST_FACTOR_NAME] = list_factor_labels[row_factor_index]
+                        map_result[gene_name][dutils.KEY_INTERNAL_HIGHEST_FACTOR_SCORE] = exp_gene_factors[index, row_factor_index]
 
 
         # log
