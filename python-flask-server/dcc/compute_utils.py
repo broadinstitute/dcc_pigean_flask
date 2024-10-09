@@ -516,10 +516,10 @@ def rank_gene_and_gene_sets(X, Y, exp_lambdak, exp_gene_factors, exp_gene_set_fa
                 list_temp.append({'gene': list_system_genes[g_index], 'score': score_gene})
         top_genes.append(list_temp)
 
-        factor_labels.append(top_gene_sets[i][0] if len(top_gene_sets[i]) > 0 else "")
+        factor_labels.append(top_gene_sets[i][0] if len(top_gene_sets[i]) > 0 else {'gene_set': None, 'score': None})
 
         # build the prompt
-        factor_prompts.append(",".join(item['gene_set'] for item in top_gene_sets[i]))
+        # factor_prompts.append(",".join(item['gene_set'] for item in top_gene_sets[i]))
         # ';'.join([item['gene'] for item in list_factor_genes[index]])
         # factor_prompts.append(",".join(top_gene_sets[i]))
 

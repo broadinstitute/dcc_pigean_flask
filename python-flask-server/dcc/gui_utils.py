@@ -144,7 +144,7 @@ def gui_build_novelty_results_map(map_gene_ontology, list_input_gene_names, map_
     # return
     return map_result
 
-def gui_build_pigean_app_results_map(list_factor, list_factor_genes, list_factor_gene_sets, max_num_per_factor=dutils.NUMBER_RETURNED_PER_FACTOR, log=False):
+def gui_build_pigean_app_results_map(list_input_genes, list_factor, list_factor_genes, list_factor_gene_sets, max_num_per_factor=dutils.NUMBER_RETURNED_PER_FACTOR, log=False):
     '''
     root method to build the pigean app results 
     '''
@@ -154,13 +154,16 @@ def gui_build_pigean_app_results_map(list_factor, list_factor_genes, list_factor
     # build the subsets of the data
     pigean_factor_map = build_pigean_factor_results_map(list_factor=list_factor, list_factor_genes=list_factor_genes, list_factor_gene_sets=list_factor_gene_sets, 
             max_num_per_factor=max_num_per_factor, log=log)
-    map_result['pigean-factor'] = pigean_factor_map
+    map_result[dutils.KEY_APP_FACTOR_PIGEAN] = pigean_factor_map
 
     # add the gene factors
-    map_result['gene-factor'] = build_pigean_gene_factor_results_map(list_factor=list_factor, list_factor_genes=list_factor_genes, list_factor_gene_sets=list_factor_gene_sets)
+    map_result[dutils.KEY_APP_FACTOR_GENE] = build_pigean_gene_factor_results_map(list_factor=list_factor, list_factor_genes=list_factor_genes, list_factor_gene_sets=list_factor_gene_sets)
 
     # add the gene factors
-    map_result['gene-set-factor'] = build_pigean_gene_set_factor_results_map(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets)
+    map_result[dutils.KEY_APP_FACTOR_GENE_SET] = build_pigean_gene_set_factor_results_map(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets)
+
+    # add the input gene list
+    map_result[dutils.KEY_APP_INPUT_GENES] = list_input_genes
 
     # return
     return map_result
@@ -176,15 +179,18 @@ def build_pigean_gene_factor_results_map(list_factor, list_factor_genes, list_fa
     # loop through the factors and add a list per gene
     # loop through the factors
     for index, row in enumerate(list_factor):
-        name = "Factor{}".format(index)
-        label = list_factor_gene_sets[index][0]['gene_set']
-        list_temp = []
+        # BUG - only add factors if gene set and genes are not null
+        # # See GitHub issue #2 for more details.
+        if row['gene_set']:
+            name = "Factor{}".format(index)
+            label = list_factor_gene_sets[index][0]['gene_set']
+            list_temp = []
 
-        # loop through the gene factors for this factor and add to list
-        for map_gene in list_factor_genes[index]:
-            list_temp.append({'label_factor': name, 'gene': map_gene.get('gene'), 'factor_value': map_gene.get('score'), 'label': label})
+            # loop through the gene factors for this factor and add to list
+            for map_gene in list_factor_genes[index]:
+                list_temp.append({'label_factor': name, 'gene': map_gene.get('gene'), 'factor_value': map_gene.get('score'), 'label': label})
 
-        map_result[name] = list_temp
+            map_result[name] = list_temp
 
     # return 
     return map_result
@@ -200,15 +206,18 @@ def build_pigean_gene_set_factor_results_map(list_factor, list_factor_gene_sets,
     # loop through the factors and add a list per gene
     # loop through the factors
     for index, row in enumerate(list_factor):
-        name = "Factor{}".format(index)
-        label = list_factor_gene_sets[index][0]['gene_set']
-        list_temp = []
+        # BUG - only add factors if gene set and genes are not null
+        # # See GitHub issue #2 for more details.
+        if row['gene_set']:
+            name = "Factor{}".format(index)
+            label = list_factor_gene_sets[index][0]['gene_set']
+            list_temp = []
 
-        # loop through the gene factors for this factor and add to list
-        for map_gene_set in list_factor_gene_sets[index]:
-            list_temp.append({'label_factor': name, 'gene_set': map_gene_set.get('gene_set'), 'factor_value': map_gene_set.get('score'), 'label': label})
+            # loop through the gene factors for this factor and add to list
+            for map_gene_set in list_factor_gene_sets[index]:
+                list_temp.append({'label_factor': name, 'gene_set': map_gene_set.get('gene_set'), 'factor_value': map_gene_set.get('score'), 'label': label})
 
-        map_result[name] = list_temp
+            map_result[name] = list_temp
 
     # return 
     return map_result
@@ -224,17 +233,20 @@ def build_pigean_factor_results_map(list_factor, list_factor_genes, list_factor_
 
     # loop through the factors
     for index, row in enumerate(list_factor):
-        name = "Factor{}".format(index)
-        map_temp = {'cluster': name, 'factor': name, 'label': row['gene_set']}
+        # BUG - only add factors if gene set and genes are not null
+        # # See GitHub issue #2 for more details.
+        if row['gene_set']:
+            name = "Factor{}".format(index)
+            map_temp = {'cluster': name, 'factor': name, 'label': row['gene_set']}
 
-        # create top genes and gene sets as ; delimited string
-        map_temp['top_genes'] = ';'.join([item['gene'] for item in list_factor_genes[index][:max_num_per_factor]])
-        map_temp['top_gene_sets'] = ';'.join(item['gene_set'] for item in list_factor_gene_sets[index][:max_num_per_factor])
-        map_temp['gene_score'] = max([item['score'] for item in list_factor_genes[index]])
-        map_temp['gene_set_score'] = max([item['score'] for item in list_factor_gene_sets[index]])
+            # create top genes and gene sets as ; delimited string
+            map_temp['top_genes'] = ';'.join([item['gene'] for item in list_factor_genes[index][:max_num_per_factor] if item['gene'] is not None])
+            map_temp['top_gene_sets'] = ';'.join([item['gene_set'] for item in list_factor_gene_sets[index][:max_num_per_factor] if item['gene_set'] is not None])
+            map_temp['gene_score'] = max([item['score'] for item in list_factor_genes[index]])
+            map_temp['gene_set_score'] = max([item['score'] for item in list_factor_gene_sets[index]])
 
-        # add to list
-        list_result.append(map_temp)
+            # add to list
+            list_result.append(map_temp)
 
     # add the factors to the map
     map_result['data'] = list_result

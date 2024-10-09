@@ -64,7 +64,10 @@ KEY_APP_NOVELTY=2
 KEY_APP_PIGEAN=3
 
 # pigean app keys
-
+KEY_APP_FACTOR_PIGEAN = 'pigean-factor'
+KEY_APP_FACTOR_GENE = 'gene-factor'
+KEY_APP_FACTOR_GENE_SET = 'gene-set-factor'
+KEY_APP_INPUT_GENES = 'input_genes'
 
 
 # methods
