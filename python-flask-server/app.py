@@ -130,7 +130,7 @@ def post_genes():
         #                                         matrix_gene_sets=matrix_gene_sets, map_gene_novelty=map_gene_novelty)
 
         list_factor, list_factor_genes, list_factor_gene_sets, \
-            gene_factor, gene_set_factor, map_gene_factor_data, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 
+            gene_factor, gene_set_factor, map_gene_factor_data, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 
                                                                                                     p_value=p_value_cutoff,
                                                                                                     max_num_gene_sets=max_number_gene_sets,
                                                                                                     list_gene=list_input_translated, 
@@ -207,7 +207,7 @@ def post_pigean_genes():
     start = time.time()
 
     # compute
-    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_novelty, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
+    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_novelty, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
                                                                                                                p_value=p_value_cutoff,
                                                                                                                max_num_gene_sets=max_number_gene_sets,
                                                                                                                list_gene=list_input_translated, 
@@ -222,7 +222,8 @@ def post_pigean_genes():
     # format the data
     # map_factors = cutils.group_factor_results(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, list_factor_genes=list_factor_genes)
     # map_result['data'] = map_factors
-    map_result = gutils.gui_build_pigean_app_results_map(list_input_genes=list_input_genes, list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, list_factor_genes=list_factor_genes)
+    map_result = gutils.gui_build_pigean_app_results_map(list_input_genes=list_input_genes, list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, 
+                                                         list_factor_genes=list_factor_genes, list_gene_set_p_values=list_gene_set_p_values)
 
 
     # add time
@@ -309,7 +310,7 @@ def process_genes(list_input_genes, p_value_cutoff, log=False):
     logger.info("got translated gene inputs of size: {}".format(len(list_input_translated)))
 
     # do the calculations
-    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_factor_data, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
+    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_factor_data, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
                                                                                                                p_value=p_value_cutoff,
                                                                                                                list_gene=list_input_translated, 
                                                                                                                list_system_genes=list_system_genes, 

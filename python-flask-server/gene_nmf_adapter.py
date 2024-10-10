@@ -137,7 +137,7 @@ def process_genes_novelty(list_input_genes, p_value_cutoff, max_num_gene_sets, l
     logger.info("got translated gene inputs of size: {}".format(len(list_input_translated)))
 
     # do the calculations
-    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_novelty, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
+    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_factor_data, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
                                                                                                                p_value=p_value_cutoff,
                                                                                                                max_num_gene_sets=max_num_gene_sets,
                                                                                                                list_gene=list_input_translated, 
@@ -151,7 +151,7 @@ def process_genes_novelty(list_input_genes, p_value_cutoff, max_num_gene_sets, l
         logger.info(row)
 
     # return
-    return map_gene_novelty, list_input_translated
+    return map_gene_factor_data, list_input_translated
 
 def process_genes_full(list_input_genes, p_value_cutoff, max_num_gene_sets, log=False):
     '''
@@ -167,7 +167,7 @@ def process_genes_full(list_input_genes, p_value_cutoff, max_num_gene_sets, log=
     logger.info("got translated gene inputs of size: {}".format(len(list_input_translated)))
 
     # do the calculations
-    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_novelty, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
+    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_factor_data, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
                                                                                                                p_value=p_value_cutoff,
                                                                                                                max_num_gene_sets=max_num_gene_sets,
                                                                                                                list_gene=list_input_translated, 
@@ -181,7 +181,7 @@ def process_genes_full(list_input_genes, p_value_cutoff, max_num_gene_sets, log=
         logger.info(row)
 
     # return
-    return list_factor, list_factor_genes, list_factor_gene_sets, map_gene_novelty, list_input_translated
+    return list_factor, list_factor_genes, list_factor_gene_sets, map_gene_factor_data, list_input_translated
 
 # main
 if __name__ == "__main__":

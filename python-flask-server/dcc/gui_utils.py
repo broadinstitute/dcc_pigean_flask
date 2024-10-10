@@ -144,7 +144,7 @@ def gui_build_novelty_results_map(map_gene_ontology, list_input_gene_names, map_
     # return
     return map_result
 
-def gui_build_pigean_app_results_map(list_input_genes, list_factor, list_factor_genes, list_factor_gene_sets, max_num_per_factor=dutils.NUMBER_RETURNED_PER_FACTOR, log=False):
+def gui_build_pigean_app_results_map(list_input_genes, list_factor, list_factor_genes, list_factor_gene_sets, list_gene_set_p_values, max_num_per_factor=dutils.NUMBER_RETURNED_PER_FACTOR, log=False):
     '''
     root method to build the pigean app results 
     '''
@@ -164,6 +164,9 @@ def gui_build_pigean_app_results_map(list_input_genes, list_factor, list_factor_
 
     # add the input gene list
     map_result[dutils.KEY_APP_INPUT_GENES] = list_input_genes
+
+    # add the gene set p_value list list
+    map_result[dutils.KEY_APP_GENE_SETS] = list_gene_set_p_values
 
     # return
     return map_result

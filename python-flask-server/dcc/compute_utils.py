@@ -124,6 +124,9 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
         logger.info("step 4: got gene set filtered indices of length: {}".format(len(selected_gene_set_indices)))
         logger.info("step 4: got gene set filtered indices: {}".format(selected_gene_set_indices))
 
+    # TODO - build filtered gene set list with p_values
+    list_gene_set_p_values = build_gene_set_p_value_list(vector_gene_set_pvalues=vector_gene_set_pvalues, selected_gene_set_indices=selected_gene_set_indices, map_gene_set_index=map_gene_set_index)
+    
     # step 5: filter gene rows by only the genes that are part of the remaining gene sets from the filtered gene set matrix
     matrix_gene_filtered_by_remaining_gene_sets, selected_gene_indices = filter_matrix_rows_by_sum_cutoff(matrix_to_filter=matrix_gene_set_filtered_by_pvalues, 
                                                                                                           matrix_to_sum=matrix_gene_set_filtered_by_pvalues, log=log)
@@ -177,10 +180,33 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
 
     # log
     for row in logs_process:
-        logger.info(row)
+        logger.info(row) 
 
     # only return the gene factors and gene set factors
-    return list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_factor_data_per_gene, logs_process
+    return list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_factor_data_per_gene, list_gene_set_p_values, logs_process
+
+
+def build_gene_set_p_value_list(vector_gene_set_pvalues, selected_gene_set_indices, map_gene_set_index, log=True):
+    '''
+    will build a sorted list of gene/p_value objects
+    '''
+    # initialize
+    list_result = []
+
+    # log
+    if log:
+        logger.info("P_VALUE_LIST - using p_value matrix of shape: {}".format(vector_gene_set_pvalues.shape))
+
+    # build the list
+    for index in selected_gene_set_indices:
+        list_result.append({dutils.KEY_APP_GENE_SET: map_gene_set_index.get(index), dutils.KEY_APP_P_VALUE: vector_gene_set_pvalues[0, index]})
+
+    # log
+    if log:
+        logger.info("P_VALUE_LIST - DATA: {}".format(list_result))
+
+    # return
+    return list_result
 
 
 def group_factor_results(list_factor, list_factor_genes, list_factor_gene_sets, log=False):

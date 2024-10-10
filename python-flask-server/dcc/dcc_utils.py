@@ -68,7 +68,9 @@ KEY_APP_FACTOR_PIGEAN = 'pigean-factor'
 KEY_APP_FACTOR_GENE = 'gene-factor'
 KEY_APP_FACTOR_GENE_SET = 'gene-set-factor'
 KEY_APP_INPUT_GENES = 'input_genes'
-
+KEY_APP_GENE_SETS = 'gene_sets'
+KEY_APP_GENE_SET = 'gene_set'
+KEY_APP_P_VALUE = 'p_value'
 
 # methods
 def get_logger(name): 

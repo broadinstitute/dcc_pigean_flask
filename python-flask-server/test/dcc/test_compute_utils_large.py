@@ -62,7 +62,7 @@ def test_calculate_factors():
     (mean_shifts, scale_factors) = cutils._calc_X_shift_scale(X=matrix_gene_sets)
 
     # get the factors
-    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_novelty, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, p_value=0.3,
+    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_novelty, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, p_value=0.3,
                                                                                                                list_gene=list_input_genes, 
                                                                                                                list_system_genes=list_system_genes, 
                                                                                                                map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
