@@ -186,7 +186,7 @@ def build_pigean_gene_factor_results_map(list_factor, list_factor_genes, list_fa
         # # See GitHub issue #2 for more details.
         if row['gene_set']:
             name = "Factor{}".format(index)
-            label = list_factor_gene_sets[index][0]['gene_set']
+            label = list_factor[index][dutils.KEY_APP_GENE_SET]
             list_temp = []
 
             # loop through the gene factors for this factor and add to list
@@ -213,7 +213,7 @@ def build_pigean_gene_set_factor_results_map(list_factor, list_factor_gene_sets,
         # # See GitHub issue #2 for more details.
         if row['gene_set']:
             name = "Factor{}".format(index)
-            label = list_factor_gene_sets[index][0]['gene_set']
+            label = list_factor[index][dutils.KEY_APP_GENE_SET]
             list_temp = []
 
             # loop through the gene factors for this factor and add to list

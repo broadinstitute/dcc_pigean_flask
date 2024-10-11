@@ -47,6 +47,8 @@ import time
 
 import dcc.dcc_utils as dutils 
 import dcc.matrix_utils as mutils 
+import dcc.ml_utils as mlutils
+
 
 # TODO - process notes
 # 1. done - X matrix is sitting in memory (something like 20K genes x 40K gene sets)
@@ -157,7 +159,10 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
                                                                         list_system_genes=list_system_genes, map_gene_set_index=map_gene_set_index, 
                                                                         list_gene_mask=selected_gene_indices, list_gene_set_mask=selected_gene_set_indices, log=log)
 
-        # step 7a - get the lowest factor per gene
+        # step 7a - create the factor labels
+        list_factor = mlutils.get_list_factor_names_from_llm(list_labels=list_factor, list_factor_gene_sets=list_factor_gene_sets)
+
+        # step 7b - get the lowest factor per gene
         map_factor_data_per_gene = get_gene_factor_data_by_gene(exp_gene_factors=updated_gene_factors, list_system_genes=list_system_genes, 
                                                                   list_gene_mask=selected_gene_indices, list_factor_labels=list_factor, log=False)
         # print(json.dumps(map_lowest_factor_per_gene, indent=2))
