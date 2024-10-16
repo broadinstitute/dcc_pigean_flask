@@ -79,7 +79,7 @@ class RunFactorException(Exception):
 
 # methods
 def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_genes, map_gene_index, map_gene_set_index, mean_shifts, scale_factors, 
-                      p_value=0.05, max_num_gene_sets=100, log=False):
+                      p_value=0.05, max_num_gene_sets=100, is_factor_labels_llm=False, log=False):
     '''
     will produce the gene set factors and gene factors
     '''
@@ -160,7 +160,8 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
                                                                         list_gene_mask=selected_gene_indices, list_gene_set_mask=selected_gene_set_indices, log=log)
 
         # step 7a - create the factor labels
-        list_factor = mlutils.get_list_factor_names_from_llm(list_labels=list_factor, list_factor_gene_sets=list_factor_gene_sets)
+        if is_factor_labels_llm:
+            list_factor = mlutils.get_list_factor_names_from_llm(list_labels=list_factor, list_factor_gene_sets=list_factor_gene_sets)
 
         # step 7b - get the lowest factor per gene
         map_factor_data_per_gene = get_gene_factor_data_by_gene(exp_gene_factors=updated_gene_factors, list_system_genes=list_system_genes, 

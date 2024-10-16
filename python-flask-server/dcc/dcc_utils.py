@@ -57,6 +57,7 @@ KEY_REST_GENE_SET = "gene_sets"
 KEY_INTERNAL_LOWEST_FACTOR_SCORE = "lowest_factor_score"
 KEY_INTERNAL_HIGHEST_FACTOR_NAME = "highest_factor_name"
 KEY_INTERNAL_HIGHEST_FACTOR_SCORE = "highest_factor_score"
+KEY_REST_GENERATE_FACTOR_LABELS = "generate_factor_labels"
 
 # app call keys
 KEY_APP_QUERY=1

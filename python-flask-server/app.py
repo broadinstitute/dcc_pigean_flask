@@ -194,6 +194,14 @@ def post_pigean_genes():
     max_number_gene_sets = process_numeric_value(json_request=data, name='max_number_gene_sets', cutoff_default=MAX_NUMBER_GENE_SETS_FOR_COMPUTATION, is_float=False)
     logger.info("got using p_value: {}".format(p_value_cutoff))
 
+    # TODO - enable - get the gene set family name
+    gene_set_family_key = process_string_value(json_request=data, name=dutils.KEY_REST_GENE_SET, default=dutils.KEY_DEFAULT_GENE_SET_FAMILY)
+    logger.info("using input gene set family key: {}".format(gene_set_family_key))
+
+    # adding input to indicate whether to generate factor label names
+    is_generate_factor_labels = process_string_value(json_request=data, name=dutils.KEY_REST_GENERATE_FACTOR_LABELS, default=False)
+    logger.info("using input is generate factor labels: {}".format(is_generate_factor_labels))
+
     # translate the genes into what the system can handle
     list_input_translated = sql_utils.db_get_gene_names_from_list(conn=sql_conn_query, list_input=list_input_genes)
     logger.info("got translated gene inputs of size: {}".format(len(list_input_translated)))
@@ -214,6 +222,7 @@ def post_pigean_genes():
                                                                                                                list_system_genes=list_system_genes, 
                                                                                                                map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
                                                                                                                mean_shifts=mean_shifts, scale_factors=scale_factors,
+                                                                                                               is_factor_labels_llm=is_generate_factor_labels,
                                                                                                                log=True)
 
     # time
