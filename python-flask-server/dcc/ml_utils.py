@@ -9,6 +9,7 @@ import dcc.dcc_utils as dutils
 
 # constants
 logger = dutils.get_logger(__name__)
+# ENV_LLM_KEY = os.environ.get('MARC_CHAT_KEY')
 ENV_LLM_KEY = os.environ.get('CHAT_KEY')
 LLM_KEY = None
 if ENV_LLM_KEY:
@@ -37,9 +38,13 @@ def get_list_factor_names_from_llm(list_labels, list_factor_gene_sets, log=True)
         if log:
             logger.info("joining gene set list: {}".format(list_temp))
 
-        list_factor_prompts.append(",".join(list_temp))
+        # test to make sure each factor has at leat one gene set
+        if any(item for item in list_temp):
+            list_factor_prompts.append(",".join(list_temp[0:5]))
+        else:
+            list_factor_prompts.append(None)
 
-    if LLM_KEY is not None:
+    if LLM_KEY is not None and any(item for item in list_factor_prompts):
         # prompt = "Print a label to assign to each group: %s" % (" ".join(["%d. %s" % (j+1, ",".join(list_factor_gene_sets[j].get('gene_set'))) for j in range(len(list_factor_gene_sets))]))
         # prompt = "Print a label to assign to each group: %s" % (" ".join(["%d. %s" % (j+1, ",".join(list_factor_prompts))]))
         prompt = "Print a label to assign to each group: %s" % (" ".join(["%d. %s" % (j+1, list_factor_prompts[j]) for j in range(len(list_factor_prompts))]))
@@ -61,13 +66,13 @@ def get_list_factor_names_from_llm(list_labels, list_factor_gene_sets, log=True)
                     raise Exception
 
             except Exception:
-                log("Couldn't decode LMM response %s; using simple label" % response)
+                logger.error("Couldn't decode LMM response %s; using simple label" % response)
                 pass
 
-    # log
-    if log:
-        logger.info("got list factor label original: {}".format(list_factor_prompts))
-        logger.info("got list factor label results: {}".format(list_result))
+        # log
+        if log:
+            logger.info("got list factor label original: {}".format("\n".join(list_factor_prompts)))
+            logger.info("got list factor label results: {}".format(list_result))
 
     # return
     return list_result

@@ -151,16 +151,22 @@ def gui_build_pigean_app_results_map(list_input_genes, list_factor, list_factor_
     # initialize
     map_result = {}
 
+    # get the index values of the clean factors
+    list_verified_index = get_list_verified_results_for_giu(list_factor=list_factor, list_factor_genes=list_factor_genes, list_factor_gene_sets=list_factor_gene_sets)
+    list_factor_gui = [list_factor[index] for index in list_verified_index]
+    list_factor_genes_gui = [list_factor_genes[index] for index in list_verified_index]
+    list_factor_gene_sets_gui = [list_factor_gene_sets[index] for index in list_verified_index]
+
     # build the subsets of the data
-    pigean_factor_map = build_pigean_factor_results_map(list_factor=list_factor, list_factor_genes=list_factor_genes, list_factor_gene_sets=list_factor_gene_sets, 
+    pigean_factor_map = build_pigean_factor_results_map(list_factor=list_factor_gui, list_factor_genes=list_factor_genes_gui, list_factor_gene_sets=list_factor_gene_sets_gui, 
             max_num_per_factor=max_num_per_factor, log=log)
     map_result[dutils.KEY_APP_FACTOR_PIGEAN] = pigean_factor_map
 
     # add the gene factors
-    map_result[dutils.KEY_APP_FACTOR_GENE] = build_pigean_gene_factor_results_map(list_factor=list_factor, list_factor_genes=list_factor_genes, list_factor_gene_sets=list_factor_gene_sets)
+    map_result[dutils.KEY_APP_FACTOR_GENE] = build_pigean_gene_factor_results_map(list_factor=list_factor_gui, list_factor_genes=list_factor_genes_gui, list_factor_gene_sets=list_factor_gene_sets_gui)
 
     # add the gene factors
-    map_result[dutils.KEY_APP_FACTOR_GENE_SET] = build_pigean_gene_set_factor_results_map(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets)
+    map_result[dutils.KEY_APP_FACTOR_GENE_SET] = build_pigean_gene_set_factor_results_map(list_factor=list_factor_gui, list_factor_gene_sets=list_factor_gene_sets_gui)
 
     # add the input gene list
     map_result[dutils.KEY_APP_INPUT_GENES] = list_input_genes
@@ -170,6 +176,22 @@ def gui_build_pigean_app_results_map(list_input_genes, list_factor, list_factor_
 
     # return
     return map_result
+
+
+def get_list_verified_results_for_giu(list_factor, list_factor_genes, list_factor_gene_sets, log=False):
+    '''
+    returns the indexes of the verified factor results 
+    '''
+    list_result = []
+
+    print("/n/n/nlist factors: {}".format(list_factor))
+
+    for index, row in enumerate(list_factor):
+        if row and row.get(dutils.KEY_APP_GENE_SET):
+            list_result.append(index)
+
+    # return
+    return list_result
 
 
 def build_pigean_gene_factor_results_map(list_factor, list_factor_genes, list_factor_gene_sets, log=False):
@@ -245,8 +267,17 @@ def build_pigean_factor_results_map(list_factor, list_factor_genes, list_factor_
             # create top genes and gene sets as ; delimited string
             map_temp['top_genes'] = ';'.join([item['gene'] for item in list_factor_genes[index][:max_num_per_factor] if item['gene'] is not None])
             map_temp['top_gene_sets'] = ';'.join([item['gene_set'] for item in list_factor_gene_sets[index][:max_num_per_factor] if item['gene_set'] is not None])
-            map_temp['gene_score'] = max([item['score'] for item in list_factor_genes[index]])
-            map_temp['gene_set_score'] = max([item['score'] for item in list_factor_gene_sets[index]])
+
+            print("list genes: {}".format(list_factor_genes))
+            if len(list_factor_genes[index]) > 0:
+                map_temp['gene_score'] = max([item['score'] if item['score'] else 0 for item in list_factor_genes[index]])
+            else:
+                map_temp['gene_score'] = 0
+
+            if len(list_factor_gene_sets[index]) > 0:
+                map_temp['gene_set_score'] = max([item['score'] if item['score'] else 0 for item in list_factor_gene_sets[index]])
+            else:
+                map_temp['gene_set_score'] = 0
 
             # add to list
             list_result.append(map_temp)
