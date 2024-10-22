@@ -130,7 +130,8 @@ def post_genes():
         #                                         matrix_gene_sets=matrix_gene_sets, map_gene_novelty=map_gene_novelty)
 
         list_factor, list_factor_genes, list_factor_gene_sets, \
-            gene_factor, gene_set_factor, map_gene_factor_data, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 
+            gene_factor, gene_set_factor, map_gene_factor_data, list_gene_set_p_values, logs_process = cutils.calculate_factors(
+                                                                                                    matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 
                                                                                                     p_value=p_value_cutoff,
                                                                                                     max_num_gene_sets=max_number_gene_sets,
                                                                                                     list_gene=list_input_translated, 
@@ -194,53 +195,85 @@ def post_pigean_genes():
     max_number_gene_sets = process_numeric_value(json_request=data, name='max_number_gene_sets', cutoff_default=MAX_NUMBER_GENE_SETS_FOR_COMPUTATION, is_float=False)
     logger.info("got using p_value: {}".format(p_value_cutoff))
 
-    # TODO - enable - get the gene set family name
-    gene_set_family_key = process_string_value(json_request=data, name=dutils.KEY_REST_GENE_SET, default=dutils.KEY_DEFAULT_GENE_SET_FAMILY)
-    logger.info("using input gene set family key: {}".format(gene_set_family_key))
-
     # adding input to indicate whether to generate factor label names
     is_generate_factor_labels = process_string_value(json_request=data, name=dutils.KEY_REST_GENERATE_FACTOR_LABELS, default=False)
     logger.info("using input is generate factor labels: {}".format(is_generate_factor_labels))
 
-    # translate the genes into what the system can handle
-    list_input_translated = sql_utils.db_get_gene_names_from_list(conn=sql_conn_query, list_input=list_input_genes)
-    logger.info("got translated gene inputs of size: {}".format(len(list_input_translated)))
+    # get the gene set family name
+    gene_set_family_key = process_string_value(json_request=data, name=dutils.KEY_REST_GENE_SET, default=dutils.KEY_DEFAULT_GENE_SET_FAMILY)
+    logger.info("using input gene set family key: {}".format(gene_set_family_key))
 
-    # add the genes to the result
-    # map_result['input_genes'] = list_input_genes
-    if DEBUG:
-        map_result['conf'] = map_conf
+    # get the gene set family object
+    gene_set_family_object: sutils.GeneSetFamily = map_gene_set_families.get(gene_set_family_key)
 
-    # time
-    start = time.time()
+    # make sure gene set family available
+    if not gene_set_family_object:
+        str_message = "got gene set family key which is not loaded: {}".format(gene_set_family_key)
+        logger.error(str_message)
+        map_result = {"logs": [str_message]}
 
-    # compute
-    list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_novelty, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
-                                                                                                               p_value=p_value_cutoff,
-                                                                                                               max_num_gene_sets=max_number_gene_sets,
-                                                                                                               list_gene=list_input_translated, 
-                                                                                                               list_system_genes=list_system_genes, 
-                                                                                                               map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
-                                                                                                               mean_shifts=mean_shifts, scale_factors=scale_factors,
-                                                                                                               is_factor_labels_llm=is_generate_factor_labels,
-                                                                                                               log=True)
+    else:
+        # translate the genes into what the system can handle
+        list_input_translated = sql_utils.db_get_gene_names_from_list(conn=sql_conn_query, list_input=list_input_genes)
+        logger.info("got translated gene inputs of size: {}".format(len(list_input_translated)))
 
-    # time
-    end = time.time()
+        # add the genes to the result
+        # map_result['input_genes'] = list_input_genes
+        if DEBUG:
+            map_result['conf'] = map_conf
 
-    # format the data
-    # map_factors = cutils.group_factor_results(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, list_factor_genes=list_factor_genes)
-    # map_result['data'] = map_factors
-    map_result = gutils.gui_build_pigean_app_results_map(list_input_genes=list_input_genes, list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, 
-                                                         list_factor_genes=list_factor_genes, list_gene_set_p_values=list_gene_set_p_values)
+        # translate the genes into what the system can handle
+        list_input_translated = sql_utils.db_get_gene_names_from_list(conn=sql_conn_query, list_input=list_input_genes)
+        logger.info("got translated gene inputs of size: {}".format(len(list_input_translated)))
+
+        # add the genes to the result
+        # map_result['input_genes'] = list_input_genes
+        if DEBUG:
+            map_result['conf'] = map_conf
+
+        # time
+        start = time.time()
+
+        # compute
+        # list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, \
+        # gene_set_factor, map_gene_novelty, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
+        #                                                                                                         p_value=p_value_cutoff,
+        #                                                                                                         max_num_gene_sets=max_number_gene_sets,
+        #                                                                                                         list_gene=list_input_translated, 
+        #                                                                                                         list_system_genes=list_system_genes, 
+        #                                                                                                         map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
+        #                                                                                                         mean_shifts=mean_shifts, scale_factors=scale_factors,
+        #                                                                                                         is_factor_labels_llm=is_generate_factor_labels,
+        #                                                                                                         log=True)
+
+        list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, \
+        gene_set_factor, map_gene_novelty, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 
+                                                                                                                p_value=p_value_cutoff,
+                                                                                                                max_num_gene_sets=max_number_gene_sets,
+                                                                                                                list_gene=list_input_translated, 
+                                                                                                                list_system_genes=list_system_genes, 
+                                                                                                                map_gene_index=map_gene_index, 
+                                                                                                    map_gene_set_index=gene_set_family_object.map_gene_set_index,
+                                                                                                    mean_shifts=gene_set_family_object.mean_shifts, 
+                                                                                                    scale_factors=gene_set_family_object.scale_factors,
+                                                                                                                is_factor_labels_llm=is_generate_factor_labels,
+                                                                                                                log=True)
+        # time
+        end = time.time()
+
+        # format the data
+        # map_factors = cutils.group_factor_results(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, list_factor_genes=list_factor_genes)
+        # map_result['data'] = map_factors
+        map_result = gutils.gui_build_pigean_app_results_map(list_input_genes=list_input_genes, list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, 
+                                                            list_factor_genes=list_factor_genes, list_gene_set_p_values=list_gene_set_p_values)
 
 
-    # add time
-    str_message = "total elapsed time is: {}s".format(end-start)
-    logs_process.append(str_message)
-    logs_process.append("code version is: {}".format(dutils.get_code_version()))
-    map_result['logs'] = logs_process
-    logger.info(str_message)
+        # add time
+        str_message = "total elapsed time is: {}s".format(end-start)
+        logs_process.append(str_message)
+        logs_process.append("code version is: {}".format(dutils.get_code_version()))
+        map_result['logs'] = logs_process
+        logger.info(str_message)
 
     # return
     return map_result
