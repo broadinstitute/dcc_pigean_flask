@@ -178,6 +178,7 @@ def post_pigean_genes():
     list_input_genes = []
     sql_conn_query = sql_utils.db_sqlite_get_connection(db_path=db_file)
     p_value_cutoff = P_VALUE_CUTOFF
+    list_logs = []
 
     # get the input
     data = request.get_json()
@@ -185,23 +186,33 @@ def post_pigean_genes():
         list_input_genes = data.get('genes')
 
     logger.info("got request: {} with gene inputs: {}".format(request.method, list_input_genes))
-    logger.info("got gene inputs of size: {}".format(len(list_input_genes)))
+    str_message = "got gene inputs of size: {}".format(len(list_input_genes))
+    logger.info(str_message)
+    list_logs.append(str_message)
 
     # get the p_value
     p_value_cutoff = process_numeric_value(json_request=data, name='p_value', cutoff_default=P_VALUE_CUTOFF)
-    logger.info("got using p_value: {}".format(p_value_cutoff))
+    str_message = "got using p_value: {}".format(p_value_cutoff)
+    logger.info(str_message)
+    list_logs.append(str_message)
 
     # get the max gene sets
     max_number_gene_sets = process_numeric_value(json_request=data, name='max_number_gene_sets', cutoff_default=MAX_NUMBER_GENE_SETS_FOR_COMPUTATION, is_float=False)
-    logger.info("got using p_value: {}".format(p_value_cutoff))
+    str_message = "got using max number of genes: {}".format(max_number_gene_sets)
+    logger.info(str_message)
+    list_logs.append(str_message)
 
     # adding input to indicate whether to generate factor label names
     is_generate_factor_labels = process_string_value(json_request=data, name=dutils.KEY_REST_GENERATE_FACTOR_LABELS, default=False)
-    logger.info("using input is generate factor labels: {}".format(is_generate_factor_labels))
+    str_message = "using input whether generate factor labels (using LLM): {}".format(is_generate_factor_labels)
+    logger.info(str_message)
+    list_logs.append(str_message)
 
     # get the gene set family name
     gene_set_family_key = process_string_value(json_request=data, name=dutils.KEY_REST_GENE_SET, default=dutils.KEY_DEFAULT_GENE_SET_FAMILY)
-    logger.info("using input gene set family key: {}".format(gene_set_family_key))
+    str_message = "using input gene set family key: {}".format(gene_set_family_key)
+    logger.info(str_message)
+    list_logs.append(str_message)
 
     # get the gene set family object
     gene_set_family_object: sutils.GeneSetFamily = map_gene_set_families.get(gene_set_family_key)
@@ -215,16 +226,9 @@ def post_pigean_genes():
     else:
         # translate the genes into what the system can handle
         list_input_translated = sql_utils.db_get_gene_names_from_list(conn=sql_conn_query, list_input=list_input_genes)
-        logger.info("got translated gene inputs of size: {}".format(len(list_input_translated)))
-
-        # add the genes to the result
-        # map_result['input_genes'] = list_input_genes
-        if DEBUG:
-            map_result['conf'] = map_conf
-
-        # translate the genes into what the system can handle
-        list_input_translated = sql_utils.db_get_gene_names_from_list(conn=sql_conn_query, list_input=list_input_genes)
-        logger.info("got translated gene inputs of size: {}".format(len(list_input_translated)))
+        str_message = "got translated gene inputs of size: {}".format(len(list_input_translated))
+        logger.info(str_message)
+        list_logs.append(str_message)
 
         # add the genes to the result
         # map_result['input_genes'] = list_input_genes
@@ -273,10 +277,31 @@ def post_pigean_genes():
         logs_process.append(str_message)
         logs_process.append("code version is: {}".format(dutils.get_code_version()))
         map_result['logs'] = logs_process
-        logger.info(str_message)
+
+        # add the input to the logs
+        logs_process = list_logs + logs_process
+
+        # print logs to app log
+        for row in logs_process:
+            logger.info(row)
 
     # return
     return map_result
+
+def log_and_add_to_list(logger, list_input, str_message):
+    '''
+    helper method to log a message and add to a log list
+    '''
+    # log message
+    logger.info(str_message)
+
+    # add to list
+    if not list_input:
+        list_input = []
+    list_input.append(str_message)
+
+    # return
+    return list_input
 
 
 @app.route("/novelty_query", methods=["POST"])
