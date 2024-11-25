@@ -36,7 +36,7 @@ logger = logging.getLogger(__name__)
 #     '''
 #     test computing the factors
 #     '''
-#     print("\n=============== IN test_calculate_factors()")
+#     print("\n=============== IN test_gene_scores()")
 #     # initialize
 #     map_gene_index = None 
 #     list_input_genes = [
@@ -134,7 +134,7 @@ def test_gene_scores_compute_lib():
     '''
     test computing the factors
     '''
-    print("\n=============== IN test_calculate_factors()")
+    print("\n=============== IN test_gene_scores_compute_lib()")
     # initialize
     map_gene_index = None 
     map_gene_scores = None
