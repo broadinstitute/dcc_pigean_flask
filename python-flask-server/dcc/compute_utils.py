@@ -48,6 +48,7 @@ import time
 import dcc.dcc_utils as dutils 
 import dcc.matrix_utils as mutils 
 import dcc.ml_utils as mlutils
+from dcc.spike_n_slab import SnS
 
 
 # TODO - process notes
@@ -843,6 +844,59 @@ def run_nmf(matrix_input, num_components=15, log=False):
 
     # return
     return W, H
+
+
+# def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index, map_gene_set_index, mean_shifts, scale_factors, log=False):
+def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index, list_system_genes, log=False):
+    '''
+    calculates the gene scores
+    '''
+    # initialize
+    map_gene_scores = {}
+
+    # get the matrix/vectors needed
+    vector_gene, list_input_gene_indices = mutils.generate_gene_vector_from_list(list_gene=list_input_genes, map_gene_index=map_gene_index)
+
+    # log
+    logger.info("form a gene list of size: {} got a gene index of size: {} and gene vector of shape: {}".format(len(list_input_genes), len(list_input_gene_indices), vector_gene.shape))
+               
+    # convert data for Alex's code
+    # make sure gene set matrix is full matrix, not sparse
+    matrix_dense_gene_sets = matrix_gene_sets.toarray()
+
+    # get the coeff
+    start = time.time()
+    mod_log_sns = SnS()
+
+    # get the new betas, ses
+    logger.info("calculating beta tildes for gene scores")
+    log_coeff_beta_tildes, log_coeff_ses, _, _, _, _, _ = mod_log_sns.compute_logistic_beta_tildes(X=matrix_dense_gene_sets, Y=vector_gene)
+
+    # get the gene scores
+    logger.info("calculating new betas for gene scores")
+    gene_betas, _ = mod_log_sns.calculate_non_inf_betas(
+                    log_coeff_beta_tildes[:, list_input_gene_indices],
+                    log_coeff_ses[:, list_input_gene_indices],
+                    X_orig=matrix_dense_gene_sets[:, list_input_gene_indices],
+                    sigma2=np.ones((1, 1)),
+                    p=np.ones((1, 1)) * 0.001)
+
+    # log
+    end = time.time()
+    str_message = "gene scores calculation time elapsed {}s".format(end-start)
+    logger.info(str_message)
+    logger.info("got gene scores of shape: {}: and data: {}".format(gene_betas.shape, gene_betas))
+
+    # build the map
+    for index, gene_score in enumerate(gene_betas):
+        index_gene = list_input_gene_indices[index]
+        map_gene_scores[list_system_genes[index_gene]] = gene_score
+
+    # return
+    return map_gene_scores
+
+
+
 
 
 # main
