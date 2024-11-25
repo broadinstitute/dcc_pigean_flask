@@ -1,0 +1,6480 @@
+{
+    "nodes": [
+        {
+            "color": "#9ca5ac",
+            "id": "LDLR",
+            "label": "LDLR",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 18.56,
+            "x": -1761.750178679167,
+            "y": -126.12571258222891
+        },
+        {
+            "color": "#c2a6bc",
+            "id": "ETS1",
+            "label": "ETS1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.08,
+            "x": 649.2121544491877,
+            "y": 214.86021767641975
+        },
+        {
+            "color": "#cba4bd",
+            "id": "ITGB3",
+            "label": "ITGB3",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.92,
+            "x": 42.765996742622235,
+            "y": 615.6102464820194
+        },
+        {
+            "color": "#c9bdc4",
+            "id": "VEGFA",
+            "label": "VEGFA",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 17.22,
+            "x": 778.7447279453276,
+            "y": 46.78394231076589
+        },
+        {
+            "color": "#dab48f",
+            "id": "RDX",
+            "label": "RDX",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.0,
+            "x": 349.42951607147444,
+            "y": 598.6323778157441
+        },
+        {
+            "color": "#d0b9aa",
+            "id": "RAMP2",
+            "label": "RAMP2",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.12,
+            "x": 739.9750660843054,
+            "y": 400.01004278592467
+        },
+        {
+            "color": "#a299b5",
+            "id": "SCARB1",
+            "label": "SCARB1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 17.92,
+            "x": -1455.7175651062985,
+            "y": 47.7769616067081
+        },
+        {
+            "color": "#aaa79d",
+            "id": "CASZ1",
+            "label": "CASZ1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.0,
+            "x": 225.02509442575254,
+            "y": -252.77713384517804
+        },
+        {
+            "color": "#d0cdbf",
+            "id": "MYL2",
+            "label": "MYL2",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 13.82,
+            "x": 306.39578445318784,
+            "y": -504.0761549215086
+        },
+        {
+            "color": "#949ea9",
+            "id": "TSPO",
+            "label": "TSPO",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.86,
+            "x": -1766.049766824781,
+            "y": -48.058040086896234
+        },
+        {
+            "color": "#c598b4",
+            "id": "BCAR1",
+            "label": "BCAR1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.02,
+            "x": 126.1932305740813,
+            "y": 496.1789091343288
+        },
+        {
+            "color": "#b4d6a2",
+            "id": "NOTCH1",
+            "label": "NOTCH1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.64,
+            "x": 715.0967931825038,
+            "y": -533.7856837002861
+        },
+        {
+            "color": "#c9bccb",
+            "id": "JUN",
+            "label": "JUN",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 14.76,
+            "x": 290.16570933604953,
+            "y": -0.47347597023941823
+        },
+        {
+            "color": "#94a0ad",
+            "id": "APOC1",
+            "label": "APOC1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.7,
+            "x": -1526.73146919438,
+            "y": -29.19931527706247
+        },
+        {
+            "color": "#c0c0a7",
+            "id": "MECOM",
+            "label": "MECOM",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.24,
+            "x": 732.9018274205584,
+            "y": 1.957912700929423
+        },
+        {
+            "color": "#dccab8",
+            "id": "HTRA1",
+            "label": "HTRA1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 13.1,
+            "x": 94.5220808941517,
+            "y": 261.0243848039595
+        },
+        {
+            "color": "#cfcac5",
+            "id": "LMNA",
+            "label": "LMNA",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.98,
+            "x": 353.1274911949942,
+            "y": -195.6575627954593
+        },
+        {
+            "color": "#d9b99a",
+            "id": "PALLD",
+            "label": "PALLD",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.24,
+            "x": 21.38583357383357,
+            "y": 517.9744428224166
+        },
+        {
+            "color": "#c8dea8",
+            "id": "ARHGEF12",
+            "label": "ARHGEF12",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.74,
+            "x": 458.03002857142855,
+            "y": 268.5522468714513
+        },
+        {
+            "color": "#c5c7a8",
+            "id": "TIE1",
+            "label": "TIE1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.02,
+            "x": 830.744123693606,
+            "y": 252.08921544330414
+        },
+        {
+            "color": "#c5c1ad",
+            "id": "EPAS1",
+            "label": "EPAS1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.98,
+            "x": 679.8304048798938,
+            "y": 262.48246691016544
+        },
+        {
+            "color": "#d2c7bb",
+            "id": "EDN1",
+            "label": "EDN1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 13.12,
+            "x": 1000.0,
+            "y": -219.94025131563282
+        },
+        {
+            "color": "#c9d5aa",
+            "id": "FOXC1",
+            "label": "FOXC1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 14.64,
+            "x": 953.4578377224808,
+            "y": -563.0969722459292
+        },
+        {
+            "color": "#a09ea4",
+            "id": "APOA1",
+            "label": "APOA1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.04,
+            "x": -1682.595965622255,
+            "y": 90.74124026222285
+        },
+        {
+            "color": "#d3baa9",
+            "id": "CLDN5",
+            "label": "CLDN5",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.6,
+            "x": 687.6311152971589,
+            "y": 319.7622139616513
+        },
+        {
+            "color": "#d5c0a4",
+            "id": "PECAM1",
+            "label": "PECAM1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 13.18,
+            "x": 634.1681198536281,
+            "y": 415.7495214812502
+        },
+        {
+            "color": "#d8d0c9",
+            "id": "TCF7L2",
+            "label": "TCF7L2",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.76,
+            "x": 286.2112266510049,
+            "y": -208.2562525060346
+        },
+        {
+            "color": "#dec3a7",
+            "id": "SERPINH1",
+            "label": "SERPINH1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 15.3,
+            "x": 364.73454380835904,
+            "y": 502.9380095249872
+        },
+        {
+            "color": "#baacbb",
+            "id": "CDKN1A",
+            "label": "CDKN1A",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 16.5,
+            "x": 381.66059155264145,
+            "y": 325.6000646617657
+        },
+        {
+            "color": "#d9caba",
+            "id": "SHROOM3",
+            "label": "SHROOM3",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.22,
+            "x": 160.69383478932588,
+            "y": -207.12077788908184
+        },
+        {
+            "color": "#acb1a9",
+            "id": "GATA4",
+            "label": "GATA4",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.68,
+            "x": 417.7462014374473,
+            "y": -558.333135418622
+        },
+        {
+            "color": "#d2c79c",
+            "id": "DLC1",
+            "label": "DLC1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.42,
+            "x": 756.0803438806446,
+            "y": 593.3556201697821
+        },
+        {
+            "color": "#89929c",
+            "id": "NPC1L1",
+            "label": "NPC1L1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.06,
+            "x": -1250.1061131081856,
+            "y": -47.937374086585315
+        },
+        {
+            "color": "#9bb7cb",
+            "id": "HNF1A",
+            "label": "HNF1A",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.7,
+            "x": -100.96736841566047,
+            "y": -265.7905372671014
+        },
+        {
+            "color": "#bcc7af",
+            "id": "FOXC2",
+            "label": "FOXC2",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 18.58,
+            "x": 821.8930412142395,
+            "y": -679.9328295766949
+        },
+        {
+            "color": "#8d95a2",
+            "id": "LPA",
+            "label": "LPA",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.14,
+            "x": -1705.1634879831051,
+            "y": -15.608175460611529
+        },
+        {
+            "color": "#96adc3",
+            "id": "SREBF1",
+            "label": "SREBF1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.84,
+            "x": -645.6342299650601,
+            "y": -256.9471911861824
+        },
+        {
+            "color": "#cdb6b5",
+            "id": "NR2F2",
+            "label": "NR2F2",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.28,
+            "x": 783.6009692880241,
+            "y": 520.0898570099937
+        },
+        {
+            "color": "#e8d7c7",
+            "id": "SH3PXD2A",
+            "label": "SH3PXD2A",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.2,
+            "x": 96.51729614957193,
+            "y": -161.5878003091018
+        },
+        {
+            "color": "#b9bccf",
+            "id": "TGFB1",
+            "label": "TGFB1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 17.4,
+            "x": 355.08774851911227,
+            "y": -341.33731997540167
+        },
+        {
+            "color": "#dec1ae",
+            "id": "TIMP3",
+            "label": "TIMP3",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 14.88,
+            "x": 493.6388197273077,
+            "y": 599.3417940848869
+        },
+        {
+            "color": "#8f9faf",
+            "id": "LIPC",
+            "label": "LIPC",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 13.38,
+            "x": -1466.858068806729,
+            "y": -53.65765638108619
+        },
+        {
+            "color": "#8b97a3",
+            "id": "ABCG5",
+            "label": "ABCG5",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.6,
+            "x": -1759.5669516252271,
+            "y": -45.29201545449997
+        },
+        {
+            "color": "#cfa1c9",
+            "id": "PGF",
+            "label": "PGF",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.98,
+            "x": 315.93748099844413,
+            "y": 594.3223024789228
+        },
+        {
+            "color": "#bcd39e",
+            "id": "TBX2",
+            "label": "TBX2",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 15.36,
+            "x": 530.4465346251072,
+            "y": -701.8867701379799
+        },
+        {
+            "color": "#b1b3a7",
+            "id": "LRP1",
+            "label": "LRP1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.52,
+            "x": -1453.017726001017,
+            "y": -55.99215394822411
+        },
+        {
+            "color": "#d5aa80",
+            "id": "ABI2",
+            "label": "ABI2",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.5,
+            "x": -130.27803077779376,
+            "y": 325.8823117563443
+        },
+        {
+            "color": "#abcbb6",
+            "id": "LIF",
+            "label": "LIF",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.02,
+            "x": 261.2121762814505,
+            "y": -410.14572826067484
+        },
+        {
+            "color": "#dac9ae",
+            "id": "SOX7",
+            "label": "SOX7",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.04,
+            "x": 641.859507968163,
+            "y": 150.87459250456993
+        },
+        {
+            "color": "#97a0a6",
+            "id": "LIPA",
+            "label": "LIPA",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 16.66,
+            "x": -1686.4827447582363,
+            "y": -63.09233625602651
+        },
+        {
+            "color": "#d7af87",
+            "id": "SWAP70",
+            "label": "SWAP70",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.92,
+            "x": 83.22407301962943,
+            "y": 485.4046064464822
+        },
+        {
+            "color": "#c0d29d",
+            "id": "SOX17",
+            "label": "SOX17",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.38,
+            "x": 814.9794192531876,
+            "y": -185.67969324860834
+        },
+        {
+            "color": "#b1d69a",
+            "id": "TCF21",
+            "label": "TCF21",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.26,
+            "x": 383.62694785027014,
+            "y": -352.27984477014604
+        },
+        {
+            "color": "#b5d5aa",
+            "id": "TBX20",
+            "label": "TBX20",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.34,
+            "x": 690.1269385413924,
+            "y": -845.5438418010269
+        },
+        {
+            "color": "#8b97a3",
+            "id": "ABCG8",
+            "label": "ABCG8",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.38,
+            "x": -1762.7922011564654,
+            "y": -44.755335081406336
+        },
+        {
+            "color": "#c6c3a9",
+            "id": "ZEB1",
+            "label": "ZEB1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.66,
+            "x": 600.5736386761238,
+            "y": 118.02297139801301
+        },
+        {
+            "color": "#bfcfba",
+            "id": "SMAD7",
+            "label": "SMAD7",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.08,
+            "x": 324.0491528214987,
+            "y": -649.4036493799074
+        },
+        {
+            "color": "#959ea5",
+            "id": "ABCA1",
+            "label": "ABCA1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 19.46,
+            "x": -1705.2152667984665,
+            "y": 1.8978719514881452
+        },
+        {
+            "color": "#c1cdba",
+            "id": "TGFB2",
+            "label": "TGFB2",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 13.3,
+            "x": 400.75354811510005,
+            "y": -714.9305525904657
+        },
+        {
+            "color": "#adc2ab",
+            "id": "NCOA6",
+            "label": "NCOA6",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.08,
+            "x": 373.7955253581161,
+            "y": -239.2695219416516
+        },
+        {
+            "color": "#d9b2a7",
+            "id": "FAP",
+            "label": "FAP",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 13.08,
+            "x": 80.43449083977559,
+            "y": 618.9609436177328
+        },
+        {
+            "color": "#c995cb",
+            "id": "PLCG1",
+            "label": "PLCG1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.2,
+            "x": 158.40604308959584,
+            "y": 472.1726535180097
+        },
+        {
+            "color": "#dac6ac",
+            "id": "COL4A1",
+            "label": "COL4A1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 15.96,
+            "x": 431.48684239906885,
+            "y": 458.86428636527603
+        },
+        {
+            "color": "#a5a4ca",
+            "id": "PPARG",
+            "label": "PPARG",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.64,
+            "x": -414.4122707229476,
+            "y": -240.72131313139658
+        },
+        {
+            "color": "#aaa9a9",
+            "id": "PLTP",
+            "label": "PLTP",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 15.14,
+            "x": -1290.9183405643778,
+            "y": 85.97362769243487
+        },
+        {
+            "color": "#c8c3bf",
+            "id": "BMP1",
+            "label": "BMP1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.4,
+            "x": -312.379236172412,
+            "y": 144.1362479837748
+        },
+        {
+            "color": "#e5d4cc",
+            "id": "ADAMTS3",
+            "label": "ADAMTS3",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.2,
+            "x": 121.83053447206713,
+            "y": -169.07405502364105
+        },
+        {
+            "color": "#eedccb",
+            "id": "SORBS2",
+            "label": "SORBS2",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.06,
+            "x": 78.47247635982562,
+            "y": -117.1565535739632
+        },
+        {
+            "color": "#b4c6c1",
+            "id": "TWIST1",
+            "label": "TWIST1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 15.12,
+            "x": 406.7935252759999,
+            "y": -620.6566970826152
+        },
+        {
+            "color": "#929ea5",
+            "id": "APOB",
+            "label": "APOB",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 15.52,
+            "x": -1707.3632048585705,
+            "y": -128.4618341628442
+        },
+        {
+            "color": "#c4a8bd",
+            "id": "KLF4",
+            "label": "KLF4",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.9,
+            "x": 528.1113935932262,
+            "y": 311.4839466802285
+        },
+        {
+            "color": "#dac9c8",
+            "id": "PDGFRB",
+            "label": "PDGFRB",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 14.3,
+            "x": 420.08706181083164,
+            "y": 83.34168843686479
+        },
+        {
+            "color": "#d5c9c7",
+            "id": "PDGFRA",
+            "label": "PDGFRA",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.16,
+            "x": 515.012286684385,
+            "y": 98.1023379394243
+        },
+        {
+            "color": "#bcc6aa",
+            "id": "NKX2-5",
+            "label": "NKX2-5",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 14.64,
+            "x": 542.0174455464469,
+            "y": -611.8219051088071
+        },
+        {
+            "color": "#c9d19b",
+            "id": "WASF2",
+            "label": "WASF2",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.58,
+            "x": 275.5664565347878,
+            "y": 340.2879423561322
+        },
+        {
+            "color": "#d5b28c",
+            "id": "FGD5",
+            "label": "FGD5",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.62,
+            "x": 197.85289535927367,
+            "y": 551.2175829750562
+        },
+        {
+            "color": "#9dadbd",
+            "id": "LPL",
+            "label": "LPL",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 19.18,
+            "x": -1528.459627969276,
+            "y": -123.68791973555295
+        },
+        {
+            "color": "#b3c6c6",
+            "id": "SMAD3",
+            "label": "SMAD3",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 16.76,
+            "x": 115.07156372828484,
+            "y": -369.82994177598323
+        },
+        {
+            "color": "#d5c4c1",
+            "id": "CXCR4",
+            "label": "CXCR4",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 13.52,
+            "x": 885.3694564400673,
+            "y": 219.002957259237
+        },
+        {
+            "color": "#89929b",
+            "id": "HMGCR",
+            "label": "HMGCR",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 13.6,
+            "x": -1246.3524543760602,
+            "y": -43.624411452018606
+        },
+        {
+            "color": "#c6beb6",
+            "id": "TEK",
+            "label": "TEK",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.52,
+            "x": 764.2584288804385,
+            "y": 399.7956883116778
+        },
+        {
+            "color": "#ddc2b6",
+            "id": "COL4A2",
+            "label": "COL4A2",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 13.34,
+            "x": 416.923947451465,
+            "y": 442.6499714960005
+        },
+        {
+            "color": "#c1c1b1",
+            "id": "ADM",
+            "label": "ADM",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 14.8,
+            "x": 909.0400715769318,
+            "y": 82.2488309000796
+        },
+        {
+            "color": "#9aa3ad",
+            "id": "CETP",
+            "label": "CETP",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 16.14,
+            "x": -1405.6350657979503,
+            "y": -7.964007566299721
+        },
+        {
+            "color": "#cfb5b8",
+            "id": "FLT1",
+            "label": "FLT1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 14.44,
+            "x": 671.5107633156733,
+            "y": 625.1936141036564
+        },
+        {
+            "color": "#889199",
+            "id": "FABP2",
+            "label": "FABP2",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 14.6,
+            "x": -1051.2248054606239,
+            "y": -39.357392271016636
+        },
+        {
+            "color": "#d6dab4",
+            "id": "SEMA3C",
+            "label": "SEMA3C",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.86,
+            "x": 543.0839500948218,
+            "y": -581.1292699828329
+        },
+        {
+            "color": "#c79fbf",
+            "id": "SEMA5A",
+            "label": "SEMA5A",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.76,
+            "x": 282.9892504488494,
+            "y": 278.8215920485207
+        },
+        {
+            "color": "#8f9fae",
+            "id": "LIPG",
+            "label": "LIPG",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 17.44,
+            "x": -1478.3781743150757,
+            "y": -53.04236760500912
+        },
+        {
+            "color": "#c5b9aa",
+            "id": "NRP1",
+            "label": "NRP1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 13.24,
+            "x": 967.7865157161528,
+            "y": 171.65681329708426
+        },
+        {
+            "color": "#cfbfa9",
+            "id": "F2R",
+            "label": "F2R",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.58,
+            "x": 699.6263120239013,
+            "y": 688.3325361925005
+        },
+        {
+            "color": "#cdcbb4",
+            "id": "FN1",
+            "label": "FN1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 15.08,
+            "x": 457.50085986424045,
+            "y": 467.3712446128614
+        },
+        {
+            "color": "#c2b8a9",
+            "id": "KLF2",
+            "label": "KLF2",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 13.2,
+            "x": 817.2556408239486,
+            "y": 337.989276531455
+        },
+        {
+            "color": "#ad9db7",
+            "id": "PTPN11",
+            "label": "PTPN11",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 15.98,
+            "x": -14.177300619257489,
+            "y": -49.2080983006647
+        },
+        {
+            "color": "#c0d0a2",
+            "id": "ENG",
+            "label": "ENG",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.86,
+            "x": 905.2244626291929,
+            "y": -250.36228370991367
+        },
+        {
+            "color": "#92a2b1",
+            "id": "APOC3",
+            "label": "APOC3",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.4,
+            "x": -1399.7479530492656,
+            "y": -47.98607829978765
+        },
+        {
+            "color": "#d4aa80",
+            "id": "MYO9B",
+            "label": "MYO9B",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.6,
+            "x": -169.15512077556102,
+            "y": 326.2050830785043
+        },
+        {
+            "color": "#d7b494",
+            "id": "NEDD9",
+            "label": "NEDD9",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.38,
+            "x": 287.2456137436305,
+            "y": 642.0930629664286
+        },
+        {
+            "color": "#b5bca4",
+            "id": "ZFPM2",
+            "label": "ZFPM2",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.48,
+            "x": 346.6526561009256,
+            "y": -590.8110237246427
+        },
+        {
+            "color": "#ddd5c3",
+            "id": "LOX",
+            "label": "LOX",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 13.46,
+            "x": 251.25927647501146,
+            "y": -16.10013790153167
+        },
+        {
+            "color": "#c39db7",
+            "id": "PLCG2",
+            "label": "PLCG2",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.44,
+            "x": -80.24160870562281,
+            "y": 678.7520127983578
+        },
+        {
+            "color": "#dcbfba",
+            "id": "CXCL12",
+            "label": "CXCL12",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.06,
+            "x": 620.7903935307504,
+            "y": 705.0548631438619
+        },
+        {
+            "color": "#b6ccb4",
+            "id": "BMP4",
+            "label": "BMP4",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.52,
+            "x": 687.6979723805446,
+            "y": -1000.0
+        },
+        {
+            "color": "#ae8db9",
+            "id": "APOH",
+            "label": "APOH",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.92,
+            "x": -832.1899776122855,
+            "y": 185.5088337747527
+        },
+        {
+            "color": "#a8add0",
+            "id": "IRS1",
+            "label": "IRS1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.1,
+            "x": -276.8772570633728,
+            "y": -5.614082227882283
+        },
+        {
+            "color": "#cfaab2",
+            "id": "RHOA",
+            "label": "RHOA",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.54,
+            "x": 225.50919407346265,
+            "y": 484.6967798338767
+        },
+        {
+            "color": "#889199",
+            "id": "MVK",
+            "label": "MVK",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.3,
+            "x": -1051.6497188876206,
+            "y": -41.26285169358376
+        },
+        {
+            "color": "#c0c4a1",
+            "id": "SOX18",
+            "label": "SOX18",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.26,
+            "x": 997.492358630905,
+            "y": -27.376200082340844
+        },
+        {
+            "color": "#8f969d",
+            "id": "LRPAP1",
+            "label": "LRPAP1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.26,
+            "x": -1503.3317853275453,
+            "y": 1.2957729488097216
+        },
+        {
+            "color": "#c59ea8",
+            "id": "RAC1",
+            "label": "RAC1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 15.06,
+            "x": 123.84909289597528,
+            "y": 411.44451066752003
+        },
+        {
+            "color": "#cacdbd",
+            "id": "SMAD6",
+            "label": "SMAD6",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.78,
+            "x": 445.3964112719805,
+            "y": -401.46890984491534
+        },
+        {
+            "color": "#c0cdb7",
+            "id": "MEF2C",
+            "label": "MEF2C",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 13.9,
+            "x": 963.0265573247257,
+            "y": -665.4740211080103
+        },
+        {
+            "color": "#bad4af",
+            "id": "WT1",
+            "label": "WT1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.8,
+            "x": 478.4154153647178,
+            "y": -618.4098201239731
+        },
+        {
+            "color": "#8e9caa",
+            "id": "APOA4",
+            "label": "APOA4",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.4,
+            "x": -1596.794126511591,
+            "y": -51.7713754872086
+        },
+        {
+            "color": "#ada5ba",
+            "id": "APOE",
+            "label": "APOE",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 18.28,
+            "x": -1461.3344940741583,
+            "y": 23.875749119297105
+        },
+        {
+            "color": "#e5ccb3",
+            "id": "C1S",
+            "label": "C1S",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 11.78,
+            "x": -25.412132748611242,
+            "y": 302.25103274381854
+        },
+        {
+            "color": "#c0dbaa",
+            "id": "TBX3",
+            "label": "TBX3",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 13.02,
+            "x": 782.7880712246641,
+            "y": -709.3726157185298
+        },
+        {
+            "color": "#bbb3ac",
+            "id": "IL6ST",
+            "label": "IL6ST",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.54,
+            "x": 462.1431382661677,
+            "y": 161.5643674255879
+        },
+        {
+            "color": "#b3cfb2",
+            "id": "CTNNB1",
+            "label": "CTNNB1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.02,
+            "x": 650.9318619675282,
+            "y": -338.73927517394867
+        },
+        {
+            "color": "#8f9fa6",
+            "id": "MTTP",
+            "label": "MTTP",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.46,
+            "x": -1681.4642935232055,
+            "y": -49.14841934754932
+        },
+        {
+            "color": "#e3c6aa",
+            "id": "TNS1",
+            "label": "TNS1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.04,
+            "x": 249.13205788207677,
+            "y": 473.53567650533455
+        },
+        {
+            "color": "#bec0b3",
+            "id": "ACVRL1",
+            "label": "ACVRL1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 15.28,
+            "x": 737.6404239748573,
+            "y": -49.77882444293142
+        },
+        {
+            "color": "#c8dba6",
+            "id": "EDNRA",
+            "label": "EDNRA",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 14.84,
+            "x": 622.044052035643,
+            "y": -655.5811190396588
+        },
+        {
+            "color": "#8f9fa6",
+            "id": "PCSK9",
+            "label": "PCSK9",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 17.1,
+            "x": -1656.5600134989409,
+            "y": -79.69945574366068
+        },
+        {
+            "color": "#b7c5a7",
+            "id": "CITED2",
+            "label": "CITED2",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 10.22,
+            "x": 692.3151317079036,
+            "y": -819.7917445440995
+        },
+        {
+            "color": "#cec0ab",
+            "id": "PLPP3",
+            "label": "PLPP3",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.44,
+            "x": 657.5324212511812,
+            "y": 465.39581153915003
+        },
+        {
+            "color": "#aabcc3",
+            "id": "NR3C1",
+            "label": "NR3C1",
+            "opacity": 1,
+            "shape": "dot",
+            "size": 12.12,
+            "x": -9.620933785490967,
+            "y": -282.631630498671
+        },
+        {
+            "color": "#889199",
+            "id": "Cholesterol Metabolic Processes",
+            "label": "Cholesterol Metabolic Processes",
+            "opacity": 1,
+            "shape": "square",
+            "size": 85.1,
+            "x": -793.1984083615773,
+            "y": -49.86974296819591
+        },
+        {
+            "color": "#99b3cc",
+            "id": "Adipogenesis Regulation",
+            "label": "Adipogenesis Regulation",
+            "opacity": 1,
+            "shape": "square",
+            "size": 56.5,
+            "x": -21.642658489809925,
+            "y": -201.11992721785055
+        },
+        {
+            "color": "#eeddcc",
+            "id": "Congenital Heart Defects",
+            "label": "Congenital Heart Defects",
+            "opacity": 1,
+            "shape": "square",
+            "size": 54.9,
+            "x": 189.62625711861938,
+            "y": -209.49758059107242
+        },
+        {
+            "color": "#91a2b3",
+            "id": "Cholesterol Production Inhibition",
+            "label": "Cholesterol Production Inhibition",
+            "opacity": 1,
+            "shape": "square",
+            "size": 47.0,
+            "x": -837.3313782837929,
+            "y": -47.16108231765755
+        },
+        {
+            "color": "#d5aa80",
+            "id": "Cytoskeletal Organization Regulation",
+            "label": "Cytoskeletal Organization Regulation",
+            "opacity": 1,
+            "shape": "square",
+            "size": 40.9,
+            "x": -7.653932035291645,
+            "y": 162.92068830363425
+        },
+        {
+            "color": "#ddbb99",
+            "id": "Liver Endothelial Cell Types",
+            "label": "Liver Endothelial Cell Types",
+            "opacity": 1,
+            "shape": "square",
+            "size": 31.7,
+            "x": 427.9018297356354,
+            "y": 232.4820947458957
+        },
+        {
+            "color": "#e6ccb3",
+            "id": "Epithelial-Mesenchymal Transition",
+            "label": "Epithelial-Mesenchymal Transition",
+            "opacity": 1,
+            "shape": "square",
+            "size": 26.8,
+            "x": 84.34438774328295,
+            "y": 146.37791925183646
+        },
+        {
+            "color": "#808080",
+            "id": "Abnormal Heart Development",
+            "label": "Abnormal Heart Development",
+            "opacity": 1,
+            "shape": "square",
+            "size": 25.4,
+            "x": 116.29304913720911,
+            "y": -201.48769000719966
+        },
+        {
+            "color": "#bbf7b3",
+            "id": "Vascular Morphology Abnormalities",
+            "label": "Vascular Morphology Abnormalities",
+            "opacity": 1,
+            "shape": "square",
+            "size": 21.8,
+            "x": 314.2130744787795,
+            "y": -50.684021119045696
+        },
+        {
+            "color": "#c488cc",
+            "id": "Endothelial Cell Migration Regulation",
+            "label": "Endothelial Cell Migration Regulation",
+            "opacity": 1,
+            "shape": "square",
+            "size": 13.6,
+            "x": 196.8122498741687,
+            "y": 62.82678237198178
+        },
+        {
+            "color": "#b3e699",
+            "id": "Epithelial Tube Morphogenesis",
+            "label": "Epithelial Tube Morphogenesis",
+            "opacity": 1,
+            "shape": "square",
+            "size": 13.3,
+            "x": 341.89159535237764,
+            "y": -325.9981103382515
+        },
+        {
+            "color": "#f7eee6",
+            "id": "Muscle Tissue Development",
+            "label": "Muscle Tissue Development",
+            "opacity": 1,
+            "shape": "square",
+            "size": 13.1,
+            "x": 183.02956571964972,
+            "y": -323.7195392536373
+        },
+        {
+            "color": "#a2c4e6",
+            "id": "TGF Beta Signaling Pathway",
+            "label": "TGF Beta Signaling Pathway",
+            "opacity": 1,
+            "shape": "square",
+            "size": 10.3,
+            "x": 73.89589247858079,
+            "y": -241.55269872843067
+        },
+        {
+            "color": "#cc99e6",
+            "id": "Angiogenesis and Cancer Pathways",
+            "label": "Angiogenesis and Cancer Pathways",
+            "opacity": 1,
+            "shape": "square",
+            "size": 8.03,
+            "x": 93.17699382946216,
+            "y": 126.41982031456718
+        },
+        {
+            "color": "#aad580",
+            "id": "Cardiac Morphogenesis Processes",
+            "label": "Cardiac Morphogenesis Processes",
+            "opacity": 1,
+            "shape": "square",
+            "size": 7.98,
+            "x": 210.42124099107835,
+            "y": -412.0441652133525
+        }
+    ],
+    "edges": [
+        {
+            "color": "#889199",
+            "from": "LDLR",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 6.402622583916624
+        },
+        {
+            "color": "#99b3cc",
+            "from": "LDLR",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.06613384915593096
+        },
+        {
+            "color": "#91a2b3",
+            "from": "LDLR",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 1.8315242349150815
+        },
+        {
+            "color": "#ddbb99",
+            "from": "LDLR",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 9.357973293634964e-06
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "LDLR",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.007014220226321467
+        },
+        {
+            "color": "#c488cc",
+            "from": "LDLR",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.00017523357152036457
+        },
+        {
+            "color": "#f7eee6",
+            "from": "LDLR",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.0014909166065404749
+        },
+        {
+            "color": "#cc99e6",
+            "from": "LDLR",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.00010894799420689776
+        },
+        {
+            "color": "#aad580",
+            "from": "LDLR",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.0023245065313545346
+        },
+        {
+            "color": "#99b3cc",
+            "from": "ETS1",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.0223757092013387
+        },
+        {
+            "color": "#eeddcc",
+            "from": "ETS1",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 0.04757032780327641
+        },
+        {
+            "color": "#ddbb99",
+            "from": "ETS1",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.23271282654069206
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "ETS1",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.013740340879354938
+        },
+        {
+            "color": "#808080",
+            "from": "ETS1",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.030303656534783115
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "ETS1",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.00012677156437500002
+        },
+        {
+            "color": "#c488cc",
+            "from": "ETS1",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 1.1120305540316724
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "ETS1",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.008956206861194698
+        },
+        {
+            "color": "#91a2b3",
+            "from": "ITGB3",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 0.0010619002620516277
+        },
+        {
+            "color": "#d5aa80",
+            "from": "ITGB3",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.9083840823599827
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "ITGB3",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.14178090310028116
+        },
+        {
+            "color": "#c488cc",
+            "from": "ITGB3",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.953248387154814
+        },
+        {
+            "color": "#b3e699",
+            "from": "ITGB3",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.01642938865950609
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "ITGB3",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 4.0303192683290185e-05
+        },
+        {
+            "color": "#cc99e6",
+            "from": "ITGB3",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.5293649729869764
+        },
+        {
+            "color": "#eeddcc",
+            "from": "VEGFA",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 0.3159709061802351
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "VEGFA",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.03352508398327552
+        },
+        {
+            "color": "#808080",
+            "from": "VEGFA",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 2.9897644647436206e-05
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "VEGFA",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 1.0349257491435184
+        },
+        {
+            "color": "#c488cc",
+            "from": "VEGFA",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 2.7200000000000006
+        },
+        {
+            "color": "#b3e699",
+            "from": "VEGFA",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.3448880106757199
+        },
+        {
+            "color": "#f7eee6",
+            "from": "VEGFA",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.06506565850861672
+        },
+        {
+            "color": "#cc99e6",
+            "from": "VEGFA",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 1.6060000000000003
+        },
+        {
+            "color": "#aad580",
+            "from": "VEGFA",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.026655065773438708
+        },
+        {
+            "color": "#d5aa80",
+            "from": "RDX",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.7288652407761221
+        },
+        {
+            "color": "#ddbb99",
+            "from": "RDX",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 2.1885961850193123
+        },
+        {
+            "color": "#ddbb99",
+            "from": "RAMP2",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 4.6913680725800715
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "RAMP2",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.0005374178051121623
+        },
+        {
+            "color": "#808080",
+            "from": "RAMP2",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.0031426142447318704
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "RAMP2",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.020117975966824155
+        },
+        {
+            "color": "#c488cc",
+            "from": "RAMP2",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.13170521666018095
+        },
+        {
+            "color": "#b3e699",
+            "from": "RAMP2",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.0011002801712994513
+        },
+        {
+            "color": "#f7eee6",
+            "from": "RAMP2",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.004067709364788112
+        },
+        {
+            "color": "#889199",
+            "from": "SCARB1",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 0.16149678335767553
+        },
+        {
+            "color": "#91a2b3",
+            "from": "SCARB1",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 3.1619632031819855
+        },
+        {
+            "color": "#ddbb99",
+            "from": "SCARB1",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.002232734623414948
+        },
+        {
+            "color": "#c488cc",
+            "from": "SCARB1",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.16726472973827575
+        },
+        {
+            "color": "#eeddcc",
+            "from": "CASZ1",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 0.19181055568933705
+        },
+        {
+            "color": "#808080",
+            "from": "CASZ1",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.40127512053523273
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "CASZ1",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.00015172674699563075
+        },
+        {
+            "color": "#d5aa80",
+            "from": "MYL2",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.0008354922168328009
+        },
+        {
+            "color": "#808080",
+            "from": "MYL2",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.26741536084419654
+        },
+        {
+            "color": "#f7eee6",
+            "from": "MYL2",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 2.6200000000000006
+        },
+        {
+            "color": "#cc99e6",
+            "from": "MYL2",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.0008211346944904587
+        },
+        {
+            "color": "#aad580",
+            "from": "MYL2",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.01951345915667407
+        },
+        {
+            "color": "#889199",
+            "from": "TSPO",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 1.0830351667626428
+        },
+        {
+            "color": "#99b3cc",
+            "from": "TSPO",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.003238680727667354
+        },
+        {
+            "color": "#91a2b3",
+            "from": "TSPO",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 0.09585751370143669
+        },
+        {
+            "color": "#ddbb99",
+            "from": "TSPO",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.0002959273600213481
+        },
+        {
+            "color": "#b3e699",
+            "from": "TSPO",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 3.714034342095854e-05
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "TSPO",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 1.9158206406273877e-05
+        },
+        {
+            "color": "#cc99e6",
+            "from": "TSPO",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 2.4597040770483684e-05
+        },
+        {
+            "color": "#d5aa80",
+            "from": "BCAR1",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.5050445589029263
+        },
+        {
+            "color": "#808080",
+            "from": "BCAR1",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.008836804789017959
+        },
+        {
+            "color": "#c488cc",
+            "from": "BCAR1",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.04439006647656405
+        },
+        {
+            "color": "#cc99e6",
+            "from": "BCAR1",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.12200554594595657
+        },
+        {
+            "color": "#d5aa80",
+            "from": "NOTCH1",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.0001275890516240593
+        },
+        {
+            "color": "#ddbb99",
+            "from": "NOTCH1",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.010044683387161232
+        },
+        {
+            "color": "#808080",
+            "from": "NOTCH1",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.0008125391595541723
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "NOTCH1",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 4.36
+        },
+        {
+            "color": "#c488cc",
+            "from": "NOTCH1",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.1607856022712074
+        },
+        {
+            "color": "#b3e699",
+            "from": "NOTCH1",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 1.2038934337336096
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "NOTCH1",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.011160905288397655
+        },
+        {
+            "color": "#aad580",
+            "from": "NOTCH1",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 1.596
+        },
+        {
+            "color": "#99b3cc",
+            "from": "JUN",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.043272542261381816
+        },
+        {
+            "color": "#eeddcc",
+            "from": "JUN",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 2.894691008139836
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "JUN",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.4586370769203053
+        },
+        {
+            "color": "#808080",
+            "from": "JUN",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.03925821180073042
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "JUN",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.11318338035235909
+        },
+        {
+            "color": "#cc99e6",
+            "from": "JUN",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.24625829470591684
+        },
+        {
+            "color": "#889199",
+            "from": "APOC1",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 0.13021532733471766
+        },
+        {
+            "color": "#91a2b3",
+            "from": "APOC1",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 2.5137659559329184
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "APOC1",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.0009374444172859531
+        },
+        {
+            "color": "#99b3cc",
+            "from": "MECOM",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.001521210214496381
+        },
+        {
+            "color": "#eeddcc",
+            "from": "MECOM",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 0.16747397803328615
+        },
+        {
+            "color": "#ddbb99",
+            "from": "MECOM",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.1415563681740332
+        },
+        {
+            "color": "#808080",
+            "from": "MECOM",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.08988175982163173
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "MECOM",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.041837265625
+        },
+        {
+            "color": "#ddbb99",
+            "from": "HTRA1",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.000605608680846121
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "HTRA1",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.7662602835695396
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "HTRA1",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.0014065932668624486
+        },
+        {
+            "color": "#99b3cc",
+            "from": "LMNA",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.7986490303067383
+        },
+        {
+            "color": "#ddbb99",
+            "from": "LMNA",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.20795193396551329
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "LMNA",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.006122475135275415
+        },
+        {
+            "color": "#808080",
+            "from": "LMNA",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.021266955787538025
+        },
+        {
+            "color": "#f7eee6",
+            "from": "LMNA",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 1.0414442029275022
+        },
+        {
+            "color": "#d5aa80",
+            "from": "PALLD",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.1532590306878887
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "PALLD",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.1983252818171115
+        },
+        {
+            "color": "#808080",
+            "from": "PALLD",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.00023090088128705673
+        },
+        {
+            "color": "#eeddcc",
+            "from": "ARHGEF12",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 2.289950785432763e-05
+        },
+        {
+            "color": "#d5aa80",
+            "from": "ARHGEF12",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.001310015311432186
+        },
+        {
+            "color": "#ddbb99",
+            "from": "ARHGEF12",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.0038913177373890587
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "ARHGEF12",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.0001563049539326661
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "ARHGEF12",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.08679273821784661
+        },
+        {
+            "color": "#ddbb99",
+            "from": "TIE1",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 3.7868069732980043
+        },
+        {
+            "color": "#808080",
+            "from": "TIE1",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.008820510746187981
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "TIE1",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 1.8109106046844994
+        },
+        {
+            "color": "#c488cc",
+            "from": "TIE1",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.17672420831240165
+        },
+        {
+            "color": "#b3e699",
+            "from": "TIE1",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.04999512344979263
+        },
+        {
+            "color": "#99b3cc",
+            "from": "EPAS1",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 1.4251841290393206
+        },
+        {
+            "color": "#ddbb99",
+            "from": "EPAS1",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 4.560985562163166
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "EPAS1",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.038539890882012755
+        },
+        {
+            "color": "#808080",
+            "from": "EPAS1",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.005170712162010139
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "EPAS1",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.0387447778469047
+        },
+        {
+            "color": "#c488cc",
+            "from": "EPAS1",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 1.636096729314819e-05
+        },
+        {
+            "color": "#b3e699",
+            "from": "EPAS1",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.0025229406099145494
+        },
+        {
+            "color": "#f7eee6",
+            "from": "EPAS1",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.0020782711754086616
+        },
+        {
+            "color": "#99b3cc",
+            "from": "EDN1",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.007287701759466842
+        },
+        {
+            "color": "#eeddcc",
+            "from": "EDN1",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 0.25913540781664757
+        },
+        {
+            "color": "#91a2b3",
+            "from": "EDN1",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 2.361747932358732e-05
+        },
+        {
+            "color": "#d5aa80",
+            "from": "EDN1",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.0031914455105510075
+        },
+        {
+            "color": "#ddbb99",
+            "from": "EDN1",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.779271432168341
+        },
+        {
+            "color": "#c488cc",
+            "from": "EDN1",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.2398319465121519
+        },
+        {
+            "color": "#b3e699",
+            "from": "EDN1",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.27081306807371835
+        },
+        {
+            "color": "#f7eee6",
+            "from": "EDN1",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.6058435442969179
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "EDN1",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 8.6490748606147e-05
+        },
+        {
+            "color": "#cc99e6",
+            "from": "EDN1",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.00541025568782973
+        },
+        {
+            "color": "#aad580",
+            "from": "EDN1",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.0066475439072590575
+        },
+        {
+            "color": "#eeddcc",
+            "from": "FOXC1",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 1.2712609229029876
+        },
+        {
+            "color": "#ddbb99",
+            "from": "FOXC1",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.7701299162986447
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "FOXC1",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 6.246873020928288e-06
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "FOXC1",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.08336942179952239
+        },
+        {
+            "color": "#c488cc",
+            "from": "FOXC1",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.006024603172155151
+        },
+        {
+            "color": "#b3e699",
+            "from": "FOXC1",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.24557294720664255
+        },
+        {
+            "color": "#f7eee6",
+            "from": "FOXC1",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.034168631057124796
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "FOXC1",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.001907012756697025
+        },
+        {
+            "color": "#aad580",
+            "from": "FOXC1",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.4330537640700611
+        },
+        {
+            "color": "#889199",
+            "from": "APOA1",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 2.382890962780025
+        },
+        {
+            "color": "#91a2b3",
+            "from": "APOA1",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 5.9956273020927995
+        },
+        {
+            "color": "#d5aa80",
+            "from": "APOA1",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.47510779578629236
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "APOA1",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 2.641873985817103e-05
+        },
+        {
+            "color": "#c488cc",
+            "from": "APOA1",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.003958634116878818
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "APOA1",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.000177473787917526
+        },
+        {
+            "color": "#d5aa80",
+            "from": "CLDN5",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.00011730788517359303
+        },
+        {
+            "color": "#ddbb99",
+            "from": "CLDN5",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 3.0994518376038616
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "CLDN5",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 7.109971887733685e-05
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "CLDN5",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 6.9565400139714456e-06
+        },
+        {
+            "color": "#c488cc",
+            "from": "CLDN5",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.040977001699179894
+        },
+        {
+            "color": "#b3e699",
+            "from": "CLDN5",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.004088472522170988
+        },
+        {
+            "color": "#f7eee6",
+            "from": "CLDN5",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.002427196922938374
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "CLDN5",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 9.775882139547506e-05
+        },
+        {
+            "color": "#aad580",
+            "from": "CLDN5",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 7.672540907418624e-05
+        },
+        {
+            "color": "#ddbb99",
+            "from": "PECAM1",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 3.875252684485706
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "PECAM1",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.015540756700158155
+        },
+        {
+            "color": "#b3e699",
+            "from": "PECAM1",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.03396983044703677
+        },
+        {
+            "color": "#cc99e6",
+            "from": "PECAM1",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.005068145416739123
+        },
+        {
+            "color": "#99b3cc",
+            "from": "TCF7L2",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.004114389919511799
+        },
+        {
+            "color": "#eeddcc",
+            "from": "TCF7L2",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 4.016685122846448
+        },
+        {
+            "color": "#ddbb99",
+            "from": "TCF7L2",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.014954935473593597
+        },
+        {
+            "color": "#c488cc",
+            "from": "TCF7L2",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 2.9286026654086566e-06
+        },
+        {
+            "color": "#b3e699",
+            "from": "TCF7L2",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.00035339049438167143
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "TCF7L2",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.008599487873180494
+        },
+        {
+            "color": "#cc99e6",
+            "from": "TCF7L2",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.00031858195194117716
+        },
+        {
+            "color": "#ddbb99",
+            "from": "SERPINH1",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.509332287785322
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "SERPINH1",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 1.0700145177217901
+        },
+        {
+            "color": "#808080",
+            "from": "SERPINH1",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.00019619242610322357
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "SERPINH1",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 3.396762831786947e-05
+        },
+        {
+            "color": "#99b3cc",
+            "from": "CDKN1A",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 1.7776644175014606
+        },
+        {
+            "color": "#ddbb99",
+            "from": "CDKN1A",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.28483918036590467
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "CDKN1A",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.09266583285803613
+        },
+        {
+            "color": "#808080",
+            "from": "CDKN1A",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.055500564658763143
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "CDKN1A",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 3.5939938709805353e-06
+        },
+        {
+            "color": "#cc99e6",
+            "from": "CDKN1A",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.10894799420689771
+        },
+        {
+            "color": "#eeddcc",
+            "from": "SHROOM3",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 2.765549651316336
+        },
+        {
+            "color": "#d5aa80",
+            "from": "SHROOM3",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.0008623509429901265
+        },
+        {
+            "color": "#808080",
+            "from": "SHROOM3",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.015787555606402562
+        },
+        {
+            "color": "#99b3cc",
+            "from": "GATA4",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.4176544062276218
+        },
+        {
+            "color": "#ddbb99",
+            "from": "GATA4",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.010048047313250888
+        },
+        {
+            "color": "#808080",
+            "from": "GATA4",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 4.474542547674871
+        },
+        {
+            "color": "#c488cc",
+            "from": "GATA4",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.010235481308501652
+        },
+        {
+            "color": "#b3e699",
+            "from": "GATA4",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.0010155018142337057
+        },
+        {
+            "color": "#f7eee6",
+            "from": "GATA4",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.4597809838719245
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "GATA4",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.0018590733680549064
+        },
+        {
+            "color": "#aad580",
+            "from": "GATA4",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.07700441028894531
+        },
+        {
+            "color": "#d5aa80",
+            "from": "DLC1",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.6974517068316525
+        },
+        {
+            "color": "#ddbb99",
+            "from": "DLC1",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 1.2788520870955624
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "DLC1",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.0885411801068075
+        },
+        {
+            "color": "#808080",
+            "from": "DLC1",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 6.792705542793319e-05
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "DLC1",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.0573224480275174
+        },
+        {
+            "color": "#b3e699",
+            "from": "DLC1",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.03280017498208862
+        },
+        {
+            "color": "#f7eee6",
+            "from": "DLC1",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.0006152031601944045
+        },
+        {
+            "color": "#889199",
+            "from": "NPC1L1",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 16.050226215056217
+        },
+        {
+            "color": "#99b3cc",
+            "from": "NPC1L1",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.00026510272425768353
+        },
+        {
+            "color": "#91a2b3",
+            "from": "NPC1L1",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 0.0018569146925056003
+        },
+        {
+            "color": "#99b3cc",
+            "from": "HNF1A",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.6848017458251323
+        },
+        {
+            "color": "#b3e699",
+            "from": "HNF1A",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 7.203073014183724e-05
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "HNF1A",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.00010382923288198533
+        },
+        {
+            "color": "#99b3cc",
+            "from": "FOXC2",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.46743608754673593
+        },
+        {
+            "color": "#eeddcc",
+            "from": "FOXC2",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 0.9228156903535721
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "FOXC2",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.00011985298926113178
+        },
+        {
+            "color": "#808080",
+            "from": "FOXC2",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.00931810568368318
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "FOXC2",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.13966821505232943
+        },
+        {
+            "color": "#c488cc",
+            "from": "FOXC2",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 1.071214273155935
+        },
+        {
+            "color": "#b3e699",
+            "from": "FOXC2",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 1.37594041884907
+        },
+        {
+            "color": "#f7eee6",
+            "from": "FOXC2",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.008660446283501558
+        },
+        {
+            "color": "#aad580",
+            "from": "FOXC2",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.38844899284517886
+        },
+        {
+            "color": "#889199",
+            "from": "LPA",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 0.8054331795458305
+        },
+        {
+            "color": "#91a2b3",
+            "from": "LPA",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 0.020060226609091323
+        },
+        {
+            "color": "#cc99e6",
+            "from": "LPA",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 2.8344681498354656e-06
+        },
+        {
+            "color": "#889199",
+            "from": "SREBF1",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 0.2412550075552686
+        },
+        {
+            "color": "#99b3cc",
+            "from": "SREBF1",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 6.531248566712332
+        },
+        {
+            "color": "#91a2b3",
+            "from": "SREBF1",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 0.00016008326550650878
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "SREBF1",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.0016569387347388246
+        },
+        {
+            "color": "#99b3cc",
+            "from": "NR2F2",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.02362546775468072
+        },
+        {
+            "color": "#ddbb99",
+            "from": "NR2F2",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.8661338501565183
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "NR2F2",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.11136274457283651
+        },
+        {
+            "color": "#808080",
+            "from": "NR2F2",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.0009336933822745421
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "NR2F2",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.011106859643315297
+        },
+        {
+            "color": "#c488cc",
+            "from": "NR2F2",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.32506547410785547
+        },
+        {
+            "color": "#b3e699",
+            "from": "NR2F2",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 6.377427083730643e-05
+        },
+        {
+            "color": "#f7eee6",
+            "from": "NR2F2",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.003790709479008242
+        },
+        {
+            "color": "#aad580",
+            "from": "NR2F2",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 3.93925592669967e-06
+        },
+        {
+            "color": "#eeddcc",
+            "from": "SH3PXD2A",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 10.980000000000002
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "SH3PXD2A",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.0007137595407879223
+        },
+        {
+            "color": "#808080",
+            "from": "SH3PXD2A",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.0004920379688019396
+        },
+        {
+            "color": "#99b3cc",
+            "from": "TGFB1",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 1.5833633708821988
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "TGFB1",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.02596786093690357
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "TGFB1",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.05937030079100619
+        },
+        {
+            "color": "#c488cc",
+            "from": "TGFB1",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 1.0498235357255374
+        },
+        {
+            "color": "#b3e699",
+            "from": "TGFB1",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 1.3222662556040723e-05
+        },
+        {
+            "color": "#f7eee6",
+            "from": "TGFB1",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.1443364575877825
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "TGFB1",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 2.03045127328633
+        },
+        {
+            "color": "#cc99e6",
+            "from": "TGFB1",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.02015311563619567
+        },
+        {
+            "color": "#aad580",
+            "from": "TGFB1",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.019290591865168155
+        },
+        {
+            "color": "#ddbb99",
+            "from": "TIMP3",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 3.6945348659731274
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "TIMP3",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.9439885083514407
+        },
+        {
+            "color": "#808080",
+            "from": "TIMP3",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 5.667425413629573e-05
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "TIMP3",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 2.7399151825591873e-05
+        },
+        {
+            "color": "#f7eee6",
+            "from": "TIMP3",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.004589334238620288
+        },
+        {
+            "color": "#cc99e6",
+            "from": "TIMP3",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.0059251879160263365
+        },
+        {
+            "color": "#889199",
+            "from": "LIPC",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 0.020992543562285998
+        },
+        {
+            "color": "#91a2b3",
+            "from": "LIPC",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 3.0826173046784
+        },
+        {
+            "color": "#889199",
+            "from": "ABCG5",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 4.0011908568350405
+        },
+        {
+            "color": "#91a2b3",
+            "from": "ABCG5",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 0.6240115606819573
+        },
+        {
+            "color": "#ddbb99",
+            "from": "PGF",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.005621552198685462
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "PGF",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.10927229838927255
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "PGF",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.00016871909586930973
+        },
+        {
+            "color": "#c488cc",
+            "from": "PGF",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.4553437047651625
+        },
+        {
+            "color": "#cc99e6",
+            "from": "PGF",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.07256999601071537
+        },
+        {
+            "color": "#ddbb99",
+            "from": "TBX2",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.0005186038878781474
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "TBX2",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.018906373049508336
+        },
+        {
+            "color": "#808080",
+            "from": "TBX2",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.030938332832878685
+        },
+        {
+            "color": "#b3e699",
+            "from": "TBX2",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.17935257280146394
+        },
+        {
+            "color": "#f7eee6",
+            "from": "TBX2",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.07216659076492293
+        },
+        {
+            "color": "#aad580",
+            "from": "TBX2",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.30199403036104155
+        },
+        {
+            "color": "#889199",
+            "from": "LRP1",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 0.4238055989275041
+        },
+        {
+            "color": "#99b3cc",
+            "from": "LRP1",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 1.2491367216247237e-05
+        },
+        {
+            "color": "#91a2b3",
+            "from": "LRP1",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 0.5886987762860033
+        },
+        {
+            "color": "#d5aa80",
+            "from": "LRP1",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 8.438227584059682e-05
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "LRP1",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.46953223663945665
+        },
+        {
+            "color": "#c488cc",
+            "from": "LRP1",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 1.859718253153114e-05
+        },
+        {
+            "color": "#cc99e6",
+            "from": "LRP1",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.0009463736712763533
+        },
+        {
+            "color": "#aad580",
+            "from": "LRP1",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.02812735437856568
+        },
+        {
+            "color": "#d5aa80",
+            "from": "ABI2",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.744678339590808
+        },
+        {
+            "color": "#99b3cc",
+            "from": "LIF",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 1.6666628992803234
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "LIF",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.0005672394018835461
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "LIF",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.0009505069412691154
+        },
+        {
+            "color": "#b3e699",
+            "from": "LIF",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.1466888233682762
+        },
+        {
+            "color": "#f7eee6",
+            "from": "LIF",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 5.859171956410213e-05
+        },
+        {
+            "color": "#cc99e6",
+            "from": "LIF",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 2.098035079397456e-06
+        },
+        {
+            "color": "#aad580",
+            "from": "LIF",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 9.760412593471114e-05
+        },
+        {
+            "color": "#eeddcc",
+            "from": "SOX7",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 1.743713860473015
+        },
+        {
+            "color": "#ddbb99",
+            "from": "SOX7",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 1.070050872216137
+        },
+        {
+            "color": "#808080",
+            "from": "SOX7",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.005520495220677885
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "SOX7",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.0034611085708479393
+        },
+        {
+            "color": "#889199",
+            "from": "LIPA",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 3.515813838037375
+        },
+        {
+            "color": "#99b3cc",
+            "from": "LIPA",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.0029373061729415606
+        },
+        {
+            "color": "#91a2b3",
+            "from": "LIPA",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 0.10954620887941119
+        },
+        {
+            "color": "#ddbb99",
+            "from": "LIPA",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 1.8491181554714923e-05
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "LIPA",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.0002600172663821616
+        },
+        {
+            "color": "#c488cc",
+            "from": "LIPA",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.0014204478460664053
+        },
+        {
+            "color": "#b3e699",
+            "from": "LIPA",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.003069216583116726
+        },
+        {
+            "color": "#d5aa80",
+            "from": "SWAP70",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.5091536291822183
+        },
+        {
+            "color": "#ddbb99",
+            "from": "SWAP70",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.03220075801398142
+        },
+        {
+            "color": "#eeddcc",
+            "from": "SOX17",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 5.412812720387975e-05
+        },
+        {
+            "color": "#ddbb99",
+            "from": "SOX17",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.35100698375168776
+        },
+        {
+            "color": "#808080",
+            "from": "SOX17",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.0017440975371471633
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "SOX17",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.011611294059499313
+        },
+        {
+            "color": "#c488cc",
+            "from": "SOX17",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 1.6668796311338525e-05
+        },
+        {
+            "color": "#b3e699",
+            "from": "SOX17",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.3393693193502877
+        },
+        {
+            "color": "#f7eee6",
+            "from": "SOX17",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.00010074506520619258
+        },
+        {
+            "color": "#aad580",
+            "from": "SOX17",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.0003077028727378639
+        },
+        {
+            "color": "#ddbb99",
+            "from": "TCF21",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.00015016358976864
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "TCF21",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.00028779402471359105
+        },
+        {
+            "color": "#808080",
+            "from": "TCF21",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.004141366719467898
+        },
+        {
+            "color": "#b3e699",
+            "from": "TCF21",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 1.0343097615981738
+        },
+        {
+            "color": "#cc99e6",
+            "from": "TCF21",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 5.560176868340728e-05
+        },
+        {
+            "color": "#808080",
+            "from": "TBX20",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.06106006377076382
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "TBX20",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.19952133740166003
+        },
+        {
+            "color": "#b3e699",
+            "from": "TBX20",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.06142655530096128
+        },
+        {
+            "color": "#f7eee6",
+            "from": "TBX20",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.10095379110371985
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "TBX20",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.03456328882364774
+        },
+        {
+            "color": "#aad580",
+            "from": "TBX20",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.25613702059171556
+        },
+        {
+            "color": "#889199",
+            "from": "ABCG8",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 4.005448197343781
+        },
+        {
+            "color": "#91a2b3",
+            "from": "ABCG8",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 0.47377430047014296
+        },
+        {
+            "color": "#91a2b3",
+            "from": "ZEB1",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 1.4491034628915201e-05
+        },
+        {
+            "color": "#ddbb99",
+            "from": "ZEB1",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.15763239101859927
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "ZEB1",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.21930788197343776
+        },
+        {
+            "color": "#808080",
+            "from": "ZEB1",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.00665025287269563
+        },
+        {
+            "color": "#b3e699",
+            "from": "ZEB1",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.01897088085610572
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "ZEB1",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.0053602089140774925
+        },
+        {
+            "color": "#eeddcc",
+            "from": "SMAD7",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 2.5223204055241206e-05
+        },
+        {
+            "color": "#ddbb99",
+            "from": "SMAD7",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.0027099937612523623
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "SMAD7",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.026418739858171027
+        },
+        {
+            "color": "#808080",
+            "from": "SMAD7",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.0012965460741951875
+        },
+        {
+            "color": "#c488cc",
+            "from": "SMAD7",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 9.746220451839392e-06
+        },
+        {
+            "color": "#f7eee6",
+            "from": "SMAD7",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.10179157764501322
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "SMAD7",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.22981895719107254
+        },
+        {
+            "color": "#aad580",
+            "from": "SMAD7",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.1806319401813553
+        },
+        {
+            "color": "#889199",
+            "from": "ABCA1",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 3.6422369022509615
+        },
+        {
+            "color": "#91a2b3",
+            "from": "ABCA1",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 2.331094656007585
+        },
+        {
+            "color": "#d5aa80",
+            "from": "ABCA1",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.0001022374824753584
+        },
+        {
+            "color": "#ddbb99",
+            "from": "ABCA1",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 8.888008993310954e-06
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "ABCA1",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.008838810963267649
+        },
+        {
+            "color": "#808080",
+            "from": "ABCA1",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.0007453923767000652
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "ABCA1",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 9.115830861943047e-06
+        },
+        {
+            "color": "#99b3cc",
+            "from": "TGFB2",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.0007245705618593471
+        },
+        {
+            "color": "#eeddcc",
+            "from": "TGFB2",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 2.2406615189677446
+        },
+        {
+            "color": "#d5aa80",
+            "from": "TGFB2",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.0001293839476748634
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "TGFB2",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.009690386565713258
+        },
+        {
+            "color": "#c488cc",
+            "from": "TGFB2",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.04141738538023176
+        },
+        {
+            "color": "#b3e699",
+            "from": "TGFB2",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.0068575872418954915
+        },
+        {
+            "color": "#f7eee6",
+            "from": "TGFB2",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.013068296530551228
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "TGFB2",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.49154288246101585
+        },
+        {
+            "color": "#aad580",
+            "from": "TGFB2",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.6180860386573773
+        },
+        {
+            "color": "#889199",
+            "from": "NCOA6",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 2.8314333195830343e-05
+        },
+        {
+            "color": "#99b3cc",
+            "from": "NCOA6",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.00408075208002894
+        },
+        {
+            "color": "#808080",
+            "from": "NCOA6",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.17522164093890427
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "NCOA6",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.12269344039351848
+        },
+        {
+            "color": "#f7eee6",
+            "from": "NCOA6",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.012567078400801164
+        },
+        {
+            "color": "#d5aa80",
+            "from": "FAP",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.11067985383189241
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "FAP",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.205558924810645
+        },
+        {
+            "color": "#c488cc",
+            "from": "FAP",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.01079228063268453
+        },
+        {
+            "color": "#d5aa80",
+            "from": "PLCG1",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.08214215695761722
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "PLCG1",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.0001726285708564815
+        },
+        {
+            "color": "#c488cc",
+            "from": "PLCG1",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 1.3490350790855654
+        },
+        {
+            "color": "#cc99e6",
+            "from": "PLCG1",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.3225287612612298
+        },
+        {
+            "color": "#ddbb99",
+            "from": "COL4A1",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 1.1222769482436268
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "COL4A1",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 5.36
+        },
+        {
+            "color": "#b3e699",
+            "from": "COL4A1",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.05356788377428299
+        },
+        {
+            "color": "#cc99e6",
+            "from": "COL4A1",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.008868378258100197
+        },
+        {
+            "color": "#99b3cc",
+            "from": "PPARG",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 11.3
+        },
+        {
+            "color": "#91a2b3",
+            "from": "PPARG",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 0.02978625102151679
+        },
+        {
+            "color": "#808080",
+            "from": "PPARG",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.018658492389718544
+        },
+        {
+            "color": "#c488cc",
+            "from": "PPARG",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 1.071214273155935
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "PPARG",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.13443573966002817
+        },
+        {
+            "color": "#889199",
+            "from": "PLTP",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 0.002600047945030338
+        },
+        {
+            "color": "#91a2b3",
+            "from": "PLTP",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 3.061210316800001
+        },
+        {
+            "color": "#ddbb99",
+            "from": "PLTP",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.3535296115949166
+        },
+        {
+            "color": "#99b3cc",
+            "from": "BMP1",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.5433508640120213
+        },
+        {
+            "color": "#eeddcc",
+            "from": "BMP1",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 0.03142985338363566
+        },
+        {
+            "color": "#91a2b3",
+            "from": "BMP1",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 0.0009079748227123274
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "BMP1",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.5953260276319904
+        },
+        {
+            "color": "#eeddcc",
+            "from": "ADAMTS3",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 2.292917091875171
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "ADAMTS3",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.00022138006879339023
+        },
+        {
+            "color": "#c488cc",
+            "from": "ADAMTS3",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.00012420657038198968
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "ADAMTS3",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.0002022042368500554
+        },
+        {
+            "color": "#cc99e6",
+            "from": "ADAMTS3",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 4.8699726824466385e-06
+        },
+        {
+            "color": "#d5aa80",
+            "from": "SORBS2",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.059971589791786496
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "SORBS2",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 5.387883329965942e-06
+        },
+        {
+            "color": "#f7eee6",
+            "from": "SORBS2",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.4606423551833393
+        },
+        {
+            "color": "#99b3cc",
+            "from": "TWIST1",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 2.0928831858563792
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "TWIST1",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.0030783530744656735
+        },
+        {
+            "color": "#c488cc",
+            "from": "TWIST1",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.025307940817672177
+        },
+        {
+            "color": "#b3e699",
+            "from": "TWIST1",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.2763280541275748
+        },
+        {
+            "color": "#f7eee6",
+            "from": "TWIST1",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.026678890115902
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "TWIST1",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.03529110980018944
+        },
+        {
+            "color": "#aad580",
+            "from": "TWIST1",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.0009991736462877728
+        },
+        {
+            "color": "#889199",
+            "from": "APOB",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 6.695173954345219
+        },
+        {
+            "color": "#99b3cc",
+            "from": "APOB",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.0002103762173204847
+        },
+        {
+            "color": "#91a2b3",
+            "from": "APOB",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 3.370052852121601
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "APOB",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 3.235774726105527e-05
+        },
+        {
+            "color": "#808080",
+            "from": "APOB",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.0011677216061722919
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "APOB",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 6.08607126031982e-06
+        },
+        {
+            "color": "#c488cc",
+            "from": "APOB",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 7.224413224142204e-05
+        },
+        {
+            "color": "#f7eee6",
+            "from": "APOB",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.0001765620411398843
+        },
+        {
+            "color": "#aad580",
+            "from": "APOB",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.0009264600858003323
+        },
+        {
+            "color": "#99b3cc",
+            "from": "KLF4",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.1389827994041879
+        },
+        {
+            "color": "#eeddcc",
+            "from": "KLF4",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 5.424224127851521e-05
+        },
+        {
+            "color": "#ddbb99",
+            "from": "KLF4",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.7683102349185176
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "KLF4",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.00502786613604979
+        },
+        {
+            "color": "#c488cc",
+            "from": "KLF4",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 1.3044600878991863
+        },
+        {
+            "color": "#b3e699",
+            "from": "KLF4",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.0008616856339970352
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "KLF4",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.00804023617117594
+        },
+        {
+            "color": "#eeddcc",
+            "from": "PDGFRB",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 7.4097524028530914
+        },
+        {
+            "color": "#ddbb99",
+            "from": "PDGFRB",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.00025819153221562444
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "PDGFRB",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 1.0945634287807113
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "PDGFRB",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.04748841351851851
+        },
+        {
+            "color": "#f7eee6",
+            "from": "PDGFRB",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.093619615744903
+        },
+        {
+            "color": "#cc99e6",
+            "from": "PDGFRB",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 1.2371534307000558
+        },
+        {
+            "color": "#aad580",
+            "from": "PDGFRB",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.03148839147395086
+        },
+        {
+            "color": "#889199",
+            "from": "PDGFRA",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 0.00019119410446744923
+        },
+        {
+            "color": "#eeddcc",
+            "from": "PDGFRA",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 0.9572266076074238
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "PDGFRA",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.5985476271254727
+        },
+        {
+            "color": "#808080",
+            "from": "PDGFRA",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.003928701041266989
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "PDGFRA",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.013625787537183102
+        },
+        {
+            "color": "#b3e699",
+            "from": "PDGFRA",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.1294618747127627
+        },
+        {
+            "color": "#f7eee6",
+            "from": "PDGFRA",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.1478100047752587
+        },
+        {
+            "color": "#cc99e6",
+            "from": "PDGFRA",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.6145849081068842
+        },
+        {
+            "color": "#eeddcc",
+            "from": "NKX2-5",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 1.4820817961675967
+        },
+        {
+            "color": "#808080",
+            "from": "NKX2-5",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 5.08
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "NKX2-5",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.22434723325703013
+        },
+        {
+            "color": "#f7eee6",
+            "from": "NKX2-5",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 1.2343918741309141
+        },
+        {
+            "color": "#aad580",
+            "from": "NKX2-5",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.3078201226563557
+        },
+        {
+            "color": "#d5aa80",
+            "from": "WASF2",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 1.4633284372567665
+        },
+        {
+            "color": "#ddbb99",
+            "from": "WASF2",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 1.2599657560803479e-05
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "WASF2",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.0009110365765745721
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "WASF2",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.8929252944375858
+        },
+        {
+            "color": "#aad580",
+            "from": "WASF2",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 3.1849100411289532e-06
+        },
+        {
+            "color": "#d5aa80",
+            "from": "FGD5",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.15191711322847298
+        },
+        {
+            "color": "#ddbb99",
+            "from": "FGD5",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.04179743054858291
+        },
+        {
+            "color": "#808080",
+            "from": "FGD5",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 5.193557690883355e-06
+        },
+        {
+            "color": "#889199",
+            "from": "LPL",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 0.0253642756643679
+        },
+        {
+            "color": "#99b3cc",
+            "from": "LPL",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 1.0090499954781984
+        },
+        {
+            "color": "#91a2b3",
+            "from": "LPL",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 2.1350208018356147
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "LPL",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.0009190672153635116
+        },
+        {
+            "color": "#f7eee6",
+            "from": "LPL",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.0020924232888134844
+        },
+        {
+            "color": "#99b3cc",
+            "from": "SMAD3",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.9767505818315032
+        },
+        {
+            "color": "#d5aa80",
+            "from": "SMAD3",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.3750700064627113
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "SMAD3",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 7.939689198306671e-05
+        },
+        {
+            "color": "#b3e699",
+            "from": "SMAD3",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.12693772677921325
+        },
+        {
+            "color": "#f7eee6",
+            "from": "SMAD3",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.03698136541692892
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "SMAD3",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 2.06
+        },
+        {
+            "color": "#99b3cc",
+            "from": "CXCR4",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.0002547180283166989
+        },
+        {
+            "color": "#eeddcc",
+            "from": "CXCR4",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 1.8305514371954452
+        },
+        {
+            "color": "#d5aa80",
+            "from": "CXCR4",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.0003032280224081011
+        },
+        {
+            "color": "#ddbb99",
+            "from": "CXCR4",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.008246852472540261
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "CXCR4",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.04819323511335678
+        },
+        {
+            "color": "#808080",
+            "from": "CXCR4",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.001101749842683803
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "CXCR4",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.021949997699759936
+        },
+        {
+            "color": "#c488cc",
+            "from": "CXCR4",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.07270253273297424
+        },
+        {
+            "color": "#b3e699",
+            "from": "CXCR4",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.00695578510091444
+        },
+        {
+            "color": "#f7eee6",
+            "from": "CXCR4",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.005056636725141908
+        },
+        {
+            "color": "#cc99e6",
+            "from": "CXCR4",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.012865786799507043
+        },
+        {
+            "color": "#889199",
+            "from": "HMGCR",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 17.02
+        },
+        {
+            "color": "#91a2b3",
+            "from": "HMGCR",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 0.0020521346960649485
+        },
+        {
+            "color": "#d5aa80",
+            "from": "TEK",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.002627362481148712
+        },
+        {
+            "color": "#ddbb99",
+            "from": "TEK",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 1.7544888112904138
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "TEK",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 3.640642893518517
+        },
+        {
+            "color": "#c488cc",
+            "from": "TEK",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 1.4111378243641006
+        },
+        {
+            "color": "#b3e699",
+            "from": "TEK",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.00484639554827233
+        },
+        {
+            "color": "#cc99e6",
+            "from": "TEK",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.07011713689817048
+        },
+        {
+            "color": "#aad580",
+            "from": "TEK",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.0010702041987631738
+        },
+        {
+            "color": "#eeddcc",
+            "from": "COL4A2",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 0.7341690595606973
+        },
+        {
+            "color": "#ddbb99",
+            "from": "COL4A2",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.45302398927749715
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "COL4A2",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 4.2128211693127104
+        },
+        {
+            "color": "#808080",
+            "from": "COL4A2",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.0024690701611982425
+        },
+        {
+            "color": "#c488cc",
+            "from": "COL4A2",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.0048421568597974635
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "COL4A2",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.0002532816545183841
+        },
+        {
+            "color": "#cc99e6",
+            "from": "COL4A2",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.0018877121352175114
+        },
+        {
+            "color": "#889199",
+            "from": "ADM",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 0.00646688200503095
+        },
+        {
+            "color": "#99b3cc",
+            "from": "ADM",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.0526397506271057
+        },
+        {
+            "color": "#91a2b3",
+            "from": "ADM",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 3.39581187792896e-05
+        },
+        {
+            "color": "#ddbb99",
+            "from": "ADM",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.28358988749925634
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "ADM",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.014234946508977695
+        },
+        {
+            "color": "#808080",
+            "from": "ADM",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.03196446062812926
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "ADM",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.10694833815500689
+        },
+        {
+            "color": "#c488cc",
+            "from": "ADM",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.043080710646806304
+        },
+        {
+            "color": "#b3e699",
+            "from": "ADM",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.03918619564800771
+        },
+        {
+            "color": "#f7eee6",
+            "from": "ADM",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.03550439910963957
+        },
+        {
+            "color": "#cc99e6",
+            "from": "ADM",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 4.432914690784493e-05
+        },
+        {
+            "color": "#889199",
+            "from": "CETP",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 0.009963773572364477
+        },
+        {
+            "color": "#91a2b3",
+            "from": "CETP",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 3.9297785545310804
+        },
+        {
+            "color": "#ddbb99",
+            "from": "CETP",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.013500543261434387
+        },
+        {
+            "color": "#ddbb99",
+            "from": "FLT1",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 6.34
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "FLT1",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.31308628183016446
+        },
+        {
+            "color": "#c488cc",
+            "from": "FLT1",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.14818590046825858
+        },
+        {
+            "color": "#cc99e6",
+            "from": "FLT1",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.277685231789278
+        },
+        {
+            "color": "#889199",
+            "from": "FABP2",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 7.780795508072751
+        },
+        {
+            "color": "#eeddcc",
+            "from": "SEMA3C",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 1.9325633155035977
+        },
+        {
+            "color": "#d5aa80",
+            "from": "SEMA3C",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 6.169794017629465e-05
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "SEMA3C",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.046410319140717686
+        },
+        {
+            "color": "#c488cc",
+            "from": "SEMA3C",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 9.986781944439142e-05
+        },
+        {
+            "color": "#b3e699",
+            "from": "SEMA3C",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.04652646084548358
+        },
+        {
+            "color": "#f7eee6",
+            "from": "SEMA3C",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.02080658130123857
+        },
+        {
+            "color": "#aad580",
+            "from": "SEMA3C",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.05007807829875316
+        },
+        {
+            "color": "#d5aa80",
+            "from": "SEMA5A",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.007467235977098235
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "SEMA5A",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.010485748400017031
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "SEMA5A",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.002303600623828907
+        },
+        {
+            "color": "#c488cc",
+            "from": "SEMA5A",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 1.8375739619106193
+        },
+        {
+            "color": "#b3e699",
+            "from": "SEMA5A",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.0011932005194329653
+        },
+        {
+            "color": "#f7eee6",
+            "from": "SEMA5A",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 4.029777496467152e-06
+        },
+        {
+            "color": "#aad580",
+            "from": "SEMA5A",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 3.477402548189428e-06
+        },
+        {
+            "color": "#889199",
+            "from": "LIPG",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 0.015299401248947925
+        },
+        {
+            "color": "#91a2b3",
+            "from": "LIPG",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 1.166747396442461
+        },
+        {
+            "color": "#eeddcc",
+            "from": "NRP1",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 0.011593426618383017
+        },
+        {
+            "color": "#d5aa80",
+            "from": "NRP1",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.6558061205041722
+        },
+        {
+            "color": "#ddbb99",
+            "from": "NRP1",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.6803775091619002
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "NRP1",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.20673415538665985
+        },
+        {
+            "color": "#c488cc",
+            "from": "NRP1",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 2.6537443598067743
+        },
+        {
+            "color": "#b3e699",
+            "from": "NRP1",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.4229245799030441
+        },
+        {
+            "color": "#cc99e6",
+            "from": "NRP1",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.009846518422524675
+        },
+        {
+            "color": "#aad580",
+            "from": "NRP1",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.058786444439619126
+        },
+        {
+            "color": "#99b3cc",
+            "from": "F2R",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 2.1587478850884934e-05
+        },
+        {
+            "color": "#91a2b3",
+            "from": "F2R",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 2.59708749832192e-05
+        },
+        {
+            "color": "#d5aa80",
+            "from": "F2R",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.006763457768051393
+        },
+        {
+            "color": "#ddbb99",
+            "from": "F2R",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.9438454197370589
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "F2R",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.047593947905398476
+        },
+        {
+            "color": "#808080",
+            "from": "F2R",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.005437511366350549
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "F2R",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.046542614266372
+        },
+        {
+            "color": "#f7eee6",
+            "from": "F2R",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.000332098575945784
+        },
+        {
+            "color": "#cc99e6",
+            "from": "F2R",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.0065169242678521175
+        },
+        {
+            "color": "#d5aa80",
+            "from": "FN1",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.04058247612165129
+        },
+        {
+            "color": "#ddbb99",
+            "from": "FN1",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.0005948128572201665
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "FN1",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 4.368798994209908
+        },
+        {
+            "color": "#808080",
+            "from": "FN1",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.004063168331438663
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "FN1",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 1.0349257491435184
+        },
+        {
+            "color": "#b3e699",
+            "from": "FN1",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.0019015611834310902
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "FN1",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.0001795502933622672
+        },
+        {
+            "color": "#cc99e6",
+            "from": "FN1",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.06815186209170886
+        },
+        {
+            "color": "#aad580",
+            "from": "FN1",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 5.46193638091722e-06
+        },
+        {
+            "color": "#889199",
+            "from": "KLF2",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 2.386425437787897e-05
+        },
+        {
+            "color": "#99b3cc",
+            "from": "KLF2",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.005541088089544937
+        },
+        {
+            "color": "#ddbb99",
+            "from": "KLF2",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.8879792669225287
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "KLF2",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.000341872252584553
+        },
+        {
+            "color": "#808080",
+            "from": "KLF2",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.020543324882313557
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "KLF2",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.08182027088731392
+        },
+        {
+            "color": "#c488cc",
+            "from": "KLF2",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.04538930551904799
+        },
+        {
+            "color": "#b3e699",
+            "from": "KLF2",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.00010832482779131606
+        },
+        {
+            "color": "#f7eee6",
+            "from": "KLF2",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 1.583575904875561e-05
+        },
+        {
+            "color": "#99b3cc",
+            "from": "PTPN11",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.007255797565264667
+        },
+        {
+            "color": "#91a2b3",
+            "from": "PTPN11",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 0.003011646586546252
+        },
+        {
+            "color": "#808080",
+            "from": "PTPN11",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 1.6850856464584216
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "PTPN11",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.0010164646020838731
+        },
+        {
+            "color": "#c488cc",
+            "from": "PTPN11",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 7.695674061434404e-06
+        },
+        {
+            "color": "#f7eee6",
+            "from": "PTPN11",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.019452394697486646
+        },
+        {
+            "color": "#cc99e6",
+            "from": "PTPN11",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.37836367788768754
+        },
+        {
+            "color": "#ddbb99",
+            "from": "ENG",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 4.930181597671134
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "ENG",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.015399691694848963
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "ENG",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 1.3709235200000003
+        },
+        {
+            "color": "#c488cc",
+            "from": "ENG",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.010087023797196818
+        },
+        {
+            "color": "#b3e699",
+            "from": "ENG",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.05005639197662035
+        },
+        {
+            "color": "#f7eee6",
+            "from": "ENG",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 2.741762150903704e-06
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "ENG",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.03257342652390324
+        },
+        {
+            "color": "#aad580",
+            "from": "ENG",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.7917893456287219
+        },
+        {
+            "color": "#91a2b3",
+            "from": "APOC3",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 4.083091107081481
+        },
+        {
+            "color": "#d5aa80",
+            "from": "APOC3",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 3.41566055689387e-05
+        },
+        {
+            "color": "#d5aa80",
+            "from": "MYO9B",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.2984805554478365
+        },
+        {
+            "color": "#99b3cc",
+            "from": "NEDD9",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 4.0386620895357266e-05
+        },
+        {
+            "color": "#d5aa80",
+            "from": "NEDD9",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.7844583692357415
+        },
+        {
+            "color": "#ddbb99",
+            "from": "NEDD9",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.4185641194083908
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "NEDD9",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.0047353261333128996
+        },
+        {
+            "color": "#c488cc",
+            "from": "NEDD9",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 5.5141820327199716e-05
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "NEDD9",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 3.899336694810092e-05
+        },
+        {
+            "color": "#eeddcc",
+            "from": "ZFPM2",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 0.0020204129688804443
+        },
+        {
+            "color": "#808080",
+            "from": "ZFPM2",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 1.7490764550068165
+        },
+        {
+            "color": "#f7eee6",
+            "from": "ZFPM2",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.5644053784083926
+        },
+        {
+            "color": "#aad580",
+            "from": "ZFPM2",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.11344045008481363
+        },
+        {
+            "color": "#eeddcc",
+            "from": "LOX",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 0.00010571899844507767
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "LOX",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 1.6891875308685589
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "LOX",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 6.210465441269112e-05
+        },
+        {
+            "color": "#b3e699",
+            "from": "LOX",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.00022914169560811108
+        },
+        {
+            "color": "#f7eee6",
+            "from": "LOX",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.08960650634906546
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "LOX",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.007759667735889849
+        },
+        {
+            "color": "#aad580",
+            "from": "LOX",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.00019033501696069468
+        },
+        {
+            "color": "#889199",
+            "from": "PLCG2",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 0.002801393158010976
+        },
+        {
+            "color": "#d5aa80",
+            "from": "PLCG2",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.011299546983247373
+        },
+        {
+            "color": "#ddbb99",
+            "from": "PLCG2",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 2.08591368586972e-05
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "PLCG2",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.0016302677896127306
+        },
+        {
+            "color": "#808080",
+            "from": "PLCG2",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.0003245792350027956
+        },
+        {
+            "color": "#c488cc",
+            "from": "PLCG2",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.004768564553552184
+        },
+        {
+            "color": "#cc99e6",
+            "from": "PLCG2",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.007841567443043056
+        },
+        {
+            "color": "#99b3cc",
+            "from": "CXCL12",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 7.70468650024258e-05
+        },
+        {
+            "color": "#eeddcc",
+            "from": "CXCL12",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 0.5250823362849998
+        },
+        {
+            "color": "#d5aa80",
+            "from": "CXCL12",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.004323915102549064
+        },
+        {
+            "color": "#ddbb99",
+            "from": "CXCL12",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.13728277264423824
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "CXCL12",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.29908044303062825
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "CXCL12",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.0009064585089394398
+        },
+        {
+            "color": "#c488cc",
+            "from": "CXCL12",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.020313396587253285
+        },
+        {
+            "color": "#cc99e6",
+            "from": "CXCL12",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.00599978473524019
+        },
+        {
+            "color": "#99b3cc",
+            "from": "BMP4",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.9251962570220101
+        },
+        {
+            "color": "#eeddcc",
+            "from": "BMP4",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 1.684365046554351
+        },
+        {
+            "color": "#ddbb99",
+            "from": "BMP4",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.00018736866018756882
+        },
+        {
+            "color": "#808080",
+            "from": "BMP4",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.05860940078089438
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "BMP4",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.0004702816512373938
+        },
+        {
+            "color": "#c488cc",
+            "from": "BMP4",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.006656696090361552
+        },
+        {
+            "color": "#b3e699",
+            "from": "BMP4",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 1.6109249890187822
+        },
+        {
+            "color": "#f7eee6",
+            "from": "BMP4",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.013256262319285617
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "BMP4",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.3039425648220567
+        },
+        {
+            "color": "#cc99e6",
+            "from": "BMP4",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 8.579961463664372e-06
+        },
+        {
+            "color": "#aad580",
+            "from": "BMP4",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.20401247133912578
+        },
+        {
+            "color": "#889199",
+            "from": "APOH",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 0.7981464340017711
+        },
+        {
+            "color": "#91a2b3",
+            "from": "APOH",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 0.001987392089080415
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "APOH",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 4.112310859045824e-05
+        },
+        {
+            "color": "#c488cc",
+            "from": "APOH",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.7768967814455482
+        },
+        {
+            "color": "#99b3cc",
+            "from": "IRS1",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 2.317966435537716
+        },
+        {
+            "color": "#91a2b3",
+            "from": "IRS1",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 0.00013673093218762147
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "IRS1",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.0004778158799645994
+        },
+        {
+            "color": "#cc99e6",
+            "from": "IRS1",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.012304706549432068
+        },
+        {
+            "color": "#d5aa80",
+            "from": "RHOA",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 5.211055904322414
+        },
+        {
+            "color": "#ddbb99",
+            "from": "RHOA",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.006512309500075249
+        },
+        {
+            "color": "#c488cc",
+            "from": "RHOA",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.38893715336903395
+        },
+        {
+            "color": "#b3e699",
+            "from": "RHOA",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.008771495685395635
+        },
+        {
+            "color": "#f7eee6",
+            "from": "RHOA",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.015593995941338094
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "RHOA",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.0005181161437828925
+        },
+        {
+            "color": "#cc99e6",
+            "from": "RHOA",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.1418043621767264
+        },
+        {
+            "color": "#889199",
+            "from": "MVK",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 14.481884663308012
+        },
+        {
+            "color": "#ddbb99",
+            "from": "SOX18",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.42957483011899367
+        },
+        {
+            "color": "#808080",
+            "from": "SOX18",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.0028802082965325793
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "SOX18",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.015889428648834008
+        },
+        {
+            "color": "#c488cc",
+            "from": "SOX18",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.01684146894077847
+        },
+        {
+            "color": "#b3e699",
+            "from": "SOX18",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.12088165628967101
+        },
+        {
+            "color": "#aad580",
+            "from": "SOX18",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.00040020541683940094
+        },
+        {
+            "color": "#889199",
+            "from": "LRPAP1",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 0.8707080255408791
+        },
+        {
+            "color": "#91a2b3",
+            "from": "LRPAP1",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 0.0032131582287872
+        },
+        {
+            "color": "#ddbb99",
+            "from": "LRPAP1",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 8.324363852092143e-05
+        },
+        {
+            "color": "#eeddcc",
+            "from": "RAC1",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 0.02836081437338421
+        },
+        {
+            "color": "#d5aa80",
+            "from": "RAC1",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 8.18
+        },
+        {
+            "color": "#808080",
+            "from": "RAC1",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.2838920520158705
+        },
+        {
+            "color": "#c488cc",
+            "from": "RAC1",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.027940216750079145
+        },
+        {
+            "color": "#cc99e6",
+            "from": "RAC1",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.5184129451341092
+        },
+        {
+            "color": "#eeddcc",
+            "from": "SMAD6",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 3.7682623849359125
+        },
+        {
+            "color": "#ddbb99",
+            "from": "SMAD6",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.5228125554280753
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "SMAD6",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.4574434387303823
+        },
+        {
+            "color": "#aad580",
+            "from": "SMAD6",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.044465815131180864
+        },
+        {
+            "color": "#99b3cc",
+            "from": "MEF2C",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 1.3912063913417416
+        },
+        {
+            "color": "#ddbb99",
+            "from": "MEF2C",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.16469272504351695
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "MEF2C",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 1.2416674652753515e-05
+        },
+        {
+            "color": "#808080",
+            "from": "MEF2C",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 2.4267370978991372e-05
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "MEF2C",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.09514214295610425
+        },
+        {
+            "color": "#c488cc",
+            "from": "MEF2C",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.11325377461326874
+        },
+        {
+            "color": "#b3e699",
+            "from": "MEF2C",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.42521707917450186
+        },
+        {
+            "color": "#f7eee6",
+            "from": "MEF2C",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.4638099202301672
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "MEF2C",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.0017276221487658235
+        },
+        {
+            "color": "#cc99e6",
+            "from": "MEF2C",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 9.861414817009458e-06
+        },
+        {
+            "color": "#aad580",
+            "from": "MEF2C",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.11241883114792506
+        },
+        {
+            "color": "#99b3cc",
+            "from": "WT1",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.005098521524932854
+        },
+        {
+            "color": "#808080",
+            "from": "WT1",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.09799796035266256
+        },
+        {
+            "color": "#b3e699",
+            "from": "WT1",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 1.6084456897403658
+        },
+        {
+            "color": "#f7eee6",
+            "from": "WT1",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.2354813292148204
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "WT1",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.0012484690912321712
+        },
+        {
+            "color": "#889199",
+            "from": "APOA4",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 1.2048722460823436
+        },
+        {
+            "color": "#91a2b3",
+            "from": "APOA4",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 5.678215058014814
+        },
+        {
+            "color": "#889199",
+            "from": "APOE",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 0.2379977835066058
+        },
+        {
+            "color": "#99b3cc",
+            "from": "APOE",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.06217185846175832
+        },
+        {
+            "color": "#eeddcc",
+            "from": "APOE",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 7.793834266115838e-05
+        },
+        {
+            "color": "#91a2b3",
+            "from": "APOE",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 9.4
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "APOE",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.09775798862802855
+        },
+        {
+            "color": "#c488cc",
+            "from": "APOE",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.5808855837251684
+        },
+        {
+            "color": "#f7eee6",
+            "from": "APOE",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.0039739272075575635
+        },
+        {
+            "color": "#cc99e6",
+            "from": "APOE",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.0009124235741121688
+        },
+        {
+            "color": "#aad580",
+            "from": "APOE",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.0011786298693987217
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "C1S",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.5203307052343952
+        },
+        {
+            "color": "#ddbb99",
+            "from": "TBX3",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.0007069857110479751
+        },
+        {
+            "color": "#808080",
+            "from": "TBX3",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.03052665883959257
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "TBX3",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.0536268216898148
+        },
+        {
+            "color": "#b3e699",
+            "from": "TBX3",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.3229546235363263
+        },
+        {
+            "color": "#f7eee6",
+            "from": "TBX3",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.1932849338445678
+        },
+        {
+            "color": "#aad580",
+            "from": "TBX3",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.018959482828137017
+        },
+        {
+            "color": "#99b3cc",
+            "from": "IL6ST",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 1.1890523395795078
+        },
+        {
+            "color": "#ddbb99",
+            "from": "IL6ST",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 2.0914197534847614
+        },
+        {
+            "color": "#808080",
+            "from": "IL6ST",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.010350613457954313
+        },
+        {
+            "color": "#b3e699",
+            "from": "IL6ST",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 7.706552335921304e-05
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "IL6ST",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 8.250571893841269e-05
+        },
+        {
+            "color": "#cc99e6",
+            "from": "IL6ST",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.00011566110042754154
+        },
+        {
+            "color": "#99b3cc",
+            "from": "CTNNB1",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.7171157648783106
+        },
+        {
+            "color": "#d5aa80",
+            "from": "CTNNB1",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.1390838483965015
+        },
+        {
+            "color": "#ddbb99",
+            "from": "CTNNB1",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.000289556701459582
+        },
+        {
+            "color": "#808080",
+            "from": "CTNNB1",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.00019235398855123542
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "CTNNB1",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.47634498572445116
+        },
+        {
+            "color": "#b3e699",
+            "from": "CTNNB1",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 2.66
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "CTNNB1",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.11099083112189974
+        },
+        {
+            "color": "#cc99e6",
+            "from": "CTNNB1",
+            "opacity": 1,
+            "to": "Angiogenesis and Cancer Pathways",
+            "width": 0.019231481293993505
+        },
+        {
+            "color": "#aad580",
+            "from": "CTNNB1",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.00015336466994227626
+        },
+        {
+            "color": "#889199",
+            "from": "MTTP",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 2.39798524425775
+        },
+        {
+            "color": "#91a2b3",
+            "from": "MTTP",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 1.4648647759796143
+        },
+        {
+            "color": "#808080",
+            "from": "MTTP",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 9.91374601729631e-05
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "MTTP",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.0019216405925491225
+        },
+        {
+            "color": "#ddbb99",
+            "from": "TNS1",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.0677842065392761
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "TNS1",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.472972019619644
+        },
+        {
+            "color": "#d5aa80",
+            "from": "ACVRL1",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 0.002682551076831116
+        },
+        {
+            "color": "#ddbb99",
+            "from": "ACVRL1",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.2084595462737963
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "ACVRL1",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 1.1525167916803118e-05
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "ACVRL1",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 2.168601824275295
+        },
+        {
+            "color": "#c488cc",
+            "from": "ACVRL1",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 1.931715009487897
+        },
+        {
+            "color": "#b3e699",
+            "from": "ACVRL1",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.00048275216263168907
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "ACVRL1",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.025992981387670012
+        },
+        {
+            "color": "#aad580",
+            "from": "ACVRL1",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.08074123942996565
+        },
+        {
+            "color": "#eeddcc",
+            "from": "EDNRA",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 2.8176887246562354
+        },
+        {
+            "color": "#ddbb99",
+            "from": "EDNRA",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.0029011010185716964
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "EDNRA",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.0970365303788303
+        },
+        {
+            "color": "#808080",
+            "from": "EDNRA",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.00013817700032244386
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "EDNRA",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.0005120777711102536
+        },
+        {
+            "color": "#b3e699",
+            "from": "EDNRA",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 1.2373950660349218
+        },
+        {
+            "color": "#f7eee6",
+            "from": "EDNRA",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.009412519682604823
+        },
+        {
+            "color": "#aad580",
+            "from": "EDNRA",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.48284595968927635
+        },
+        {
+            "color": "#889199",
+            "from": "PCSK9",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 0.6164052500460662
+        },
+        {
+            "color": "#91a2b3",
+            "from": "PCSK9",
+            "opacity": 1,
+            "to": "Cholesterol Production Inhibition",
+            "width": 0.5722512652112631
+        },
+        {
+            "color": "#b3e699",
+            "from": "PCSK9",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.00037878826753298217
+        },
+        {
+            "color": "#99b3cc",
+            "from": "CITED2",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 0.0006293369714444153
+        },
+        {
+            "color": "#eeddcc",
+            "from": "CITED2",
+            "opacity": 1,
+            "to": "Congenital Heart Defects",
+            "width": 0.12635397438243143
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "CITED2",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.020099684955671868
+        },
+        {
+            "color": "#808080",
+            "from": "CITED2",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.41534018592925465
+        },
+        {
+            "color": "#c488cc",
+            "from": "CITED2",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.0003117857867861086
+        },
+        {
+            "color": "#b3e699",
+            "from": "CITED2",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.1173854497992374
+        },
+        {
+            "color": "#f7eee6",
+            "from": "CITED2",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.036714673908962304
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "CITED2",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.007495733452095441
+        },
+        {
+            "color": "#aad580",
+            "from": "CITED2",
+            "opacity": 1,
+            "to": "Cardiac Morphogenesis Processes",
+            "width": 0.09246251366260483
+        },
+        {
+            "color": "#889199",
+            "from": "PLPP3",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 4.2499715618561765e-05
+        },
+        {
+            "color": "#d5aa80",
+            "from": "PLPP3",
+            "opacity": 1,
+            "to": "Cytoskeletal Organization Regulation",
+            "width": 1.2747602432426186e-05
+        },
+        {
+            "color": "#ddbb99",
+            "from": "PLPP3",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 2.17886730348851
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "PLPP3",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.0001319770258802904
+        },
+        {
+            "color": "#bbf7b3",
+            "from": "PLPP3",
+            "opacity": 1,
+            "to": "Vascular Morphology Abnormalities",
+            "width": 0.22250924374917444
+        },
+        {
+            "color": "#c488cc",
+            "from": "PLPP3",
+            "opacity": 1,
+            "to": "Endothelial Cell Migration Regulation",
+            "width": 0.06482850551486716
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "PLPP3",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 5.177760900922223e-06
+        },
+        {
+            "color": "#889199",
+            "from": "NR3C1",
+            "opacity": 1,
+            "to": "Cholesterol Metabolic Processes",
+            "width": 0.0010218945047094008
+        },
+        {
+            "color": "#99b3cc",
+            "from": "NR3C1",
+            "opacity": 1,
+            "to": "Adipogenesis Regulation",
+            "width": 4.078779113706932
+        },
+        {
+            "color": "#ddbb99",
+            "from": "NR3C1",
+            "opacity": 1,
+            "to": "Liver Endothelial Cell Types",
+            "width": 0.0005107159243949311
+        },
+        {
+            "color": "#e6ccb3",
+            "from": "NR3C1",
+            "opacity": 1,
+            "to": "Epithelial-Mesenchymal Transition",
+            "width": 0.010871350947896619
+        },
+        {
+            "color": "#808080",
+            "from": "NR3C1",
+            "opacity": 1,
+            "to": "Abnormal Heart Development",
+            "width": 0.00037967746630435914
+        },
+        {
+            "color": "#b3e699",
+            "from": "NR3C1",
+            "opacity": 1,
+            "to": "Epithelial Tube Morphogenesis",
+            "width": 0.0029609125434396366
+        },
+        {
+            "color": "#f7eee6",
+            "from": "NR3C1",
+            "opacity": 1,
+            "to": "Muscle Tissue Development",
+            "width": 0.0007898003598144056
+        },
+        {
+            "color": "#a2c4e6",
+            "from": "NR3C1",
+            "opacity": 1,
+            "to": "TGF Beta Signaling Pathway",
+            "width": 0.004908141478108728
+        }
+    ]
+}
