@@ -862,6 +862,7 @@ def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index
                
     # convert data for Alex's code
     # make sure gene set matrix is full matrix, not sparse
+    # TODO transpose matrices to get genes with gene sets as features
     matrix_dense_gene_sets = matrix_gene_sets.toarray()
 
     # get the coeff
@@ -869,16 +870,38 @@ def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index
     mod_log_sns = SnS()
 
     # get the new betas, ses
+    # need to use dense marix; error with sparse matrix on .std() call
     logger.info("calculating beta tildes for gene scores")
-    log_coeff_beta_tildes, log_coeff_ses, _, _, _, _, _ = mod_log_sns.compute_logistic_beta_tildes(X=matrix_dense_gene_sets, Y=vector_gene)
+    log_coeff_beta_tildes, log_coeff_ses, _, log_coeff_pvalue, _, _, _ = mod_log_sns.compute_logistic_beta_tildes(X=matrix_dense_gene_sets, Y=vector_gene)
+
+    # log
+    logger.info("got beta tildes shape: {}".format(log_coeff_beta_tildes.shape))
+
+    # TODO - try using sparse matrix here for speed
+    # step to calculate correlation and filter out gene set features
+    # filter on pvalue
+    prune_val = 0.8
+    # features_to_keep = mod_log_sns.prune_gene_sets(matrix_dense_gene_sets, log_coeff_pvalue, prune_value=prune_val)
+    features_to_keep = np.zeros(matrix_dense_gene_sets.shape[1], dtype=bool)
+    features_to_keep[0:100]=True
+    logger.info("got filter of shape: {} and data: {}".format(features_to_keep.shape, features_to_keep))
 
     # get the gene scores
     logger.info("calculating new betas for gene scores")
+    # gene_betas, _ = mod_log_sns.calculate_non_inf_betas(
+    #                 log_coeff_beta_tildes[:, list_input_gene_indices],
+    #                 log_coeff_ses[:, list_input_gene_indices],
+    #                 X_orig=matrix_dense_gene_sets[:, list_input_gene_indices],
+    #                 sigma2=np.ones((1, 1)),
+    #                 p=np.ones((1, 1)) * 0.001)
+
+    # TODO - try with the sparse matrix for speed
+    variance = 0.001
     gene_betas, _ = mod_log_sns.calculate_non_inf_betas(
-                    log_coeff_beta_tildes[:, list_input_gene_indices],
-                    log_coeff_ses[:, list_input_gene_indices],
-                    X_orig=matrix_dense_gene_sets[:, list_input_gene_indices],
-                    sigma2=np.ones((1, 1)),
+                    log_coeff_beta_tildes[:, features_to_keep],
+                    log_coeff_ses[:, features_to_keep],
+                    X_orig=matrix_dense_gene_sets[:, features_to_keep],
+                    sigma2=np.ones((1, 1)) * variance,
                     p=np.ones((1, 1)) * 0.001)
 
     # log

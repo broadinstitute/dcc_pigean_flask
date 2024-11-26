@@ -21,9 +21,10 @@ path_files = "python-flask-server/conf/startup_files/"
 # list_gene_set_file = ["gene_set_list_msigdb_c1.txt", "gene_set_list_msigdb_c2.txt", "gene_set_list_msigdb_c3.txt", "gene_set_list_msigdb_c4.txt", "gene_set_list_msigdb_c5.txt", 
 #                       "gene_set_list_msigdb_c6.txt", "gene_set_list_msigdb_c7.txt", "gene_set_list_msigdb_c8.txt"]
 
-list_gene_set_file = ["gene_set_list_msigdb_c1.txt", "gene_set_list_msigdb_c2.txt", "gene_set_list_msigdb_c3.txt", "gene_set_list_msigdb_c4.txt", "gene_set_list_msigdb_c5.txt", 
-                      "gene_set_list_msigdb_c6.txt", "gene_set_list_msigdb_c7.txt", "gene_set_list_msigdb_c8.txt", "gene_set_list_msigdb_h.txt", "gene_set_list_msigdb_h2.txt",
-                      "gene_set_list_mouse_2024.txt", "gene_set_list_ocr_human.txt"]
+# list_gene_set_file = ["gene_set_list_msigdb_c1.txt", "gene_set_list_msigdb_c2.txt", "gene_set_list_msigdb_c3.txt", "gene_set_list_msigdb_c4.txt", "gene_set_list_msigdb_c5.txt", 
+#                       "gene_set_list_msigdb_c6.txt", "gene_set_list_msigdb_c7.txt", "gene_set_list_msigdb_c8.txt", "gene_set_list_msigdb_h.txt", "gene_set_list_msigdb_h2.txt",
+#                       "gene_set_list_mouse_2024.txt", "gene_set_list_ocr_human.txt"]
+list_gene_set_file = ["gene_set_list_msigdb_c1.txt", "gene_set_list_msigdb_c2.txt", "gene_set_list_msigdb_c3.txt"]
 gene_file = "genes.txt"
 
 # Configure logging
