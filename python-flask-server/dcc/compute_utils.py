@@ -862,16 +862,22 @@ def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index
                
     # convert data for Alex's code
     # make sure gene set matrix is full matrix, not sparse
-    # TODO transpose matrices to get genes with gene sets as features
+    # TODO transpose matrices to get genes with gene sets as features (gene rows by gen set columns)
     matrix_dense_gene_sets = matrix_gene_sets.toarray()
 
     # get the coeff
     start = time.time()
     mod_log_sns = SnS()
 
+
+    # TODO - get betas and standard errors
+    # cal_beta_tildes, cal_ses from first pvalue calc - gene set specific
+    # 
+
     # get the new betas, ses
     # need to use dense marix; error with sparse matrix on .std() call
     logger.info("calculating beta tildes for gene scores")
+    # TODO - not needed 
     log_coeff_beta_tildes, log_coeff_ses, _, log_coeff_pvalue, _, _, _ = mod_log_sns.compute_logistic_beta_tildes(X=matrix_dense_gene_sets, Y=vector_gene)
 
     # log
@@ -880,6 +886,7 @@ def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index
     # TODO - try using sparse matrix here for speed
     # step to calculate correlation and filter out gene set features
     # filter on pvalue
+    # similar to runnagene prining; not needed here
     prune_val = 0.8
     # features_to_keep = mod_log_sns.prune_gene_sets(matrix_dense_gene_sets, log_coeff_pvalue, prune_value=prune_val)
     features_to_keep = np.zeros(matrix_dense_gene_sets.shape[1], dtype=bool)
@@ -896,13 +903,29 @@ def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index
     #                 p=np.ones((1, 1)) * 0.001)
 
     # TODO - try with the sparse matrix for speed
+    # if verytthing is 0, increase the variance (increasr by factor of 10)
     variance = 0.001
-    gene_betas, _ = mod_log_sns.calculate_non_inf_betas(
-                    log_coeff_beta_tildes[:, features_to_keep],
-                    log_coeff_ses[:, features_to_keep],
+    # TODO - jf - cut on .05 pvalue (reduce gene sets)
+    # TODO this will be gene set scores (this is beta; effect of gene set of whether gene is in gene set)
+    gene_set_betas, _ = mod_log_sns.calculate_non_inf_betas(
+                    log_coeff_beta_tildes[features_to_keep],
+                    log_coeff_ses[features_to_keep],
                     X_orig=matrix_dense_gene_sets[:, features_to_keep],
                     sigma2=np.ones((1, 1)) * variance,
                     p=np.ones((1, 1)) * 0.001)
+
+    # TODO - naive_priors
+    # input betas above and x original matrix; also scale factors
+    # TODO - look at naive priors adjusted function
+    # return all inpout genes and score and extra genes with high scores
+
+    # old alex coded
+    # gene_betas, _ = mod_log_sns.calculate_non_inf_betas(
+    #                 log_coeff_beta_tildes[:, features_to_keep],
+    #                 log_coeff_ses[:, features_to_keep],
+    #                 X_orig=matrix_dense_gene_sets[:, features_to_keep],
+    #                 sigma2=np.ones((1, 1)) * variance,
+    #                 p=np.ones((1, 1)) * 0.001)
 
     # log
     end = time.time()
