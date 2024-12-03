@@ -110,7 +110,7 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
         logger.info("step 2: got resulting found gene indices list of size: {}".format(len(list_input_gene_indices)))
 
     # step 3: get the p_values by gene set
-    vector_gene_set_pvalues = compute_beta_tildes(X=matrix_gene_sets_gene_original, Y=vector_gene, scale_factors=scale_factors, mean_shifts=mean_shifts)
+    vector_gene_set_pvalues, _, _ = compute_beta_tildes(X=matrix_gene_sets_gene_original, Y=vector_gene, scale_factors=scale_factors, mean_shifts=mean_shifts)
 
     if log:
         logger.info("step 3: got p values vector of shape: {}".format(vector_gene_set_pvalues.shape))
@@ -127,7 +127,8 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
         logger.info("step 4: got gene set filtered indices of length: {}".format(len(selected_gene_set_indices)))
         logger.info("step 4: got gene set filtered indices: {}".format(selected_gene_set_indices))
 
-    # TODO - build filtered gene set list with p_values
+    # NOTE - only used in return at end
+    # build filtered gene set list with p_values
     list_gene_set_p_values = build_gene_set_p_value_list(vector_gene_set_pvalues=vector_gene_set_pvalues, selected_gene_set_indices=selected_gene_set_indices, map_gene_set_index=map_gene_set_index)
     
     # step 5: filter gene rows by only the genes that are part of the remaining gene sets from the filtered gene set matrix
@@ -298,7 +299,7 @@ def compute_beta_tildes(X, Y, scale_factors, mean_shifts, y_var=1, resid_correla
     # MPD - change so only return pvalues
     # return finalize_regression(beta_tildes=beta_tildes, ses=ses, se_inflation_factors=se_inflation_factors)
     (cal_beta_tildes, cal_ses, cal_z_scores, cal_p_values, cal_se_inflation_factors) = finalize_regression(beta_tildes=beta_tildes, ses=ses, se_inflation_factors=se_inflation_factors)
-    return cal_p_values
+    return cal_p_values, cal_beta_tildes, cal_ses
 
 def finalize_regression(beta_tildes, ses, se_inflation_factors):
 
@@ -847,7 +848,102 @@ def run_nmf(matrix_input, num_components=15, log=False):
 
 
 # def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index, map_gene_set_index, mean_shifts, scale_factors, log=False):
-def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index, list_system_genes, log=False):
+# def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index, list_system_genes, input_p_values, input_beta_tildes, input_ses, log=False):
+#     '''
+#     calculates the gene scores
+#     '''
+#     # initialize
+#     map_gene_scores = {}
+
+#     # get the matrix/vectors needed
+#     vector_gene, list_input_gene_indices = mutils.generate_gene_vector_from_list(list_gene=list_input_genes, map_gene_index=map_gene_index)
+
+#     # log
+#     logger.info("form a gene list of size: {} got a gene index of size: {} and gene vector of shape: {}".format(len(list_input_genes), len(list_input_gene_indices), vector_gene.shape))
+               
+#     # convert data for Alex's code
+#     # make sure gene set matrix is full matrix, not sparse
+#     # TODO transpose matrices to get genes with gene sets as features (gene rows by gen set columns)
+#     matrix_dense_gene_sets = matrix_gene_sets.toarray()
+
+#     # get the coeff
+#     start = time.time()
+#     mod_log_sns = SnS()
+
+
+#     # TODO - get betas and standard errors
+#     # cal_beta_tildes, cal_ses from first pvalue calc - gene set specific
+#     # 
+
+#     # get the new betas, ses
+#     # need to use dense marix; error with sparse matrix on .std() call
+#     # logger.info("calculating beta tildes for gene scores")
+#     # # TODO - not needed 
+#     # log_coeff_beta_tildes, log_coeff_ses, _, log_coeff_pvalue, _, _, _ = mod_log_sns.compute_logistic_beta_tildes(X=matrix_dense_gene_sets, Y=vector_gene)
+
+#     # log
+#     # logger.info("got beta tildes shape: {}".format(log_coeff_beta_tildes.shape))
+#     logger.info("got beta tildes shape: {}".format(input_beta_tildes.shape))
+
+#     # TODO - try using sparse matrix here for speed
+#     # step to calculate correlation and filter out gene set features
+#     # filter on pvalue
+#     # similar to runnagene prining; not needed here
+#     prune_val = 0.8
+#     # features_to_keep = mod_log_sns.prune_gene_sets(matrix_dense_gene_sets, log_coeff_pvalue, prune_value=prune_val)
+#     features_to_keep = np.zeros(matrix_dense_gene_sets.shape[1], dtype=bool)
+#     features_to_keep[0:100]=True
+#     logger.info("got filter of shape: {} and data: {}".format(features_to_keep.shape, features_to_keep))
+
+#     # get the gene scores
+#     logger.info("calculating new betas for gene scores")
+#     # gene_betas, _ = mod_log_sns.calculate_non_inf_betas(
+#     #                 log_coeff_beta_tildes[:, list_input_gene_indices],
+#     #                 log_coeff_ses[:, list_input_gene_indices],
+#     #                 X_orig=matrix_dense_gene_sets[:, list_input_gene_indices],
+#     #                 sigma2=np.ones((1, 1)),
+#     #                 p=np.ones((1, 1)) * 0.001)
+
+#     # TODO - try with the sparse matrix for speed
+#     # if verytthing is 0, increase the variance (increasr by factor of 10)
+#     variance = 0.001
+#     # TODO - jf - cut on .05 pvalue (reduce gene sets)
+#     # TODO this will be gene set scores (this is beta; effect of gene set of whether gene is in gene set)
+#     gene_set_betas, _ = mod_log_sns.calculate_non_inf_betas(
+#                     log_coeff_beta_tildes[features_to_keep],
+#                     log_coeff_ses[features_to_keep],
+#                     X_orig=matrix_dense_gene_sets[:, features_to_keep],
+#                     sigma2=np.ones((1, 1)) * variance,
+#                     p=np.ones((1, 1)) * 0.001)
+
+#     # TODO - naive_priors
+#     # input betas above and x original matrix; also scale factors
+#     # TODO - look at naive priors adjusted function
+#     # return all inpout genes and score and extra genes with high scores
+
+#     # old alex coded
+#     # gene_betas, _ = mod_log_sns.calculate_non_inf_betas(
+#     #                 log_coeff_beta_tildes[:, features_to_keep],
+#     #                 log_coeff_ses[:, features_to_keep],
+#     #                 X_orig=matrix_dense_gene_sets[:, features_to_keep],
+#     #                 sigma2=np.ones((1, 1)) * variance,
+#     #                 p=np.ones((1, 1)) * 0.001)
+
+#     # log
+#     end = time.time()
+#     str_message = "gene scores calculation time elapsed {}s".format(end-start)
+#     logger.info(str_message)
+#     logger.info("got gene scores of shape: {}: and data: {}".format(gene_betas.shape, gene_betas))
+
+#     # build the map
+#     for index, gene_score in enumerate(gene_betas):
+#         index_gene = list_input_gene_indices[index]
+#         map_gene_scores[list_system_genes[index_gene]] = gene_score
+
+#     # return
+#     return map_gene_scores
+
+def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index, list_system_genes, input_p_values, input_beta_tildes, input_ses, log=False):
     '''
     calculates the gene scores
     '''
@@ -858,7 +954,7 @@ def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index
     vector_gene, list_input_gene_indices = mutils.generate_gene_vector_from_list(list_gene=list_input_genes, map_gene_index=map_gene_index)
 
     # log
-    logger.info("form a gene list of size: {} got a gene index of size: {} and gene vector of shape: {}".format(len(list_input_genes), len(list_input_gene_indices), vector_gene.shape))
+    logger.info("from a gene list of size: {} got a gene index of size: {} and gene vector of shape: {}".format(len(list_input_genes), len(list_input_gene_indices), vector_gene.shape))
                
     # convert data for Alex's code
     # make sure gene set matrix is full matrix, not sparse
@@ -871,48 +967,82 @@ def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index
 
 
     # TODO - get betas and standard errors
+    # DONE - comes in from input
     # cal_beta_tildes, cal_ses from first pvalue calc - gene set specific
-    # 
-
-    # get the new betas, ses
-    # need to use dense marix; error with sparse matrix on .std() call
-    logger.info("calculating beta tildes for gene scores")
-    # TODO - not needed 
-    log_coeff_beta_tildes, log_coeff_ses, _, log_coeff_pvalue, _, _, _ = mod_log_sns.compute_logistic_beta_tildes(X=matrix_dense_gene_sets, Y=vector_gene)
 
     # log
-    logger.info("got beta tildes shape: {}".format(log_coeff_beta_tildes.shape))
+    logger.info("got beta tildes shape: {}".format(input_beta_tildes.shape))
+    logger.info("got ses shape: {}".format(input_ses.shape))
 
-    # TODO - try using sparse matrix here for speed
-    # step to calculate correlation and filter out gene set features
-    # filter on pvalue
-    # similar to runnagene prining; not needed here
-    prune_val = 0.8
-    # features_to_keep = mod_log_sns.prune_gene_sets(matrix_dense_gene_sets, log_coeff_pvalue, prune_value=prune_val)
-    features_to_keep = np.zeros(matrix_dense_gene_sets.shape[1], dtype=bool)
-    features_to_keep[0:100]=True
-    logger.info("got filter of shape: {} and data: {}".format(features_to_keep.shape, features_to_keep))
+
+
+    # matrix_gene_set_filtered_by_pvalues, selected_gene_set_indices = filter_matrix_columns(matrix_input=matrix_gene_sets_gene_original, vector_input=vector_gene_set_pvalues, 
+    #                                                                                        cutoff_input=p_value, max_num_gene_sets=max_num_gene_sets, log=log)
+    # # step 5: filter gene rows by only the genes that are part of the remaining gene sets from the filtered gene set matrix
+    # matrix_gene_filtered_by_remaining_gene_sets, selected_gene_indices = filter_matrix_rows_by_sum_cutoff(matrix_to_filter=matrix_gene_set_filtered_by_pvalues, 
+                                                                                                        #   matrix_to_sum=matrix_gene_set_filtered_by_pvalues, log=log)
+
+    # matrix_gene_set_filtered_by_pvalues, selected_gene_set_indices = filter_matrix_columns(matrix_input=matrix_gene_sets_gene_original, vector_input=vector_gene_set_pvalues, 
+    #                                                                                        cutoff_input=p_value, max_num_gene_sets=max_num_gene_sets, log=log)
+    # # step 5: filter gene rows by only the genes that are part of the remaining gene sets from the filtered gene set matrix
+    # matrix_gene_filtered_by_remaining_gene_sets, selected_gene_indices = filter_matrix_rows_by_sum_cutoff(matrix_to_filter=matrix_gene_set_filtered_by_pvalues, 
+
+
+
+
+    # filter the gene set columns based on computed pvalue for each gene set
+    # TODO - jf - cut on .05 pvalue (reduce gene sets)
+    max_gene_sets = 500
+    matrix_gene_set_filtered_by_pvalues, selected_gene_set_indices = filter_matrix_columns(matrix_input=matrix_gene_sets, vector_input=input_p_values, 
+                                                                                           cutoff_input=0.05, max_num_gene_sets=max_gene_sets, log=log)
+    # matrix_gene_set_filtered_by_pvalues, selected_gene_set_indices = filter_matrix_columns(matrix_input=matrix_gene_sets_gene_original, vector_input=vector_gene_set_pvalues, 
+    #                                                                                        cutoff_input=0.5, log=log)
+
+    logger.info("got gene set filtered (row) matrix of shape: {}".format(matrix_gene_set_filtered_by_pvalues.shape))
+    logger.info("got gene set filtered indices of length: {}".format(len(selected_gene_set_indices)))
+    # logger.info("got gene set filtered indices: {}".format(selected_gene_set_indices))
+
+    # NOTE - filter genes for speed
+    # filter gene rows by only the genes that are part of the remaining gene sets from the filtered gene set matrix
+    matrix_gene_filtered_by_remaining_gene_sets, selected_gene_indices = filter_matrix_rows_by_sum_cutoff(matrix_to_filter=matrix_gene_set_filtered_by_pvalues, 
+                                                                                                          matrix_to_sum=matrix_gene_set_filtered_by_pvalues, log=log)
+    logger.info("got gene filtered (col) matrix of shape: {}".format(matrix_gene_filtered_by_remaining_gene_sets.shape))
+    logger.info("got gene filtered indices of length: {}".format(len(selected_gene_indices)))
+
 
     # get the gene scores
-    logger.info("calculating new betas for gene scores")
-    # gene_betas, _ = mod_log_sns.calculate_non_inf_betas(
-    #                 log_coeff_beta_tildes[:, list_input_gene_indices],
-    #                 log_coeff_ses[:, list_input_gene_indices],
-    #                 X_orig=matrix_dense_gene_sets[:, list_input_gene_indices],
-    #                 sigma2=np.ones((1, 1)),
-    #                 p=np.ones((1, 1)) * 0.001)
-
-    # TODO - try with the sparse matrix for speed
+    logger.info("calculating gene set betas for gene scores")
     # if verytthing is 0, increase the variance (increasr by factor of 10)
     variance = 0.001
-    # TODO - jf - cut on .05 pvalue (reduce gene sets)
     # TODO this will be gene set scores (this is beta; effect of gene set of whether gene is in gene set)
+
+    # NOTE - too long for full matrix
+    # gene_set_betas, _ = mod_log_sns.calculate_non_inf_betas(
+    #                 input_beta_tildes,
+    #                 input_ses,
+    #                 X_orig=matrix_dense_gene_sets,
+    #                 sigma2=np.ones((1, 1)) * variance,
+    #                 p=np.ones((1, 1)) * 0.001)
+    filtered_beta_tildes = input_beta_tildes[:, selected_gene_set_indices]
+    filtered_ses = input_ses[:, selected_gene_set_indices]
     gene_set_betas, _ = mod_log_sns.calculate_non_inf_betas(
-                    log_coeff_beta_tildes[features_to_keep],
-                    log_coeff_ses[features_to_keep],
-                    X_orig=matrix_dense_gene_sets[:, features_to_keep],
+                    filtered_beta_tildes,
+                    filtered_ses,
+                    X_orig=matrix_gene_filtered_by_remaining_gene_sets.toarray(),
                     sigma2=np.ones((1, 1)) * variance,
                     p=np.ones((1, 1)) * 0.001)
+    # gene_set_betas, _ = mod_log_sns.calculate_non_inf_betas(
+    #                 filtered_beta_tildes,
+    #                 filtered_ses,
+    #                 X_orig=matrix_dense_gene_sets[selected_gene_set_indices, :],
+    #                 sigma2=np.ones((1, 1)) * variance,
+    #                 p=np.ones((1, 1)) * 0.001)
+    # gene_set_betas, _ = mod_log_sns.calculate_non_inf_betas(
+    #                 log_coeff_beta_tildes[features_to_keep],
+    #                 log_coeff_ses[features_to_keep],
+    #                 X_orig=matrix_dense_gene_sets[:, features_to_keep],
+    #                 sigma2=np.ones((1, 1)) * variance,
+    #                 p=np.ones((1, 1)) * 0.001)
 
     # TODO - naive_priors
     # input betas above and x original matrix; also scale factors
@@ -931,12 +1061,12 @@ def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index
     end = time.time()
     str_message = "gene scores calculation time elapsed {}s".format(end-start)
     logger.info(str_message)
-    logger.info("got gene scores of shape: {}: and data: {}".format(gene_betas.shape, gene_betas))
+    # logger.info("got gene scores of shape: {}: and data: {}".format(gene_betas.shape, gene_betas))
 
     # build the map
-    for index, gene_score in enumerate(gene_betas):
-        index_gene = list_input_gene_indices[index]
-        map_gene_scores[list_system_genes[index_gene]] = gene_score
+    # for index, gene_score in enumerate(gene_betas):
+    #     index_gene = list_input_gene_indices[index]
+    #     map_gene_scores[list_system_genes[index_gene]] = gene_score
 
     # return
     return map_gene_scores
@@ -983,6 +1113,41 @@ if __name__ == "__main__":
 #             self.combined_prior_Ys = self.priors + self.Y
 #         if self.priors_adj is not None:
 #             self.combined_prior_Ys_adj = self.priors_adj + self.Y
+
+
+# def calculate_priors_adj(self, overwrite_priors=False):
+#     if self.priors is None:
+#         return
+    
+#     #do the regression
+#     gene_N = self.get_gene_N()
+#     gene_N_missing = self.get_gene_N(get_missing=True)
+#     all_gene_N = gene_N
+#     if self.genes_missing is not None:
+#         assert(gene_N_missing is not None)
+#         all_gene_N = np.concatenate((all_gene_N, gene_N_missing))
+
+#     if self.genes_missing is not None:
+#         total_priors = np.concatenate((self.priors, self.priors_missing))
+#     else:
+#         total_priors = self.priors
+
+#     priors_slope = np.cov(total_priors, all_gene_N)[0,1] / np.var(all_gene_N)
+#     priors_intercept = np.mean(total_priors - all_gene_N * priors_slope)
+
+#     log("Adjusting priors with slope %.4g" % priors_slope)
+#     priors_adj = self.priors - priors_slope * gene_N - priors_intercept
+#     if overwrite_priors:
+#         self.priors = priors_adj
+#     else:
+#         self.priors_adj = priors_adj
+#     if self.genes_missing is not None:
+#         priors_adj_missing = self.priors_missing - priors_slope * gene_N_missing
+#         if overwrite_priors:
+#             self.priors_missing = priors_adj_missing
+#         else:
+#             self.priors_adj_missing = priors_adj_missing
+
 
 
     #there are two levels of parallelization here:

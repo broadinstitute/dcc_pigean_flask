@@ -80,7 +80,7 @@ def test_compute_beta_tildes():
     assert scale_factors is not None
 
     # get the pvalues
-    vector_pvalues = cutils.compute_beta_tildes(X=matrix_gene_sets, Y=vector_genes, scale_factors=scale_factors, mean_shifts=mean_shifts)
+    vector_pvalues, _, _ = cutils.compute_beta_tildes(X=matrix_gene_sets, Y=vector_genes, scale_factors=scale_factors, mean_shifts=mean_shifts)
 
     # test 
     assert vector_pvalues is not None

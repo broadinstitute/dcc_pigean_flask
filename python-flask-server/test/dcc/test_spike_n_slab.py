@@ -165,6 +165,7 @@ def test_gene_scores_compute_lib():
     vector_gene, list_input_gene_indices = mutils.generate_gene_vector_from_list(list_gene=list_input_genes, map_gene_index=map_gene_index)
 
     # get the mean factors
+    logger.info("UNIT TEST - calculating mean_shifts, scale_factors for gene scores")
     (mean_shifts, scale_factors) = cutils._calc_X_shift_scale(X=matrix_gene_sets)
 
     # get the gene scores
@@ -176,15 +177,25 @@ def test_gene_scores_compute_lib():
     #                                                                                                            log=True)
 
     start = time.time()
-    map_gene_scores = cutils.calculate_gene_scores_map(matrix_gene_sets=matrix_gene_sets, list_input_genes=list_input_genes, map_gene_index=map_gene_index, list_system_genes=list_system_genes)
-    logger.info("calculating gene scores for gene scores")
+
+    # OLD
+    # map_gene_scores = cutils.calculate_gene_scores_map(matrix_gene_sets=matrix_gene_sets, list_input_genes=list_input_genes, map_gene_index=map_gene_index, list_system_genes=list_system_genes)
+
+    # get the p_values, beta_tildes and ses
+    logger.info("UNIT TEST - calculating p_values for gene scores")
+    vector_gene_set_pvalues, vector_beta_tildes, vector_ses = cutils.compute_beta_tildes(X=matrix_gene_sets, Y=vector_gene, scale_factors=scale_factors, mean_shifts=mean_shifts)
+
+    logger.info("UNIT TEST - getting gene score map for gene scores")
+    map_gene_set_scores = cutils.calculate_gene_scores_map(matrix_gene_sets=matrix_gene_sets, list_input_genes=list_input_genes, map_gene_index=map_gene_index, list_system_genes=list_system_genes,
+                                                       input_p_values=vector_gene_set_pvalues, input_beta_tildes=vector_beta_tildes, input_ses=vector_beta_tildes, log=True)
+    
     end = time.time()
     str_message = "gene scores calculation time elapsed {}s".format(end-start)
     logger.info(str_message)
-    logger.info("got gene scores: {}".format(map_gene_scores))
+    logger.info("got gene scores: {}".format(map_gene_set_scores))
 
     # log
-    logger.info("got gene scores: {}".format(json.dumps(map_gene_scores, indent=2)))
+    logger.info("got gene scores: {}".format(json.dumps(map_gene_set_scores, indent=2)))
 
     # test
     assert map_gene_scores is not None
