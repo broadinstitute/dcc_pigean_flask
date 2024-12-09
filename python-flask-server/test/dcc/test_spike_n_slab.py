@@ -186,8 +186,9 @@ def test_gene_scores_compute_lib():
     vector_gene_set_pvalues, vector_beta_tildes, vector_ses = cutils.compute_beta_tildes(X=matrix_gene_sets, Y=vector_gene, scale_factors=scale_factors, mean_shifts=mean_shifts)
 
     logger.info("UNIT TEST - getting gene score map for gene scores")
-    map_gene_set_scores = cutils.calculate_gene_scores_map(matrix_gene_sets=matrix_gene_sets, list_input_genes=list_input_genes, map_gene_index=map_gene_index, list_system_genes=list_system_genes,
-                                                       input_p_values=vector_gene_set_pvalues, input_beta_tildes=vector_beta_tildes, input_ses=vector_beta_tildes, log=True)
+    map_gene_set_scores = cutils.calculate_gene_scores_map(matrix_gene_sets=matrix_gene_sets, vector_gene=vector_gene, list_input_genes=list_input_genes, map_gene_index=map_gene_index, list_system_genes=list_system_genes,
+                                                       input_p_values=vector_gene_set_pvalues, input_beta_tildes=vector_beta_tildes, input_ses=vector_beta_tildes, 
+                                                       input_scale_factors=scale_factors, log=True)
     
     end = time.time()
     str_message = "gene scores calculation time elapsed {}s".format(end-start)
