@@ -190,7 +190,7 @@ def test_gene_scores_compute_lib():
     # map_gene_scores = cutils.calculate_gene_scores_map(matrix_gene_sets=matrix_gene_sets, vector_gene=vector_gene, list_input_genes=list_input_genes, map_gene_index=map_gene_index, list_system_genes=list_system_genes,
     #                                                    input_p_values=vector_gene_set_pvalues, input_beta_tildes=vector_beta_tildes, input_ses=vector_beta_tildes, 
     #                                                    input_scale_factors=scale_factors, input_mean_shits=mean_shifts, log=True)
-    map_gene_scores = cutils.calculate_gene_scores_map(matrix_gene_sets=matrix_gene_sets, list_input_genes=list_input_genes, map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
+    map_gene_scores, map_gene_set_scores, logs_process = cutils.calculate_gene_scores_map(matrix_gene_sets=matrix_gene_sets, list_input_genes=list_input_genes, map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
                                                     list_system_genes=list_system_genes,
                                                     input_scale_factors=scale_factors, input_mean_shifts=mean_shifts, log=True)
     
@@ -205,3 +205,7 @@ def test_gene_scores_compute_lib():
     # test
     assert map_gene_scores is not None
     assert len(map_gene_scores) > 0
+    # assert map_gene_set_scores is not None
+    # assert len(map_gene_set_scores) > 0
+
+

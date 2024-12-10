@@ -288,8 +288,9 @@ def post_pigean_genes():
     # return
     return map_result
 
+
 @app.route("/gene_scores", methods=["POST"])
-def post_pigean_genes():
+def post_gene_scores():
     # initialize 
     map_result = {}
     list_input_genes = []
@@ -349,9 +350,9 @@ def post_pigean_genes():
         # time
         start = time.time()
 
-        # map_gene_scores = cutils.calculate_gene_scores_map(matrix_gene_sets=matrix_gene_sets, vector_gene=vector_gene, list_input_genes=list_input_genes, map_gene_index=map_gene_index, list_system_genes=list_system_genes,
-        #                                                 input_p_values=vector_gene_set_pvalues, input_beta_tildes=vector_beta_tildes, input_ses=vector_beta_tildes, 
-        #                                                 input_scale_factors=scale_factors, log=True)
+        map_gene_scores, map_gene_set_scores, logs_process = cutils.calculate_gene_scores_map(matrix_gene_sets=matrix_gene_sets, list_input_genes=list_input_genes, map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
+                                                        list_system_genes=list_system_genes,
+                                                        input_scale_factors=scale_factors, input_mean_shifts=mean_shifts, log=True)
 
         # list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, \
         # gene_set_factor, map_gene_novelty, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 
@@ -371,8 +372,7 @@ def post_pigean_genes():
         # format the data
         # map_factors = cutils.group_factor_results(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, list_factor_genes=list_factor_genes)
         # map_result['data'] = map_factors
-        map_result = gutils.gui_build_pigean_app_results_map(list_input_genes=list_input_genes, list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, 
-                                                            list_factor_genes=list_factor_genes, list_gene_set_p_values=list_gene_set_p_values)
+        map_result = gutils.gui_build_gene_scores_app_results_map(map_gene_scores=map_gene_scores, map_gene_set_scores=map_gene_set_scores)
 
 
         # add time

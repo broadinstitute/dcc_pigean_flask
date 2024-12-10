@@ -178,6 +178,23 @@ def gui_build_pigean_app_results_map(list_input_genes, list_factor, list_factor_
     return map_result
 
 
+def gui_build_gene_scores_app_results_map(map_gene_scores, map_gene_set_scores, log=False):
+    '''
+    root method to build the pigean app results 
+    '''
+    # initialize
+    map_result = {}
+
+    # add the gene scores
+    map_result[dutils.KEY_APP_GENE_SCORES] = map_gene_scores
+
+    # add the gene set scores
+    map_result[dutils.KEY_APP_GENE_SET_SCORES] = map_gene_set_scores
+
+    # return
+    return map_result
+
+
 def get_list_verified_results_for_giu(list_factor, list_factor_genes, list_factor_gene_sets, log=False):
     '''
     returns the indexes of the verified factor results 
