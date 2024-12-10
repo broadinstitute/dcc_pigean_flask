@@ -1058,15 +1058,19 @@ def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index
     logger.info(str_message)
     # logger.info("got gene scores of shape: {}: and data: {}".format(gene_betas.shape, gene_betas))
 
+    # build the gene set map
+    for index, gene_set_score in enumerate(gene_set_betas):
+        index_gene_set = selected_gene_set_indices[index]
+        map_gene_set_scores[map_gene_set_index[index_gene_set]] = gene_set_score
+
     # build the gene map
-    # return all inpout genes and score and extra genes with high scores
+    # return all input genes and score and extra genes with high scores
     for index, gene_score in enumerate(result_priors):
         index_gene = selected_gene_indices[index]
         map_gene_scores[list_system_genes[index_gene]] = gene_score
 
     # return
     return map_gene_scores, map_gene_set_scores, logs_process
-
 
 
 def calculate_naive_priors(input_matrix_gene_set, input_vector_genes, input_betas, input_scale_factors, log=False):
