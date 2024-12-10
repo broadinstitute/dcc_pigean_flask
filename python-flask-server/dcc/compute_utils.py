@@ -946,8 +946,7 @@ def run_nmf(matrix_input, num_components=15, log=False):
 #     # return
 #     return map_gene_scores
 
-def calculate_gene_scores_map(matrix_gene_sets, vector_gene, list_input_genes, map_gene_index, list_system_genes, input_p_values, input_beta_tildes, 
-            input_ses, input_scale_factors, log=False):
+def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index, map_gene_set_index, list_system_genes, input_mean_shifts, input_scale_factors, log=False):
     '''
     calculates the gene scores
     '''
@@ -970,21 +969,23 @@ def calculate_gene_scores_map(matrix_gene_sets, vector_gene, list_input_genes, m
     start = time.time()
     mod_log_sns = SnS()
 
-
     # TODO - get betas and standard errors
     # DONE - comes in from input
     # cal_beta_tildes, cal_ses from first pvalue calc - gene set specific
+    logger.info("gene scores - calculating p_values for gene scores")
+    vector_gene_set_pvalues, vector_beta_tildes, vector_ses = compute_beta_tildes(X=matrix_gene_sets, Y=vector_gene, scale_factors=input_scale_factors, mean_shifts=input_mean_shifts)
 
     # log
-    logger.info("got input beta tildes shape: {}".format(input_beta_tildes.shape))
-    logger.info("got input ses shape: {}".format(input_ses.shape))
+    logger.info("got calculated beta tildes shape: {}".format(vector_beta_tildes.shape))
+    logger.info("got calculated ses shape: {}".format(vector_ses.shape))
     logger.info("got input scale factors shape: {}".format(input_scale_factors.shape))
+    logger.info("got calculated p_values shape: {}".format(vector_gene_set_pvalues.shape))
 
     # filter the gene set columns based on computed pvalue for each gene set
     # TODO - jf - cut on .05 pvalue (reduce gene sets)
     max_gene_sets = 500
     max_gene_sets = 200
-    matrix_gene_set_filtered_by_pvalues, selected_gene_set_indices = filter_matrix_columns(matrix_input=matrix_gene_sets, vector_input=input_p_values, 
+    matrix_gene_set_filtered_by_pvalues, selected_gene_set_indices = filter_matrix_columns(matrix_input=matrix_gene_sets, vector_input=vector_gene_set_pvalues, 
                                                                                            cutoff_input=0.05, max_num_gene_sets=max_gene_sets, log=log)
     # matrix_gene_set_filtered_by_pvalues, selected_gene_set_indices = filter_matrix_columns(matrix_input=matrix_gene_sets_gene_original, vector_input=vector_gene_set_pvalues, 
     #                                                                                        cutoff_input=0.5, log=log)
@@ -1014,8 +1015,8 @@ def calculate_gene_scores_map(matrix_gene_sets, vector_gene, list_input_genes, m
     #                 X_orig=matrix_dense_gene_sets,
     #                 sigma2=np.ones((1, 1)) * variance,
     #                 p=np.ones((1, 1)) * 0.001)
-    filtered_beta_tildes = input_beta_tildes[:, selected_gene_set_indices]
-    filtered_ses = input_ses[:, selected_gene_set_indices]
+    filtered_beta_tildes = vector_beta_tildes[:, selected_gene_set_indices]
+    filtered_ses = vector_ses[:, selected_gene_set_indices]
     gene_set_betas, _ = mod_log_sns.calculate_non_inf_betas(
                     filtered_beta_tildes,
                     filtered_ses,

@@ -163,9 +163,9 @@ def test_gene_scores_compute_lib():
     matrix_gene_sets, map_gene_set_index = mutils.load_geneset_matrix(map_gene_index=map_gene_index, list_gene_set_files=list_gene_set_file, path_gene_set_files=path_files, log=False)
 
     # get the gene vector
-    vector_gene, list_input_gene_indices = mutils.generate_gene_vector_from_list(list_gene=list_input_genes, map_gene_index=map_gene_index)
+    # vector_gene, list_input_gene_indices = mutils.generate_gene_vector_from_list(list_gene=list_input_genes, map_gene_index=map_gene_index)
 
-    # get the mean factors
+    # get the mean shifts and scale factors
     logger.info("UNIT TEST - calculating mean_shifts, scale_factors for gene scores")
     (mean_shifts, scale_factors) = cutils._calc_X_shift_scale(X=matrix_gene_sets)
 
@@ -183,13 +183,16 @@ def test_gene_scores_compute_lib():
     # map_gene_scores = cutils.calculate_gene_scores_map(matrix_gene_sets=matrix_gene_sets, list_input_genes=list_input_genes, map_gene_index=map_gene_index, list_system_genes=list_system_genes)
 
     # get the p_values, beta_tildes and ses
-    logger.info("UNIT TEST - calculating p_values for gene scores")
-    vector_gene_set_pvalues, vector_beta_tildes, vector_ses = cutils.compute_beta_tildes(X=matrix_gene_sets, Y=vector_gene, scale_factors=scale_factors, mean_shifts=mean_shifts)
+    # logger.info("UNIT TEST - calculating p_values for gene scores")
+    # vector_gene_set_pvalues, vector_beta_tildes, vector_ses = cutils.compute_beta_tildes(X=matrix_gene_sets, Y=vector_gene, scale_factors=scale_factors, mean_shifts=mean_shifts)
 
     logger.info("UNIT TEST - getting gene score map for gene scores")
-    map_gene_scores = cutils.calculate_gene_scores_map(matrix_gene_sets=matrix_gene_sets, vector_gene=vector_gene, list_input_genes=list_input_genes, map_gene_index=map_gene_index, list_system_genes=list_system_genes,
-                                                       input_p_values=vector_gene_set_pvalues, input_beta_tildes=vector_beta_tildes, input_ses=vector_beta_tildes, 
-                                                       input_scale_factors=scale_factors, log=True)
+    # map_gene_scores = cutils.calculate_gene_scores_map(matrix_gene_sets=matrix_gene_sets, vector_gene=vector_gene, list_input_genes=list_input_genes, map_gene_index=map_gene_index, list_system_genes=list_system_genes,
+    #                                                    input_p_values=vector_gene_set_pvalues, input_beta_tildes=vector_beta_tildes, input_ses=vector_beta_tildes, 
+    #                                                    input_scale_factors=scale_factors, input_mean_shits=mean_shifts, log=True)
+    map_gene_scores = cutils.calculate_gene_scores_map(matrix_gene_sets=matrix_gene_sets, list_input_genes=list_input_genes, map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
+                                                    list_system_genes=list_system_genes,
+                                                    input_scale_factors=scale_factors, input_mean_shifts=mean_shifts, log=True)
     
     end = time.time()
     str_message = "gene scores calculation time elapsed {}s".format(end-start)
