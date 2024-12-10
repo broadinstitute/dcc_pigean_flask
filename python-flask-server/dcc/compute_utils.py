@@ -1045,12 +1045,14 @@ def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index
     # input betas above and x original matrix; also scale factors
     # get the priors
     filtered_scale_factors = input_scale_factors[selected_gene_set_indices]
-    result_priors = calculate_naive_priors(input_matrix_gene_set=matrix_gene_filtered_by_remaining_gene_sets, 
+    result_priors, result_adjusted_priors = calculate_naive_priors(input_matrix_gene_set=matrix_gene_filtered_by_remaining_gene_sets, 
         input_vector_genes=vector_gene, input_betas=gene_set_betas, input_scale_factors=filtered_scale_factors, log=log)
 
     # log
     logger.info("gene scores: got result gene naive priors of shape: {}".format(result_priors.shape))
     logger.info("gene scores: got result gene naive priors of data: {}".format(result_priors))
+    logger.info("gene scores: got result gene naive adjusted priors of shape: {}".format(result_adjusted_priors.shape))
+    logger.info("gene scores: got result gene naive adjusted priors of data: {}".format(result_adjusted_priors))
 
     # log
     end = time.time()
@@ -1065,7 +1067,8 @@ def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index
 
     # build the gene map
     # return all input genes and score and extra genes with high scores
-    for index, gene_score in enumerate(result_priors):
+    # for index, gene_score in enumerate(result_priors):
+    for index, gene_score in enumerate(result_adjusted_priors):
         index_gene = selected_gene_indices[index]
         map_gene_scores[list_system_genes[index_gene]] = gene_score
 
@@ -1099,6 +1102,7 @@ def calculate_naive_priors(input_matrix_gene_set, input_vector_genes, input_beta
     result_priors_missing -= total_mean
 
     # self.calculate_priors_adj()
+    adjusted_priors = calculate_priors_adj(input_matrix_gene_sets=input_matrix_gene_set, input_priors=result_priors, log=log)
 
     # # TODO - is this necessary with one hot vector?
     # if self.Y is not None:
@@ -1108,7 +1112,14 @@ def calculate_naive_priors(input_matrix_gene_set, input_vector_genes, input_beta
     #         self.combined_prior_Ys_adj = self.priors_adj + self.Y
 
     # TODO - what do I return?
-    return result_priors
+    return result_priors, adjusted_priors
+
+
+def get_col_sums(X, num_nonzero=False, axis=0):
+    if num_nonzero:
+        return X.astype(bool).sum(axis=axis).A1
+    else:
+        return np.abs(X).sum(axis=axis).A1
 
 
 def calculate_priors_adj(input_matrix_gene_sets, input_priors, log=False):
@@ -1116,7 +1127,12 @@ def calculate_priors_adj(input_matrix_gene_sets, input_priors, log=False):
     # gene_N = self.get_gene_N()
 
     # gene_N_missing = self.get_gene_N(get_missing=True)
-    all_gene_N = gene_N
+
+    # gene_N is sum of gene sets that the genes are in
+    # all_gene_N = gene_N
+    all_gene_N = get_col_sums(input_matrix_gene_sets, axis=1)
+
+    # self.gene_N = self.get_col_sums(self.X_orig, axis=1)
     # if self.genes_missing is not None:
     #     assert(gene_N_missing is not None)
     #     all_gene_N = np.concatenate((all_gene_N, gene_N_missing))
@@ -1133,7 +1149,7 @@ def calculate_priors_adj(input_matrix_gene_sets, input_priors, log=False):
 
     logger.info("Adjusting priors with slope %.4g" % priors_slope)
     # priors_adj = self.priors - priors_slope * gene_N - priors_intercept
-    priors_adj = input_priors - priors_slope * gene_N - priors_intercept
+    priors_adj = input_priors - priors_slope * all_gene_N - priors_intercept
 
     # if overwrite_priors:
     #     self.priors = priors_adj
