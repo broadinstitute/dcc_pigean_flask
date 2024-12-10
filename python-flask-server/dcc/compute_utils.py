@@ -953,6 +953,7 @@ def calculate_gene_scores_map(matrix_gene_sets, vector_gene, list_input_genes, m
     '''
     # initialize
     map_gene_scores = {}
+    map_gene_set_scores = {}
 
     # get the matrix/vectors needed
     vector_gene, list_input_gene_indices = mutils.generate_gene_vector_from_list(list_gene=list_input_genes, map_gene_index=map_gene_index)
@@ -982,6 +983,7 @@ def calculate_gene_scores_map(matrix_gene_sets, vector_gene, list_input_genes, m
     # filter the gene set columns based on computed pvalue for each gene set
     # TODO - jf - cut on .05 pvalue (reduce gene sets)
     max_gene_sets = 500
+    max_gene_sets = 200
     matrix_gene_set_filtered_by_pvalues, selected_gene_set_indices = filter_matrix_columns(matrix_input=matrix_gene_sets, vector_input=input_p_values, 
                                                                                            cutoff_input=0.05, max_num_gene_sets=max_gene_sets, log=log)
     # matrix_gene_set_filtered_by_pvalues, selected_gene_set_indices = filter_matrix_columns(matrix_input=matrix_gene_sets_gene_original, vector_input=vector_gene_set_pvalues, 
@@ -1020,6 +1022,10 @@ def calculate_gene_scores_map(matrix_gene_sets, vector_gene, list_input_genes, m
                     X_orig=matrix_gene_filtered_by_remaining_gene_sets.toarray(),
                     sigma2=np.ones((1, 1)) * variance,
                     p=np.ones((1, 1)) * 0.001)
+    
+    logger.info("gene scores: got gene set betas of shape: {}".format(gene_set_betas.shape))
+    # logger.info("gene scores: got gene set betas of data: {}".format(gene_set_betas))
+
     # gene_set_betas, _ = mod_log_sns.calculate_non_inf_betas(
     #                 filtered_beta_tildes,
     #                 filtered_ses,
@@ -1041,7 +1047,8 @@ def calculate_gene_scores_map(matrix_gene_sets, vector_gene, list_input_genes, m
         input_vector_genes=vector_gene, input_betas=gene_set_betas, input_scale_factors=filtered_scale_factors, log=log)
 
     # log
-    logger.info("got result naive priors of shape: {}".format(result_priors.shape))
+    logger.info("gene scores: got result gene naive priors of shape: {}".format(result_priors.shape))
+    logger.info("gene scores: got result gene naive priors of data: {}".format(result_priors))
 
     # log
     end = time.time()
@@ -1049,11 +1056,11 @@ def calculate_gene_scores_map(matrix_gene_sets, vector_gene, list_input_genes, m
     logger.info(str_message)
     # logger.info("got gene scores of shape: {}: and data: {}".format(gene_betas.shape, gene_betas))
 
-    # build the map
+    # build the gene map
     # return all inpout genes and score and extra genes with high scores
-    # for index, gene_score in enumerate(gene_betas):
-    #     index_gene = list_input_gene_indices[index]
-    #     map_gene_scores[list_system_genes[index_gene]] = gene_score
+    for index, gene_score in enumerate(result_priors):
+        index_gene = selected_gene_indices[index]
+        map_gene_scores[list_system_genes[index_gene]] = gene_score
 
     # return
     return map_gene_scores
@@ -1061,6 +1068,9 @@ def calculate_gene_scores_map(matrix_gene_sets, vector_gene, list_input_genes, m
 
 
 def calculate_naive_priors(input_matrix_gene_set, input_vector_genes, input_betas, input_scale_factors, log=False):
+    '''
+    calculate the gene scores based on the input gene set betas
+    '''
     #  initialize
 
     # log
@@ -1094,9 +1104,11 @@ def calculate_naive_priors(input_matrix_gene_set, input_vector_genes, input_beta
     # TODO - what do I return?
     return result_priors
 
+
 def calculate_priors_adj(input_matrix_gene_sets, input_priors, log=False):
     #do the regression
-    gene_N = self.get_gene_N()
+    # gene_N = self.get_gene_N()
+
     # gene_N_missing = self.get_gene_N(get_missing=True)
     all_gene_N = gene_N
     # if self.genes_missing is not None:
@@ -1107,13 +1119,15 @@ def calculate_priors_adj(input_matrix_gene_sets, input_priors, log=False):
     #     total_priors = np.concatenate((self.priors, self.priors_missing))
     # else:
     #     total_priors = self.priors
-    total_priors = self.priors
+    # total_priors = self.priors
+    total_priors = input_priors
 
     priors_slope = np.cov(total_priors, all_gene_N)[0,1] / np.var(all_gene_N)
     priors_intercept = np.mean(total_priors - all_gene_N * priors_slope)
 
     logger.info("Adjusting priors with slope %.4g" % priors_slope)
-    priors_adj = self.priors - priors_slope * gene_N - priors_intercept
+    # priors_adj = self.priors - priors_slope * gene_N - priors_intercept
+    priors_adj = input_priors - priors_slope * gene_N - priors_intercept
 
     # if overwrite_priors:
     #     self.priors = priors_adj
@@ -1126,6 +1140,8 @@ def calculate_priors_adj(input_matrix_gene_sets, input_priors, log=False):
     #     else:
     #         self.priors_adj_missing = priors_adj_missing
 
+    # return
+    return priors_adj
 
 
 # main

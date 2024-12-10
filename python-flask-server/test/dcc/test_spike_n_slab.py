@@ -139,6 +139,7 @@ def test_gene_scores_compute_lib():
     # initialize
     map_gene_index = None 
     map_gene_scores = None
+    map_gene_set_scores = None
     list_input_genes = [
         "TCF7L2", "PPARG", "KCNJ11", "KCNQ1", "FTO", "SLC30A8", "HHEX", "CDKAL1",
         "IGF2BP2", "CDKN2A/B", "NOTCH2", "THADA", "ADAMTS9", "JAZF1", "CDC123/CAMK1D",
@@ -186,17 +187,17 @@ def test_gene_scores_compute_lib():
     vector_gene_set_pvalues, vector_beta_tildes, vector_ses = cutils.compute_beta_tildes(X=matrix_gene_sets, Y=vector_gene, scale_factors=scale_factors, mean_shifts=mean_shifts)
 
     logger.info("UNIT TEST - getting gene score map for gene scores")
-    map_gene_set_scores = cutils.calculate_gene_scores_map(matrix_gene_sets=matrix_gene_sets, vector_gene=vector_gene, list_input_genes=list_input_genes, map_gene_index=map_gene_index, list_system_genes=list_system_genes,
+    map_gene_scores = cutils.calculate_gene_scores_map(matrix_gene_sets=matrix_gene_sets, vector_gene=vector_gene, list_input_genes=list_input_genes, map_gene_index=map_gene_index, list_system_genes=list_system_genes,
                                                        input_p_values=vector_gene_set_pvalues, input_beta_tildes=vector_beta_tildes, input_ses=vector_beta_tildes, 
                                                        input_scale_factors=scale_factors, log=True)
     
     end = time.time()
     str_message = "gene scores calculation time elapsed {}s".format(end-start)
     logger.info(str_message)
-    logger.info("got gene scores: {}".format(map_gene_set_scores))
 
     # log
-    logger.info("got gene scores: {}".format(json.dumps(map_gene_set_scores, indent=2)))
+    # logger.info("got gene scores: {}".format(json.dumps(map_gene_set_scores, indent=2)))
+    logger.info("got gene scores: {}".format(json.dumps({key: map_gene_scores[key] for key in map_gene_scores.keys() if key < 'AD'}, indent=2)))
 
     # test
     assert map_gene_scores is not None
