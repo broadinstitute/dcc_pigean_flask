@@ -187,7 +187,7 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
 
     # end time counter
     end = time.time()
-    str_message = "compute process time is: {}s".format(end-start)
+    str_message = "gene factorization compute process time is: {}s".format(end-start)
     logs_process.append(str_message)
     logs_process.append("used p_value: {}".format(p_value))
     logs_process.append("used max number of gene sets: {}".format(max_num_gene_sets))
@@ -946,7 +946,7 @@ def run_nmf(matrix_input, num_components=15, log=False):
 #     # return
 #     return map_gene_scores
 
-def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index, map_gene_set_index, list_system_genes, input_mean_shifts, input_scale_factors, log=False):
+def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index, map_gene_set_index, list_system_genes, input_mean_shifts, input_scale_factors, max_num_gene_sets=200, log=False):
     '''
     calculates the gene scores
     '''
@@ -983,11 +983,9 @@ def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index
     logger.info("got calculated p_values shape: {}".format(vector_gene_set_pvalues.shape))
 
     # filter the gene set columns based on computed pvalue for each gene set
-    # TODO - jf - cut on .05 pvalue (reduce gene sets)
-    max_gene_sets = 500
-    max_gene_sets = 200
+    # NOTE - jf - cut on .05 pvalue (reduce gene sets)
     matrix_gene_set_filtered_by_pvalues, selected_gene_set_indices = filter_matrix_columns(matrix_input=matrix_gene_sets, vector_input=vector_gene_set_pvalues, 
-                                                                                           cutoff_input=0.05, max_num_gene_sets=max_gene_sets, log=log)
+                                                                                           cutoff_input=0.05, max_num_gene_sets=max_num_gene_sets, log=log)
     # matrix_gene_set_filtered_by_pvalues, selected_gene_set_indices = filter_matrix_columns(matrix_input=matrix_gene_sets_gene_original, vector_input=vector_gene_set_pvalues, 
     #                                                                                        cutoff_input=0.5, log=log)
 
@@ -1007,15 +1005,7 @@ def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index
     logger.info("calculating gene set betas for gene scores")
     # if verytthing is 0, increase the variance (increasr by factor of 10)
     variance = 0.001
-    # TODO this will be gene set scores (this is beta; effect of gene set of whether gene is in gene set)
-
-    # NOTE - too long for full matrix
-    # gene_set_betas, _ = mod_log_sns.calculate_non_inf_betas(
-    #                 input_beta_tildes,
-    #                 input_ses,
-    #                 X_orig=matrix_dense_gene_sets,
-    #                 sigma2=np.ones((1, 1)) * variance,
-    #                 p=np.ones((1, 1)) * 0.001)
+    # NOTE this will be gene set scores (this is beta; effect of gene set of whether gene is in gene set)
     filtered_beta_tildes = vector_beta_tildes[:, selected_gene_set_indices]
     filtered_ses = vector_ses[:, selected_gene_set_indices]
     gene_set_betas, _ = mod_log_sns.calculate_non_inf_betas(
@@ -1028,6 +1018,7 @@ def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index
     logger.info("gene scores: got gene set betas of shape: {}".format(gene_set_betas.shape))
     # logger.info("gene scores: got gene set betas of data: {}".format(gene_set_betas))
 
+    # NOTE - old code, remove when stable
     # gene_set_betas, _ = mod_log_sns.calculate_non_inf_betas(
     #                 filtered_beta_tildes,
     #                 filtered_ses,
@@ -1058,7 +1049,6 @@ def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index
     end = time.time()
     str_message = "gene scores calculation time elapsed {}s".format(end-start)
     logger.info(str_message)
-    # logger.info("got gene scores of shape: {}: and data: {}".format(gene_betas.shape, gene_betas))
 
     # build the gene set map
     for index, gene_set_score in enumerate(gene_set_betas):

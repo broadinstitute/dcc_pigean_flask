@@ -192,7 +192,7 @@ def post_pigean_genes():
 
     # get the p_value
     p_value_cutoff = process_numeric_value(json_request=data, name='p_value', cutoff_default=P_VALUE_CUTOFF)
-    str_message = "got using p_value: {}".format(p_value_cutoff)
+    str_message = "got p_value filter: {}".format(p_value_cutoff)
     logger.info(str_message)
     list_logs.append(str_message)
 
@@ -203,8 +203,14 @@ def post_pigean_genes():
     list_logs.append(str_message)
 
     # adding input to indicate whether to generate factor label names
-    is_generate_factor_labels = process_string_value(json_request=data, name=dutils.KEY_REST_GENERATE_FACTOR_LABELS, default=False)
+    is_generate_factor_labels = process_boolean_value(json_request=data, name=dutils.KEY_REST_GENERATE_FACTOR_LABELS, default=False)
     str_message = "using input whether generate factor labels (using LLM): {}".format(is_generate_factor_labels)
+    logger.info(str_message)
+    list_logs.append(str_message)
+
+    # adding input to indicate whether to generate factor label names
+    is_add_gene_scores = process_boolean_value(json_request=data, name=dutils.KEY_REST_ADD_GENE_SCORES, default=False)
+    str_message = "using input whether to also calculate gene scores: {}".format(is_add_gene_scores)
     logger.info(str_message)
     list_logs.append(str_message)
 
@@ -262,9 +268,6 @@ def post_pigean_genes():
                                                                                                     scale_factors=gene_set_family_object.scale_factors,
                                                                                                                 is_factor_labels_llm=is_generate_factor_labels,
                                                                                                                 log=True)
-        # time
-        end = time.time()
-
         # format the data
         # map_factors = cutils.group_factor_results(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, list_factor_genes=list_factor_genes)
         # map_result['data'] = map_factors
@@ -272,14 +275,31 @@ def post_pigean_genes():
                                                             list_factor_genes=list_factor_genes, list_gene_set_p_values=list_gene_set_p_values)
 
 
+        if is_add_gene_scores:
+            # get the gene scores
+            map_gene_scores, map_gene_set_scores, logs_gene_scores = cutils.calculate_gene_scores_map(matrix_gene_sets=matrix_gene_sets, list_input_genes=list_input_genes, map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
+                                                            list_system_genes=list_system_genes,
+                                                            input_scale_factors=scale_factors, input_mean_shifts=mean_shifts, max_num_gene_sets=max_number_gene_sets, log=True)
+
+
+            # get the gene score gui elements
+            map_result_gene_score = gutils.gui_build_gene_scores_app_results_map(map_gene_scores=map_gene_scores, map_gene_set_scores=map_gene_set_scores)
+
+            # add the gene score data tologs and map result
+            logs_process.append(logs_gene_scores)
+            map_result.update(map_result_gene_score)
+
+        # time
+        end = time.time()
+
         # add time
-        str_message = "total elapsed time is: {}s".format(end-start)
+        str_message = "post /pigean total elapsed time is: {}s".format(end-start)
         logs_process.append(str_message)
         logs_process.append("code version is: {}".format(dutils.get_code_version()))
-        map_result['logs'] = logs_process
 
         # add the input to the logs
         logs_process = list_logs + logs_process
+        map_result['logs'] = logs_process
 
         # print logs to app log
         for row in logs_process:
@@ -376,7 +396,7 @@ def post_gene_scores():
 
 
         # add time
-        str_message = "total elapsed time is: {}s".format(end-start)
+        str_message = "post /gene_scores total elapsed time is: {}s".format(end-start)
         logs_process.append(str_message)
         logs_process.append("code version is: {}".format(dutils.get_code_version()))
         map_result['logs'] = logs_process
@@ -548,6 +568,29 @@ def process_string_value(json_request, name, default, log=False):
 
     # return
     return value
+
+def process_boolean_value(json_request, name, default=False, log=False):
+    '''
+    Convert string values to boolean.
+    '''
+    # initialize
+    value = None
+    result = False
+
+    # extract the value
+    # Retrieve the float value from the request
+    value = json_request.get(name)
+
+    # if null
+    if value:
+        # if type boolean, return as is
+        if isinstance(value, bool):
+            result = value
+        else:
+           result = value.lower() in ['true', '1', 'yes', 'on']
+
+    # return
+    return result
 
 
 if __name__ == '__main__':
