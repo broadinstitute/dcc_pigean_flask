@@ -33,7 +33,7 @@
 # imports
 import dcc.matrix_utils as mutils 
 import dcc.dcc_utils as dutils 
-
+import dcc.graph_utils as gutils
 
 
 # constants
@@ -102,6 +102,7 @@ def gui_build_results_map(list_factor, list_factor_genes, list_factor_gene_sets,
 
     # return
     return map_result
+
 
 def gui_build_novelty_results_map(map_gene_ontology, list_input_gene_names, map_gene_index, matrix_gene_sets, map_gene_factor_data, log=False):
     '''
@@ -306,99 +307,35 @@ def build_pigean_factor_results_map(list_factor, list_factor_genes, list_factor_
     return map_result
 
 
-def generate_distinct_colors_orig(N):
-
-    if N == 2:
-        colors = [(1,0,0), (0,0,1)]
-    else:
-
-        colors = []
-        step = 256 / N  # Step to space colors evenly in the RGB space
-
-        white_scale = 0.5
-
-        for i in range(1,N+1):
-            r = 1 - white_scale * (1 - int((i * step) % 256) / 256.0)        # Red channel
-            g = 1 - white_scale * (1 - int((i * step * 2) % 256) / 256.0)    # Green channel
-            b = 1 - white_scale * (1 - int((i * step * 3) % 256) / 256.0)    # Blue channel
-            colors.append((r, g, b))
-
-    return colors
-
-
-def generate_distinct_colors(N, start_with_red_blue=True):
-    """
-    Generate N distinct colors, ensuring complementarity if starting with red and blue.
-    Defaults to the original behavior if not starting with red and blue.
-
-    Args:
-        N (int): The number of distinct colors to generate.
-        start_with_red_blue (bool): If True, the first two colors are red and blue.
-
-    Returns:
-        list: A list of tuples representing RGB colors.
-    """
-
-    if N <= 0:
-        return []
-
-    colors = []
-
-    if start_with_red_blue and N >= 2:
-        # Start with predefined red and blue
-        colors.append((1, 0, 0))  # Red
-        colors.append((0, 0, 1))  # Blue
-
-        import colorsys
-
-        # Generate the remaining colors with complementarity
-        for i in range(2, N):
-            max_dist_color = None
-            max_dist = -1
-
-            # Sample potential colors in HSV space and find the most distinct one
-            for h in range(0, 360, 10):  # Test hues in 10-degree increments
-                for s in [0.7, 1.0]:     # Test two saturation levels
-                    for v in [0.7, 1.0]: # Test two brightness levels
-                        r, g, b = colorsys.hsv_to_rgb(h / 360.0, s, v)
-                        candidate_color = (r, g, b)
-
-                        # Compute the minimum Euclidean distance to all existing colors
-                        min_dist = min(
-                            sum((r1 - r2)**2 for r1, r2 in zip(candidate_color, c))**0.5
-                            for c in colors
-                        )
-
-                        # Keep track of the most distinct candidate
-                        if min_dist > max_dist:
-                            max_dist = min_dist
-                            max_dist_color = candidate_color
-
-            # Add the most distinct color to the list
-            colors.append(max_dist_color)
-
-    else:
-        # Default behavior: evenly distribute colors in RGB space
-        step = 256 / N  # Step to space colors evenly
-        white_scale = 0.5
-
-        for i in range(1, N + 1):
-            r = 1 - white_scale * (1 - int((i * step) % 256) / 256.0)  # Red channel
-            g = 1 - white_scale * (1 - int((i * step * 2) % 256) / 256.0)  # Green channel
-            b = 1 - white_scale * (1 - int((i * step * 3) % 256) / 256.0)  # Blue channel
-            colors.append((r, g, b))
-
-    return colors
-
-
-def build_factor_graph(list_factor, log=False):
+def build_graph_node_edge_map(list_factor, log=True):
     '''
-    will build the nodes and edges list for graph display
+    will build the map for the VIS graph display library format
     '''
-    map_result = {'nodes': {}, 'edges': {}}
+    map_result = {}
+    graph = None
+    list_nodes = []
+    list_edges = []
+    
+    # get the network x graph object
+    graph = gutils.build_factor_graph(list_factor=list_factor)
 
+    # get the data
+    data = gutils.extract_data_from_graph(graph=graph)
+    map_result['networkx'] = data
 
-    # 
+    # get the edges and nodes
+    list_nodes, list_edges = gutils.extract_nodes_edges_from_graph(graph=graph)
+
+    # log
+    if log:
+        logger.info("got graph nodes: {}".format(list_nodes))    
+        logger.info("got graph edges: {}".format(list_edges))    
+
+    # add to map
+    map_result['data'] = [{'nodes': list_nodes, 'edges': list_edges}]
+
+    # return
+    return map_result
 
 
 # main

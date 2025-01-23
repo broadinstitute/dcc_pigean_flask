@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Network Graph</title>
+    <script type="text/javascript" src="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style type="text/css">
+        #mynetwork {
+            width: 1200px;
+            height: 800px;
+            border: 1px solid lightgray;
+        }
+    </style>
+</head>
+<body>
+
+<div id="mynetwork"></div>
+
+<script type="text/javascript">
+  // Fetch the JSON data from the server or local file
+//  fetch('network_data.json')
+//  fetch('https://bioindex-dev.hugeamp.org/api/bio/query/pigean-graph?q=CAD,2,small')
+fetch('http://localhost:8082/network_graph', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    p_value: "0.05",
+    max_number_gene_sets: 150,
+    gene_sets: "default",
+    generate_factor_labels: false,
+    calculate_gene_scores: false,
+    genes: [
+      "ABCA1", "ABCC6", "ACE", "ADAMTS7", "ADIPOQ", "AGT", "AGTR1", "ALDH2", "ANK2",
+      "APOA1", "APOA5", "APOB", "APOC3", "APOE", "ARHGEF26", "ARL15", "BAG3", "BCL2",
+      "BIRC5", "C9orf3", "CAV1", "CETP", "CHRM2", "CLEC16A", "CNOT4", "COL4A1", "COL4A2",
+      "CRP", "CTLA4", "CXCL12", "CYBA", "DAB2IP", "DDAH1", "DHCR7", "DLG1", "DSCAML1",
+      "EDEM1", "EDN1", "F2", "F5", "F8", "F9", "FGF23", "FGF5", "FURIN", "GATA2", "GCKR",
+      "GHR", "GJA5", "GPC5", "GPX3", "HAMP", "HIF1A", "HMOX1", "HNF1A", "IL6", "IRS1",
+      "KLF14", "LDLR", "LEP", "LIPC", "LPA", "LPL", "LRP1", "MADD", "MMP3", "MTHFR",
+      "MYBPC3", "NOS3", "NPR1", "NR1H3", "OLR1", "PCSK9", "PDE4D", "PDGFD", "PEMT",
+      "PLAT", "PLAU", "PLCB3", "PLG", "PPARG", "PRKCH", "PSRC1", "PTGS1", "PTGS2", "RECK",
+      "SCARB1", "SIRT1", "SLC22A3", "SMARCA4", "SOD2", "SORT1", "SPARC", "TFPI", "THBD",
+      "TLL1", "TNF", "TP53", "TRAF3", "TRIB1", "UBE2Z", "VAMP8", "VWF"
+    ]
+  })
+})
+  .then(response => response.json())
+    .then(data => {
+        var json_data = data
+        var nodes = new vis.DataSet(json_data.data[0].nodes);
+        var edges = new vis.DataSet(json_data.data[0].edges);
+
+        var networkData = {
+            nodes: nodes,
+            edges: edges
+        };
+
+        var options = {
+            nodes: {
+                shape: 'dot',
+                size: 20,
+                font: {
+                    size: 15
+                }
+            },
+            edges: {
+                width: 2
+            },
+            physics: {
+                forceAtlas2Based: {
+                    gravitationalConstant: -26,
+                    centralGravity: 0.005,
+                    springLength: 230,
+                    springConstant: 0.18
+                },
+                maxVelocity: 146,
+                solver: 'forceAtlas2Based',
+                timestep: 0.35,
+                stabilization: {iterations: 150}
+            }
+        };
+
+        var container = document.getElementById('mynetwork');
+        var network = new vis.Network(container, networkData, options);
+
+        // Add an event listener to check if the network is loaded
+        network.on("stabilizationIterationsDone", function () {
+            network.setOptions( { physics: false } );
+            console.log("Stabilization done");
+        });
+    }).catch(error => console.error('Error loading the network data:', error));
+
+</script>
+
+</body>
+</html>

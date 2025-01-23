@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NetworkX Graph</title>
+    <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+</head>
+<body>
+    <div id="cy" style="width: 800px; height: 600px;"></div>
+    <script>
+        fetch('http://0.0.0.0:8000/testGraph.json')
+            .then(response => response.json())
+            .then(data => {
+                var cy = cytoscape({
+                    container: document.getElementById('cy'),
+                    elements: data.elements,
+                    style: [
+                        {
+                            selector: 'node',
+                            style: {
+                                'background-color': '#666',
+                                'label': 'data(id)'
+                            }
+                        },
+                        {
+                            selector: 'edge',
+                            style: {
+                                'width': 3,
+                                'line-color': '#ccc',
+                                'target-arrow-color': '#ccc',
+                                'target-arrow-shape': 'triangle'
+                            }
+                        }
+                    ],
+                    layout: {
+                        name: 'grid'
+                    }
+                });
+            });
+            document.addEventListener('DOMContentLoaded', (event) => {
+        // Code to access localStorage or similar here
+        if (window.localStorage) {
+            // Access or modify localStorage
+            console.log('Local storage is available.');
+        } else {
+            console.log('Local storage is not available in this browser context.');
+        }
+    });
+    </script>
+</body>
+</html>
