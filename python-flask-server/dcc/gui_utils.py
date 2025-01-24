@@ -34,6 +34,7 @@
 import dcc.matrix_utils as mutils 
 import dcc.dcc_utils as dutils 
 import dcc.graph_utils as gutils
+import dcc.data_utils as dautils 
 
 
 # constants
@@ -144,6 +145,7 @@ def gui_build_novelty_results_map(map_gene_ontology, list_input_gene_names, map_
 
     # return
     return map_result
+
 
 def gui_build_pigean_app_results_map(list_input_genes, list_factor, list_factor_genes, list_factor_gene_sets, list_gene_set_p_values, max_num_per_factor=dutils.NUMBER_RETURNED_PER_FACTOR, log=False):
     '''
@@ -307,7 +309,7 @@ def build_pigean_factor_results_map(list_factor, list_factor_genes, list_factor_
     return map_result
 
 
-def build_graph_node_edge_map(list_factor, log=True):
+def build_graph_node_edge_map(list_factor_input, list_factor_genes_input, list_factor_gene_sets_input, log=False):
     '''
     will build the map for the VIS graph display library format
     '''
@@ -316,8 +318,11 @@ def build_graph_node_edge_map(list_factor, log=True):
     list_nodes = []
     list_edges = []
     
+    # # get the manipulated list factor list
+    # list_factor = dautils.extract_factor_data_list(list_factor_input=list_factor_input, list_factor_genes_input=list_factor_genes_input, list_factor_gene_sets_input=list_factor_gene_sets_input)
+
     # get the network x graph object
-    graph = gutils.build_factor_graph(list_factor=list_factor)
+    graph = gutils.build_factor_graph(list_factor=list_factor_input, list_factor_genes=list_factor_genes_input, list_factor_gene_sets=list_factor_gene_sets_input)
 
     # get the data
     data = gutils.extract_data_from_graph(graph=graph)

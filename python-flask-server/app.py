@@ -495,7 +495,13 @@ def post_network_graph():
                                                                                                     mean_shifts=gene_set_family_object.mean_shifts, 
                                                                                                     scale_factors=gene_set_family_object.scale_factors,
                                                                                                                 is_factor_labels_llm=is_generate_factor_labels,
-                                                                                                                log=True)
+                                                                                                                log=False)
+        
+        # easier to format the data for gene nmf call and thn extract the nodes/edges
+        # get the /pigean data
+        # TODO - abstract out the code that cobines the factor/gene/geneset data?
+        map_result_intermediate = gutils.gui_build_pigean_app_results_map(list_input_genes=list_input_genes, list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, 
+                                                            list_factor_genes=list_factor_genes, list_gene_set_p_values=list_gene_set_p_values)
 
         # list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, \
         # gene_set_factor, map_gene_novelty, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 
@@ -515,8 +521,11 @@ def post_network_graph():
         # format the data
         # map_factors = cutils.group_factor_results(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, list_factor_genes=list_factor_genes)
         # map_result['data'] = map_factors
-        map_result = gutils.build_graph_node_edge_map(list_factor=list_factor)
+        map_result = gutils.build_graph_node_edge_map(list_factor_input=list_factor, list_factor_gene_sets_input=list_factor_gene_sets, 
+                                                            list_factor_genes_input=list_factor_genes)
 
+        # for debug, add pigean list
+        map_result['list_factor'] = list_factor
 
         # add time
         str_message = "post /network_graph total elapsed time is: {}s".format(end-start)

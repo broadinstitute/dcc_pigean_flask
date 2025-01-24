@@ -80,7 +80,7 @@ class RunFactorException(Exception):
 
 # methods
 def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_genes, map_gene_index, map_gene_set_index, mean_shifts, scale_factors, 
-                      p_value=0.05, max_num_gene_sets=100, is_factor_labels_llm=False, use_set_p_value=False, log=False):
+                      p_value=0.05, max_num_gene_sets=100, is_factor_labels_llm=False, use_set_p_value=False, step_log=True, log=False):
     '''
     will produce the gene set factors and gene factors
     '''
@@ -97,12 +97,12 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
     start = time.time()
 
     # step 1/2: get the gene vector from the gene list
-    if log:
+    if step_log:
         logger.info("step 0: got input gene list from user of size: {}".format(len(list_gene)))
     vector_gene, list_input_gene_indices = mutils.generate_gene_vector_from_list(list_gene=list_gene, map_gene_index=map_gene_index)
 
     # log
-    if log:
+    if step_log:
         logger.info("step 1: got gene set matrix of shape: {}".format(matrix_gene_sets_gene_original.shape))
         logger.info("step 1: got mean_shifts of shape: {}".format(mean_shifts.shape))
         logger.info("step 1: got scale_factors of shape: {}".format(scale_factors.shape))
@@ -112,7 +112,7 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
     # step 3: get the p_values by gene set
     vector_gene_set_pvalues, _, _ = compute_beta_tildes(X=matrix_gene_sets_gene_original, Y=vector_gene, scale_factors=scale_factors, mean_shifts=mean_shifts)
 
-    if log:
+    if step_log:
         logger.info("step 3: got p values vector of shape: {}".format(vector_gene_set_pvalues.shape))
         logger.info("step 3: filtering gene sets using p_value: {}".format(p_value))
 
@@ -125,7 +125,7 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
     # matrix_gene_set_filtered_by_pvalues, selected_gene_set_indices = filter_matrix_columns(matrix_input=matrix_gene_sets_gene_original, vector_input=vector_gene_set_pvalues, 
     #                                                                                        cutoff_input=0.5, log=log)
 
-    if log:
+    if step_log:
         logger.info("step 4: got gene set filtered (col) matrix of shape: {}".format(matrix_gene_set_filtered_by_pvalues.shape))
         logger.info("step 4: got gene set filtered indices of length: {}".format(len(selected_gene_set_indices)))
         logger.info("step 4: got gene set filtered indices: {}".format(selected_gene_set_indices))
@@ -140,7 +140,7 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
     # check how many genes are left out
     list_input_genes_filtered_out_indices = [item for item in list_input_gene_indices if item not in selected_gene_indices.tolist()]    
 
-    if log:
+    if step_log:
         logger.info("step 5: ===> got input gene filtered out of length: {}".format(len(list_input_genes_filtered_out_indices)))
         logger.info("step 5: got gene filtered indices of length: {}".format(len(selected_gene_indices)))
         logger.info("step 5: ===> got gene filtered (rows) matrix of shape: {} to start bayes NMF".format(matrix_gene_filtered_by_remaining_gene_sets.shape))
@@ -157,7 +157,7 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
         gene_factor, gene_set_factor, _, _, exp_lambda, _ = _bayes_nmf_l2(V0=matrix_gene_filtered_by_remaining_gene_sets)
         # gene_factor, gene_set_factor = run_nmf(matrix_input=matrix_gene_filtered_by_remaining_gene_sets, log=log)
 
-        if log:
+        if step_log:
             logger.info("step 6: got gene factor matrix of shape: {}".format(gene_factor.shape))
             logger.info("step 6: got gene set factor matrix of shape: {}".format(gene_set_factor.shape))
             logger.info("step 6: got lambda matrix of shape: {} with data: {}".format(exp_lambda.shape, exp_lambda))
@@ -176,14 +176,16 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
                                                                   list_gene_mask=selected_gene_indices, list_factor_labels=list_factor, log=False)
         # print(json.dumps(map_lowest_factor_per_gene, indent=2))
 
-        if log:
+        if step_log:
             logger.info("step 7: got factor list: {}".format(list_factor))
-            logger.info("step 7: got gene list:")
-            for row in list_factor_genes: 
-                logger.info (row)
-            logger.info("step 7: got gene set list:")
-            for row in list_factor_gene_sets: 
-                logger.info (row)
+            logger.info("step 7: got gene list: of size {}".format(len(list_factor_genes)))
+            # logger.info("step 7: got gene list:")
+            # for row in list_factor_genes: 
+            #     logger.info (row)
+            logger.info("step 7: got gene set list of size: {}".format(len(list_factor_gene_sets)))
+            # logger.info("step 7: got gene set list:")
+            # for row in list_factor_gene_sets: 
+            #     logger.info (row)
 
     # end time counter
     end = time.time()
@@ -200,7 +202,7 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
     return list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_factor_data_per_gene, list_gene_set_p_values, logs_process
 
 
-def build_gene_set_p_value_list(vector_gene_set_pvalues, selected_gene_set_indices, map_gene_set_index, log=True):
+def build_gene_set_p_value_list(vector_gene_set_pvalues, selected_gene_set_indices, map_gene_set_index, log=False):
     '''
     will build a sorted list of gene/p_value objects
     '''
@@ -565,6 +567,9 @@ def rank_gene_and_gene_sets(X, Y, exp_lambdak, exp_gene_factors, exp_gene_set_fa
 
     if log:
         logger.info("got factor labels of size: {} and data: {}".format(len(factor_labels), factor_labels))
+
+    logger.info("\n\ngot factor list: {}".format(factor_labels))
+    logger.info("\n\ngot factor scores: {}".format(exp_gene_factors))
 
     # return the 3 grouping data structures, then the updated (filtered) gene factors
     return factor_labels, top_genes, top_gene_sets, exp_gene_factors
@@ -959,7 +964,8 @@ def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index
     vector_gene, list_input_gene_indices = mutils.generate_gene_vector_from_list(list_gene=list_input_genes, map_gene_index=map_gene_index)
 
     # log
-    logger.info("from a gene list of size: {} got a gene index of size: {} and gene vector of shape: {}".format(len(list_input_genes), len(list_input_gene_indices), vector_gene.shape))
+    if log:
+        logger.info("from a gene list of size: {} got a gene index of size: {} and gene vector of shape: {}".format(len(list_input_genes), len(list_input_gene_indices), vector_gene.shape))
                
     # convert data for Alex's code
     # make sure gene set matrix is full matrix, not sparse
@@ -977,10 +983,11 @@ def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index
     vector_gene_set_pvalues, vector_beta_tildes, vector_ses = compute_beta_tildes(X=matrix_gene_sets, Y=vector_gene, scale_factors=input_scale_factors, mean_shifts=input_mean_shifts)
 
     # log
-    logger.info("got calculated beta tildes shape: {}".format(vector_beta_tildes.shape))
-    logger.info("got calculated ses shape: {}".format(vector_ses.shape))
-    logger.info("got input scale factors shape: {}".format(input_scale_factors.shape))
-    logger.info("got calculated p_values shape: {}".format(vector_gene_set_pvalues.shape))
+    if log:
+        logger.info("got calculated beta tildes shape: {}".format(vector_beta_tildes.shape))
+        logger.info("got calculated ses shape: {}".format(vector_ses.shape))
+        logger.info("got input scale factors shape: {}".format(input_scale_factors.shape))
+        logger.info("got calculated p_values shape: {}".format(vector_gene_set_pvalues.shape))
 
     # filter the gene set columns based on computed pvalue for each gene set
     # NOTE - jf - cut on .05 pvalue (reduce gene sets)
@@ -989,20 +996,23 @@ def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index
     # matrix_gene_set_filtered_by_pvalues, selected_gene_set_indices = filter_matrix_columns(matrix_input=matrix_gene_sets_gene_original, vector_input=vector_gene_set_pvalues, 
     #                                                                                        cutoff_input=0.5, log=log)
 
-    logger.info("got gene set filtered (row) matrix of shape: {}".format(matrix_gene_set_filtered_by_pvalues.shape))
-    logger.info("got gene set filtered indices of length: {}".format(len(selected_gene_set_indices)))
+    if log:
+        logger.info("got gene set filtered (row) matrix of shape: {}".format(matrix_gene_set_filtered_by_pvalues.shape))
+        logger.info("got gene set filtered indices of length: {}".format(len(selected_gene_set_indices)))
     # logger.info("got gene set filtered indices: {}".format(selected_gene_set_indices))
 
     # NOTE - filter genes for speed
     # filter gene rows by only the genes that are part of the remaining gene sets from the filtered gene set matrix
     matrix_gene_filtered_by_remaining_gene_sets, selected_gene_indices = filter_matrix_rows_by_sum_cutoff(matrix_to_filter=matrix_gene_set_filtered_by_pvalues, 
                                                                                                           matrix_to_sum=matrix_gene_set_filtered_by_pvalues, log=log)
-    logger.info("got gene filtered (col) matrix of shape: {}".format(matrix_gene_filtered_by_remaining_gene_sets.shape))
-    logger.info("got gene filtered indices of length: {}".format(len(selected_gene_indices)))
+    if log:
+        logger.info("got gene filtered (col) matrix of shape: {}".format(matrix_gene_filtered_by_remaining_gene_sets.shape))
+        logger.info("got gene filtered indices of length: {}".format(len(selected_gene_indices)))
 
 
-    # get the gene scores
-    logger.info("calculating gene set betas for gene scores")
+        # get the gene scores
+        logger.info("calculating gene set betas for gene scores")
+
     # if verytthing is 0, increase the variance (increasr by factor of 10)
     variance = 0.001
     # NOTE this will be gene set scores (this is beta; effect of gene set of whether gene is in gene set)
@@ -1015,7 +1025,8 @@ def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index
                     sigma2=np.ones((1, 1)) * variance,
                     p=np.ones((1, 1)) * 0.001)
     
-    logger.info("gene scores: got gene set betas of shape: {}".format(gene_set_betas.shape))
+    if log:
+        logger.info("gene scores: got gene set betas of shape: {}".format(gene_set_betas.shape))
     # logger.info("gene scores: got gene set betas of data: {}".format(gene_set_betas))
 
     # NOTE - old code, remove when stable
@@ -1040,10 +1051,11 @@ def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index
         input_vector_genes=vector_gene, input_betas=gene_set_betas, input_scale_factors=filtered_scale_factors, log=log)
 
     # log
-    logger.info("gene scores: got result gene naive priors of shape: {}".format(result_priors.shape))
-    logger.info("gene scores: got result gene naive priors of data: {}".format(result_priors))
-    logger.info("gene scores: got result gene naive adjusted priors of shape: {}".format(result_adjusted_priors.shape))
-    logger.info("gene scores: got result gene naive adjusted priors of data: {}".format(result_adjusted_priors))
+    if log:
+        logger.info("gene scores: got result gene naive priors of shape: {}".format(result_priors.shape))
+        logger.info("gene scores: got result gene naive priors of data: {}".format(result_priors))
+        logger.info("gene scores: got result gene naive adjusted priors of shape: {}".format(result_adjusted_priors.shape))
+        logger.info("gene scores: got result gene naive adjusted priors of data: {}".format(result_adjusted_priors))
 
     # log
     end = time.time()

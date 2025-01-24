@@ -5,6 +5,7 @@ import networkx as nx
 import json
 from pyvis.network import Network
 import dcc.dcc_utils as dutils 
+import dcc.data_utils as dautils 
 
 
 # constants
@@ -96,6 +97,18 @@ def generate_distinct_colors(N, start_with_red_blue=True):
 
     return colors
 
+def normalized_to_rgb_list(list_color):
+    # return tuple(int(255 * channel) for channel in color)
+    # return tuple(int(255 * channel) for channel in color)
+    list_result = []
+
+    # loop through the colors
+    for color in list_color:
+        list_result.append(tuple(255 * channel for channel in color))
+
+    # return
+    return list_result
+
 
 def blend_colors(color_list, weights, opacity=1):
     '''
@@ -124,7 +137,7 @@ def blend_colors(color_list, weights, opacity=1):
     return tuple(c for c in blended_color)  # Convert to 0-255 for HTML colors
 
 
-def build_factor_graph(list_factor, test=True, log=False):
+def build_factor_graph(list_factor, list_factor_genes, list_factor_gene_sets, test=False, log=True):
     '''
     will build the nodes and edges list for graph display
 
@@ -139,18 +152,37 @@ def build_factor_graph(list_factor, test=True, log=False):
     # if test/debug
     if test:
         graph = build_test_graph(log=log)
+
     else:
+        # get the extracted factors
+        list_factor_graph = dautils.extract_factor_data_list(list_factor_input=list_factor, list_factor_genes_input=list_factor_genes, list_factor_gene_sets_input=list_factor_gene_sets)
+
+        # log
+        if log:
+            logger.info("got list factor list of size: {}".format(len(list_factor_graph)))
+            logger.info("got list factor list: {}".format(list_factor_graph))
+
         # start a new graph
-        GRAPH = nx.Graph()
+        graph = nx.Graph()
 
         # get the colors needed for the number of factors
-        num_colors = len(list_factor)
+        num_colors = len(list_factor_graph)
         if log:
             logger.info("getting color list for factors of size: {}".format(num_colors))
         list_colors = generate_distinct_colors(N=num_colors)
 
-        # add the factors as squares
+        # make rgb colors
+        list_colors = normalized_to_rgb_list(list_color=list_colors)
 
+        # add the factors as squares
+        for index, factor in enumerate(list_factor_graph):
+            color_node = "rgb{}".format(list_colors[index])
+            label = factor.get('label')
+            if log:
+                logger.info("adding factor to graph with index: {}, label: {} and color: {}".format(index, label, color_node))
+            # will use string as key
+            # graph.add_node("factor-{}".factor.get('label'), size=size, color=node_color, border_color=node_border_color, alpha=gene_node_opacity, label=node, gene=True)
+            graph.add_node("factor-{}".format(label), color=color_node, border_color=color_node, label=label, shape='square')
 
     # return
     return graph
@@ -171,7 +203,7 @@ def build_test_graph(log=False):
     return graph
 
 
-def extract_nodes_edges_from_graph(graph, log=False):
+def extract_nodes_edges_from_graph_old(graph, log=False):
     '''
     extracts the nodes and edges from the data
     '''
@@ -181,6 +213,29 @@ def extract_nodes_edges_from_graph(graph, log=False):
     edges = [{'from': edge['source'], 'to': edge['target'], 'width': edge['weight']} for edge in data['links']]
 
     # return
+    return nodes, edges
+
+
+def extract_nodes_edges_from_graph(graph, log=False):
+    '''
+    extracts the nodes and edges from the data
+    '''
+    nodes = []
+    edges = []
+
+    for node, node_attrs in graph.nodes(data=True):
+        node_data = {
+            'id': node,
+            'label': node_attrs.get('label', ''),
+            'shape': node_attrs.get('shape', 'ellipse'),
+            'color': node_attrs.get('color', 'gray'),
+            'size': node_attrs.get('size', 10)
+        }
+        nodes.append(node_data)
+
+    for source, target in graph.edges():
+        edges.append({'from': source, 'to': target})
+
     return nodes, edges
 
 
