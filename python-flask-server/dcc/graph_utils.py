@@ -104,7 +104,7 @@ def normalized_to_rgb_list(list_color):
 
     # loop through the colors
     for color in list_color:
-        list_result.append(tuple(255 * channel for channel in color))
+        list_result.append(tuple(int(255 * channel) for channel in color))
 
     # return
     return list_result
@@ -135,6 +135,39 @@ def blend_colors(color_list, weights, opacity=1):
 
 
     return tuple(c for c in blended_color)  # Convert to 0-255 for HTML colors
+
+
+def blend_rgb_colors(colors, weights, log=False):
+    # Check if the number of colors and weights are equal
+    if len(colors) != len(weights):
+        raise ValueError("Each color must have a corresponding weight")
+
+    # log
+    if log:
+        logger.info("got colors list: {}".format(colors))
+
+    # Initialize sums and total weight
+    total_weight = sum(weights)
+    sum_r = sum_g = sum_b = 0
+
+    # Iterate through each color and weight
+    for color, weight in zip(colors, weights):
+        # Parse the RGB values from the color string
+        rgb = color.strip('rgb(').rstrip(')').split(',')
+        r, g, b = map(int, rgb)
+        
+        # Add weighted RGB values
+        sum_r += r * weight
+        sum_g += g * weight
+        sum_b += b * weight
+
+    # Compute the weighted average of each component
+    average_r = int(round(sum_r / total_weight))
+    average_g = int(round(sum_g / total_weight))
+    average_b = int(round(sum_b / total_weight))
+
+    # Return the blended color in RGB format
+    return f'rgb({average_r}, {average_g}, {average_b})'
 
 
 def build_factor_graph(list_factor, list_factor_genes, list_factor_gene_sets, test=False, log=True):
@@ -169,7 +202,7 @@ def build_factor_graph(list_factor, list_factor_genes, list_factor_gene_sets, te
         num_colors = len(list_factor_graph)
         if log:
             logger.info("getting color list for factors of size: {}".format(num_colors))
-        list_colors = generate_distinct_colors(N=num_colors)
+        list_colors = generate_distinct_colors_orig(N=num_colors)
 
         # make rgb colors
         list_colors = normalized_to_rgb_list(list_color=list_colors)
@@ -178,11 +211,34 @@ def build_factor_graph(list_factor, list_factor_genes, list_factor_gene_sets, te
         for index, factor in enumerate(list_factor_graph):
             color_node = "rgb{}".format(list_colors[index])
             label = factor.get('label')
+            size = factor.get('gene_set_score', 1) * 10
+            id_factor = factor.get('factor')
             if log:
                 logger.info("adding factor to graph with index: {}, label: {} and color: {}".format(index, label, color_node))
             # will use string as key
             # graph.add_node("factor-{}".factor.get('label'), size=size, color=node_color, border_color=node_border_color, alpha=gene_node_opacity, label=node, gene=True)
-            graph.add_node("factor-{}".format(label), color=color_node, border_color=color_node, label=label, shape='square')
+            graph.add_node("factor-{}".format(id_factor), color=color_node, border_color=color_node, label=id_factor, size=size, shape='square')
+
+        # get the extracted genes
+        map_genes = dautils.extract_pigean_gene_factor_results_map(list_factor=list_factor, list_factor_genes=list_factor_genes, max_num_per_factor=20)
+        # print(json.dumps(map_genes, indent=2))
+        for gene, list_value in map_genes.items():
+            id_node_gene = "gene-{}".format(gene)
+
+            # calculate the color
+            color_gene = blend_rgb_colors(colors=[graph.nodes["factor-{}".format(row.get('factor'))].get('color') for row in list_value], weights=[row.get('factor_score') for row in list_value])
+            size_gene = sum([row.get('factor_score') for row in list_value]) * 10
+
+            # add the gene node
+            graph.add_node(id_node_gene, label=gene, shape='circle', color=color_gene, size=size_gene)
+
+            # add edge
+            for factor_row in list_value:
+                id_node_factor = "factor-{}".format(factor_row.get('factor'))
+                color_edge = graph.nodes[id_node_factor].get('color')
+                graph.add_edge(id_node_factor, id_node_gene, color=color_edge, width=1, dashed=False)
+
+
 
     # return
     return graph
@@ -233,8 +289,13 @@ def extract_nodes_edges_from_graph(graph, log=False):
         }
         nodes.append(node_data)
 
-    for source, target in graph.edges():
-        edges.append({'from': source, 'to': target})
+    for source, target, edge_attrs in graph.edges(data=True):
+        edges.append({
+            'from': source, 
+            'to': target,
+            'color': edge_attrs.get('color', 'blue'),
+            'size': edge_attrs.get('size', 5)
+            })
 
     return nodes, edges
 

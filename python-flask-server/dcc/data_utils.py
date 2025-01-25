@@ -13,7 +13,7 @@ def get_list_verified_results_for_giu(list_factor, list_factor_genes, list_facto
     '''
     list_result = []
 
-    print("/n/n/nlist factors: {}".format(list_factor))
+    # print("/n/n/nlist factors: {}".format(list_factor))
 
     for index, row in enumerate(list_factor):
         if row and row.get(dutils.KEY_APP_GENE_SET):
@@ -69,4 +69,30 @@ def extract_factor_data_list(list_factor_input, list_factor_genes_input, list_fa
     # return
     return list_result
 
+
+def extract_pigean_gene_factor_results_map(list_factor, list_factor_genes, max_num_per_factor=10, log=False):
+    '''
+    builds the map results for the pigean app gene factor subset
+    '''
+    # initialize
+    map_result = {}
+
+    # loop through the factors and add a list per gene
+    # loop through the factors
+    for index, row in enumerate(list_factor):
+        # BUG - only add factors if gene set and genes are not null
+        # # See GitHub issue #2 for more details.
+        if row['gene_set']:
+            name = "Factor{}".format(index)
+
+            # loop through the gene factors for this factor and add to list
+            for map_gene in list_factor_genes[index][0:max_num_per_factor]:
+                label_gene = map_gene.get('gene')
+                if not map_result.get(label_gene):
+                    map_result[label_gene] = []
+
+                map_result[label_gene].append({'factor': name, 'factor_score': map_gene.get('score')})
+
+    # return 
+    return map_result
 

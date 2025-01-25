@@ -5,7 +5,7 @@
     <script type="text/javascript" src="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"></script>
     <style type="text/css">
         #mynetwork {
-            width: 1200px;
+            width: 1800px;
             height: 800px;
             border: 1px solid lightgray;
         }
@@ -60,25 +60,46 @@ fetch('http://localhost:8082/network_graph', {
             nodes: {
                 shape: 'dot',
                 size: 20,
+                // font: {
+                //     size: 15
+                // }
                 font: {
-                    size: 15
-                }
+                    mod: 'bold',
+                    size: 20,       // Increase font size to make it more visible
+                    face: 'Courier',  // Specify a font face that is clear
+                    color: '#000000', // Choose a color that contrasts well with the node background
+                    // strokeWidth: 2 // Outer stroke of the text to make it more legible against complex backgrounds
+                    // strokeColor: '#000000' // Stroke color around the text
+                },
             },
             edges: {
                 width: 2
             },
+            // physics: {
+            //     forceAtlas2Based: {
+            //         gravitationalConstant: -26,
+            //         centralGravity: 0.005,
+            //         springLength: 230,
+            //         springConstant: 0.18
+            //     },
+            //     maxVelocity: 146,
+            //     solver: 'forceAtlas2Based',
+            //     timestep: 0.35,
+            //     stabilization: {iterations: 150}
+            // }
             physics: {
-                forceAtlas2Based: {
-                    gravitationalConstant: -26,
-                    centralGravity: 0.005,
-                    springLength: 230,
-                    springConstant: 0.18
+                enabled: true,
+                solver: 'barnesHut',
+                barnesHut: {
+                    gravitationalConstant: -3000,
+                    centralGravity: 0.3,
+                    springLength: 200,
+                    springConstant: 0.04,
+                    damping: 0.09,  // Lower damping makes the nodes more 'bouncy'
+                    avoidOverlap: 0.1
                 },
-                maxVelocity: 146,
-                solver: 'forceAtlas2Based',
-                timestep: 0.35,
-                stabilization: {iterations: 150}
-            }
+                stabilization: { iterations: 150 }
+            } 
         };
 
         var container = document.getElementById('mynetwork');

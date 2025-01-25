@@ -55,8 +55,12 @@ def heartbeat():
 
 
 @app.route('/test_graph')
-def index():
+def index_graph():
     return send_from_directory('./static', 'factor_graph.html')  # Adjust 'index.html' to your main file
+
+@app.route('/test_vis')
+def index_vis():
+    return send_from_directory('./static', 'vis.html')  # Adjust 'index.html' to your main file
 
 
 @app.route("/query", methods=["POST"])

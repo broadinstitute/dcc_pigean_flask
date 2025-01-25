@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Network Graph</title>
+    <script type="text/javascript" src="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style type="text/css">
+        #mynetwork {
+            width: 1200px;
+            height: 800px;
+            border: 1px solid lightgray;
+        }
+    </style>
+</head>
+<body>
+
+<div id="mynetwork"></div>
+
+<script type="text/javascript">
+  // Fetch the JSON data from the server or local file
+//  fetch('network_data.json')
+  fetch('https://bioindex-dev.hugeamp.org/api/bio/query/pigean-graph?q=CAD,2,small')
+  .then(response => response.json())
+    .then(data => {
+        var json_data = data
+        var nodes = new vis.DataSet(json_data.data[0].nodes);
+        var edges = new vis.DataSet(json_data.data[0].edges);
+
+        var networkData = {
+            nodes: nodes,
+            edges: edges
+        };
+
+        var options = {
+            nodes: {
+                shape: 'dot',
+                size: 20,
+                font: {
+                    size: 15
+                }
+            },
+            edges: {
+                width: 2
+            },
+            physics: {
+                forceAtlas2Based: {
+                    gravitationalConstant: -26,
+                    centralGravity: 0.005,
+                    springLength: 230,
+                    springConstant: 0.18
+                },
+                maxVelocity: 146,
+                solver: 'forceAtlas2Based',
+                timestep: 0.35,
+                stabilization: {iterations: 150}
+            }
+        };
+
+        var container = document.getElementById('mynetwork');
+        var network = new vis.Network(container, networkData, options);
+
+        // Add an event listener to check if the network is loaded
+        network.on("stabilizationIterationsDone", function () {
+            network.setOptions( { physics: false } );
+            console.log("Stabilization done");
+        });
+    }).catch(error => console.error('Error loading the network data:', error));
+
+</script>
+
+</body>
+</html>
