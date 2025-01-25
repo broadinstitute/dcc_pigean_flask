@@ -221,7 +221,7 @@ def build_factor_graph(list_factor, list_factor_genes, list_factor_gene_sets, te
 
         # get the extracted genes
         map_genes = dautils.extract_pigean_gene_factor_results_map(list_factor=list_factor, list_factor_genes=list_factor_genes, max_num_per_factor=20)
-        # print(json.dumps(map_genes, indent=2))
+
         for gene, list_value in map_genes.items():
             id_node_gene = "gene-{}".format(gene)
 
@@ -237,6 +237,25 @@ def build_factor_graph(list_factor, list_factor_genes, list_factor_gene_sets, te
                 id_node_factor = "factor-{}".format(factor_row.get('factor'))
                 color_edge = graph.nodes[id_node_factor].get('color')
                 graph.add_edge(id_node_factor, id_node_gene, color=color_edge, width=1, dashed=False)
+
+        # get the extracted gene sets
+        map_gene_sets = dautils.extract_pigean_gene_set_factor_results_map(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, max_num_per_factor=10)
+
+        for gene_set, list_value in map_gene_sets.items():
+            id_node_gene_set = "gene_set-{}".format(gene_set)
+
+            # calculate the color
+            color_gene_set = blend_rgb_colors(colors=[graph.nodes["factor-{}".format(row.get('factor'))].get('color') for row in list_value], weights=[row.get('factor_score') for row in list_value])
+            size_gene_set = sum([row.get('factor_score') for row in list_value]) * 10
+
+            # add the gene node
+            graph.add_node(id_node_gene_set, label=gene_set, shape='diamond', color=color_gene_set, size=size_gene_set)
+
+            # add edge
+            for factor_row in list_value:
+                id_node_factor = "factor-{}".format(factor_row.get('factor'))
+                color_edge = graph.nodes[id_node_factor].get('color')
+                graph.add_edge(id_node_factor, id_node_gene_set, color=color_edge, width=1, dashed=False)
 
 
 

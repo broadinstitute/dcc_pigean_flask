@@ -96,3 +96,29 @@ def extract_pigean_gene_factor_results_map(list_factor, list_factor_genes, max_n
     # return 
     return map_result
 
+
+def extract_pigean_gene_set_factor_results_map(list_factor, list_factor_gene_sets, max_num_per_factor=10, log=False):
+    '''
+    builds the map results for the pigean app gene factor subset
+    '''
+    # initialize
+    map_result = {}
+
+    # loop through the factors and add a list per gene
+    # loop through the factors
+    for index, row in enumerate(list_factor):
+        # BUG - only add factors if gene set and genes are not null
+        # # See GitHub issue #2 for more details.
+        if row['gene_set']:
+            name = "Factor{}".format(index)
+
+            # loop through the gene factors for this factor and add to list
+            for map_gene_set in list_factor_gene_sets[index][0:max_num_per_factor]:
+                label_gene_set = map_gene_set.get('gene_set')
+                if not map_result.get(label_gene_set):
+                    map_result[label_gene_set] = []
+
+                map_result[label_gene_set].append({'factor': name, 'factor_score': map_gene_set.get('score')})
+
+    # return 
+    return map_result
