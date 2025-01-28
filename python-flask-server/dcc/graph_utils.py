@@ -3,7 +3,7 @@
 import numpy as np
 import networkx as nx
 import json
-from pyvis.network import Network
+# from pyvis.network import Network
 import dcc.dcc_utils as dutils 
 import dcc.data_utils as dautils 
 
@@ -234,7 +234,7 @@ def build_factor_graph_for_gui(list_factor, list_factor_genes, list_factor_gene_
 
             # add edge
             for factor_row in list_value:
-                id_node_factor = factor_row.get('factor')
+                id_node_factor = "factor-{}".format(factor_row.get('factor'))
                 score_edge = graph.nodes[id_node_factor].get('score')
                 props_edge = {'score': score_edge, 'relatioship': 'has gene'}
                 graph.add_edge(id_node_factor, id_node_gene, **props_edge)
@@ -254,7 +254,7 @@ def build_factor_graph_for_gui(list_factor, list_factor_genes, list_factor_gene_
 
             # add edge
             for factor_row in list_value:
-                id_node_factor = factor_row.get('factor')
+                id_node_factor = "factor-{}".format(factor_row.get('factor'))
                 score_edge = graph.nodes[id_node_factor].get('score')
                 props_edge = {'score': score_edge, 'relatioship': 'has gene set'}
                 graph.add_edge(id_node_factor, id_node_gene_set, **props_edge)
