@@ -322,7 +322,7 @@ def build_graph_node_edge_map(list_factor_input, list_factor_genes_input, list_f
     # list_factor = dautils.extract_factor_data_list(list_factor_input=list_factor_input, list_factor_genes_input=list_factor_genes_input, list_factor_gene_sets_input=list_factor_gene_sets_input)
 
     # get the network x graph object
-    graph = gutils.build_factor_graph(list_factor=list_factor_input, list_factor_genes=list_factor_genes_input, list_factor_gene_sets=list_factor_gene_sets_input)
+    graph = gutils.build_factor_graph_for_gui(list_factor=list_factor_input, list_factor_genes=list_factor_genes_input, list_factor_gene_sets=list_factor_gene_sets_input)
 
     # get the data
     data = gutils.extract_data_from_graph(graph=graph)

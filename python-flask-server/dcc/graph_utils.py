@@ -170,7 +170,7 @@ def blend_rgb_colors(colors, weights, log=False):
     return f'rgb({average_r}, {average_g}, {average_b})'
 
 
-def build_factor_graph(list_factor, list_factor_genes, list_factor_gene_sets, test=False, log=True):
+def build_factor_graph_for_gui(list_factor, list_factor_genes, list_factor_gene_sets, test=False, log=True):
     '''
     will build the nodes and edges list for graph display
 
@@ -234,9 +234,10 @@ def build_factor_graph(list_factor, list_factor_genes, list_factor_gene_sets, te
 
             # add edge
             for factor_row in list_value:
-                id_node_factor = "factor-{}".format(factor_row.get('factor'))
-                color_edge = graph.nodes[id_node_factor].get('color')
-                graph.add_edge(id_node_factor, id_node_gene, color=color_edge, width=1, dashed=False)
+                id_node_factor = factor_row.get('factor')
+                score_edge = graph.nodes[id_node_factor].get('score')
+                props_edge = {'score': score_edge, 'relatioship': 'has gene'}
+                graph.add_edge(id_node_factor, id_node_gene, **props_edge)
 
         # get the extracted gene sets
         map_gene_sets = dautils.extract_pigean_gene_set_factor_results_map(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, max_num_per_factor=10)
@@ -253,11 +254,89 @@ def build_factor_graph(list_factor, list_factor_genes, list_factor_gene_sets, te
 
             # add edge
             for factor_row in list_value:
-                id_node_factor = "factor-{}".format(factor_row.get('factor'))
-                color_edge = graph.nodes[id_node_factor].get('color')
-                graph.add_edge(id_node_factor, id_node_gene_set, color=color_edge, width=1, dashed=False)
+                id_node_factor = factor_row.get('factor')
+                score_edge = graph.nodes[id_node_factor].get('score')
+                props_edge = {'score': score_edge, 'relatioship': 'has gene set'}
+                graph.add_edge(id_node_factor, id_node_gene_set, **props_edge)
 
 
+
+    # return
+    return graph
+
+
+def build_factor_graph_for_llm(list_factor, list_factor_genes, list_factor_gene_sets, max_num_genes=20, max_num_gene_sets=10, test=False, log=True):
+    '''
+    will build the nodes and edges list for graph display
+
+    - color of factor is generated
+    - shape of factor is square
+    ? size of factor (sum of factors) 
+    - color of gene and gene sets is a weighted blending of the factors it is linked to
+    '''
+    graph = None
+    map_nodes = {}
+
+    # if test/debug
+    if test:
+        graph = build_test_graph(log=log)
+
+    else:
+        # get the extracted factors
+        list_factor_graph = dautils.extract_factor_data_list(list_factor_input=list_factor, list_factor_genes_input=list_factor_genes, list_factor_gene_sets_input=list_factor_gene_sets)
+
+        # log
+        if log:
+            logger.info("got list factor list of size: {}".format(len(list_factor_graph)))
+            logger.info("got list factor list: {}".format(list_factor_graph))
+
+        # start a new graph
+        graph = nx.Graph()
+
+        # add the factors as squares
+        for index, factor in enumerate(list_factor_graph):
+            label = factor.get('label')
+            props_factor = {'type': 'factor', 'score': factor.get('gene_set_score', 1), 'name': label}
+            id_factor = factor.get('factor')
+            if log:
+                logger.info("adding factor to graph with index: {}, label: {}".format(index, label))
+            # will use string as key
+            # graph.add_node("factor-{}".factor.get('label'), size=size, color=node_color, border_color=node_border_color, alpha=gene_node_opacity, label=node, gene=True)
+            graph.add_node(id_factor, **props_factor)
+
+        # get the extracted genes
+        map_genes = dautils.extract_pigean_gene_factor_results_map(list_factor=list_factor, list_factor_genes=list_factor_genes, max_num_per_factor=max_num_genes)
+
+        for gene, list_value in map_genes.items():
+            id_node_gene = gene
+            props_gene = {'type': 'gene', 'name': gene}
+
+            # TODO - add gene score to gene node
+            # add the gene node
+            graph.add_node(id_node_gene, **props_gene)
+
+            # add edge
+            for factor_row in list_value:
+                id_node_factor = factor_row.get('factor')
+                props_gene_edge = {'score': factor_row.get('factor_score')}
+                graph.add_edge(id_node_factor, id_node_gene, **props_gene_edge)
+
+        # get the extracted gene sets
+        map_gene_sets = dautils.extract_pigean_gene_set_factor_results_map(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, max_num_per_factor=max_num_gene_sets)
+
+        for gene_set, list_value in map_gene_sets.items():
+            id_node_gene_set = gene_set
+            props_gene_set = {'type': 'gene set', 'name': gene_set}
+
+            # TODO - add gene set score to gene set node
+            # add the gene set node
+            graph.add_node(id_node_gene_set, **props_gene_set)
+
+            # add edge
+            for factor_row in list_value:
+                id_node_factor = factor_row.get('factor')
+                props_gene_set_edge = {'score': factor_row.get('factor_score')}
+                graph.add_edge(id_node_factor, id_node_gene, **props_gene_set_edge)
 
     # return
     return graph
