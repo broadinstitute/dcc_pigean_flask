@@ -288,7 +288,7 @@ def build_pigean_factor_results_map(list_factor, list_factor_genes, list_factor_
             map_temp['top_genes'] = ';'.join([item['gene'] for item in list_factor_genes[index][:max_num_per_factor] if item['gene'] is not None])
             map_temp['top_gene_sets'] = ';'.join([item['gene_set'] for item in list_factor_gene_sets[index][:max_num_per_factor] if item['gene_set'] is not None])
 
-            print("list genes: {}".format(list_factor_genes))
+            # print("list genes: {}".format(list_factor_genes))
             if len(list_factor_genes[index]) > 0:
                 map_temp['gene_score'] = max([item['score'] if item['score'] else 0 for item in list_factor_genes[index]])
             else:
