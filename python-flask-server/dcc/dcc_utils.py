@@ -75,6 +75,8 @@ KEY_APP_GENE_SET = 'gene_set'
 KEY_APP_P_VALUE = 'p_value'
 KEY_APP_GENE_SET_SCORES = 'gene_set_scores'
 KEY_APP_GENE_SCORES = 'gene_scores'
+KEY_APP_NETWORK_GRAPH = 'network_graph'
+
 
 # methods
 def get_logger(name): 

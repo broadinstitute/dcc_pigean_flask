@@ -337,7 +337,7 @@ def build_graph_node_edge_map(list_factor_input, list_factor_genes_input, list_f
         logger.info("got graph edges: {}".format(list_edges))    
 
     # add to map
-    map_result['data'] = [{'nodes': list_nodes, 'edges': list_edges}]
+    map_result[dutils.KEY_APP_NETWORK_GRAPH] = [{'nodes': list_nodes, 'edges': list_edges}]
 
     # return
     return map_result

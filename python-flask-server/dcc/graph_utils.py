@@ -235,9 +235,10 @@ def build_factor_graph_for_gui(list_factor, list_factor_genes, list_factor_gene_
             # add edge
             for factor_row in list_value:
                 id_node_factor = "factor-{}".format(factor_row.get('factor'))
-                score_edge = graph.nodes[id_node_factor].get('score')
-                props_edge = {'score': score_edge, 'relatioship': 'has gene'}
-                graph.add_edge(id_node_factor, id_node_gene, **props_edge)
+                # score_edge = graph.nodes[id_node_factor].get('score')
+                # props_edge = {'score': score_edge, 'relationship': 'has gene'}
+                props_gene_edge = {'score': factor_row.get('factor_score')}
+                graph.add_edge(id_node_factor, id_node_gene, **props_gene_edge)
 
         # get the extracted gene sets
         map_gene_sets = dautils.extract_pigean_gene_set_factor_results_map(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, max_num_per_factor=10)
@@ -255,9 +256,11 @@ def build_factor_graph_for_gui(list_factor, list_factor_genes, list_factor_gene_
             # add edge
             for factor_row in list_value:
                 id_node_factor = "factor-{}".format(factor_row.get('factor'))
-                score_edge = graph.nodes[id_node_factor].get('score')
-                props_edge = {'score': score_edge, 'relatioship': 'has gene set'}
-                graph.add_edge(id_node_factor, id_node_gene_set, **props_edge)
+                # score_edge = graph.nodes[id_node_factor].get('score')
+                # props_edge = {'score': score_edge, 'relationship': 'has gene set'}
+                # graph.add_edge(id_node_factor, id_node_gene_set, **props_edge)
+                props_gene_set_edge = {'score': factor_row.get('factor_score')}
+                graph.add_edge(id_node_factor, id_node_gene, **props_gene_set_edge)
 
 
 

@@ -298,6 +298,11 @@ def post_pigean_genes():
             logs_process.append(logs_gene_scores)
             map_result.update(map_result_gene_score)
 
+        # 20250129 - adding map for network graph data
+        map_network_result = gutils.build_graph_node_edge_map(list_factor_input=list_factor, list_factor_gene_sets_input=list_factor_gene_sets, 
+                                                            list_factor_genes_input=list_factor_genes)
+        map_result.update(map_network_result)
+
         # time
         end = time.time()
 
@@ -504,8 +509,8 @@ def post_network_graph():
         # easier to format the data for gene nmf call and thn extract the nodes/edges
         # get the /pigean data
         # TODO - abstract out the code that cobines the factor/gene/geneset data?
-        map_result_intermediate = gutils.gui_build_pigean_app_results_map(list_input_genes=list_input_genes, list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, 
-                                                            list_factor_genes=list_factor_genes, list_gene_set_p_values=list_gene_set_p_values)
+        # map_result_intermediate = gutils.gui_build_pigean_app_results_map(list_input_genes=list_input_genes, list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, 
+        #                                                     list_factor_genes=list_factor_genes, list_gene_set_p_values=list_gene_set_p_values)
 
         # list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, \
         # gene_set_factor, map_gene_novelty, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 
