@@ -32,6 +32,8 @@
 
 # imports
 import numpy as np
+import copy
+from scipy import sparse
 from scipy.sparse import csc_matrix
 
 import dcc.file_utils as futils 
@@ -118,6 +120,187 @@ def load_geneset_matrix(map_gene_index, list_gene_set_files, path_gene_set_files
     # return
     return matrix_result, map_gene_set_indexes_result
     
+
+def read_gene_phewas_bfs(genes, gene_to_ind, gene_phewas_bfs_in, min_value=1.0, **kwargs):
+
+    #require X matrix
+
+    if gene_phewas_bfs_in is None:
+        logger.error("Require  gene-phewas-bfs-in file")
+
+    logger.info("Reading --gene-phewas-bfs-in file %s" % gene_phewas_bfs_in)
+
+    if gene_to_ind is None:
+        logger.error("Need to initialixe --X before reading gene_phewas")
+
+    Ys = None
+    combineds = None
+    priors = None
+
+    row = []
+    col = []
+    with open(gene_phewas_bfs_in) as gene_phewas_bfs_fh:
+        header_cols = gene_phewas_bfs_fh.readline().strip().split()
+
+        pheno_col = 0
+        if header_cols[pheno_col] != 'Trait':
+            logger.warning("first column should be 'Trait' but is %s" % header_cols[1])
+
+        id_col = 1
+        if header_cols[id_col] != 'Gene':
+            logger.warning("second column should be 'Gene' but is %s" % header_cols[0])
+
+        combined_col = 2
+        if header_cols[combined_col] != 'Combined':
+            logger.warning("third column should be 'Combined' but is %s" % header_cols[2])
+
+        bf_col = 3
+        if header_cols[bf_col] != 'Direct':
+            logger.warning("fourth column should be 'Direct' but is %s" % header_cols[3])
+
+        prior_col = None
+
+        if bf_col is not None:
+            Ys  = []
+        if combined_col is not None:
+            combineds = []
+        if prior_col is not None:
+            priors = []
+
+        phenos = []
+        pheno_to_ind = {}
+
+        num_gene_phewas_filtered = 0
+        for line in gene_phewas_bfs_fh:
+            cols = line.strip().split()
+            if id_col >= len(cols) or pheno_col >= len(cols) or (bf_col is not None and bf_col >= len(cols)) or (combined_col is not None and combined_col >= len(cols)) or (prior_col is not None and prior_col >= len(cols)):
+                logger.warning("Skipping due to too few columns in line: %s" % line)
+                continue
+
+            gene = cols[id_col]
+
+            # if self.gene_label_map is not None and gene in self.gene_label_map:
+            #     gene = self.gene_label_map[gene]
+
+            if gene not in gene_to_ind:
+                # logger.warning("Skipping gene %s not in gene index map" % gene)
+                continue
+            # logger.info("gene %s" % gene)
+
+            pheno = cols[pheno_col]
+
+            cur_combined = None
+            if combined_col is not None:
+                try:
+                    combined = float(cols[combined_col])
+                except ValueError:
+                    if not cols[combined_col] == "NA":
+                        logger.warning("Skipping unconvertible value %s for gene_set %s" % (cols[combined_col], gene))
+                    continue
+
+                if min_value is not None and combined < min_value:
+                    num_gene_phewas_filtered += 1
+                    continue
+
+                cur_combined = combined
+
+            if bf_col is not None:
+                try:
+                    bf = float(cols[bf_col])
+                except ValueError:
+                    if not cols[bf_col] == "NA":
+                        logger.warning("Skipping unconvertible value %s for gene %s and pheno %s" % (cols[bf_col], gene, pheno))
+                    continue
+
+                if min_value is not None and combined_col is None and bf < min_value:
+                    num_gene_phewas_filtered += 1
+                    continue
+
+                cur_Y = bf
+
+            if prior_col is not None:
+                try:
+                    prior = float(cols[prior_col])
+                except ValueError:
+                    if not cols[prior_col] == "NA":
+                        logger.warning("Skipping unconvertible value %s for gene_set %s" % (cols[prior_col], gene))
+                    continue
+
+                if min_value is not None and combined_col is None and bf_col is None and prior < min_value:
+                    num_gene_phewas_filtered += 1
+                    continue
+
+                cur_prior = prior
+
+
+            if pheno not in pheno_to_ind:
+                pheno_to_ind[pheno] = len(phenos)
+                phenos.append(pheno)
+
+            pheno_ind = pheno_to_ind[pheno]
+
+            if combineds is not None:
+                combineds.append(cur_combined)
+            if Ys is not None:
+                Ys.append(cur_Y)
+            if priors is not None:
+                priors.append(cur_prior)
+
+            col.append(pheno_ind)
+            row.append(gene_to_ind[gene])
+
+        #update what's stored internally
+        # num_added_phenos = 0
+        # if self.phenos is not None and len(self.phenos) < len(phenos):
+        #     num_added_phenos = len(phenos) - len(self.phenos)
+
+        # if num_added_phenos > 0:
+        #     if self.X_phewas_beta is not None:
+        #         self.X_phewas_beta = csc_matrix(sparse.vstack((self.X_phewas_beta, sparse.csc_matrix((num_added_phenos, self.X_phewas_beta.shape[1])))))
+        #     if self.X_phewas_beta_uncorrected is not None:
+        #         self.X_phewas_beta_uncorrected = csc_matrix(sparse.vstack((self.X_phewas_beta_uncorrected, sparse.csc_matrix((num_added_phenos, self.X_phewas_beta_uncorrected.shape[1])))))
+
+        # self.phenos = phenos
+        # pheno_to_ind = self._construct_map_to_ind(phenos)
+
+        #uniquify if needed
+        row = np.array(row)
+        col = np.array(col)
+        indices = np.array(list(zip(row, col)))
+        _, unique_indices = np.unique(indices, axis=0, return_index=True)
+        if len(unique_indices) < len(row):
+            logger.warning("Found %d duplicate values; ignoring duplicates" % (len(row) - len(unique_indices)))
+
+        row = row[unique_indices]
+        col = col[unique_indices]
+
+        if combineds is not None:
+            combineds = np.array(combineds)[unique_indices]
+            gene_pheno_combined_prior_Ys = csc_matrix((combineds, (row, col)), shape=(len(genes), len(phenos)))
+
+        if Ys is not None:
+            Ys = np.array(Ys)[unique_indices]
+            gene_pheno_Y = csc_matrix((Ys, (row, col)), shape=(len(genes), len(phenos)))
+        print('   ++ gene_pheno_Y', gene_pheno_Y.shape)
+
+        if priors is not None:
+            priors = np.array(priors)[unique_indices]
+            gene_pheno_priors = csc_matrix((priors, (row, col)), shape=(len(genes), len(phenos)))
+        
+        # self.anchor_gene_mask = None
+        # if anchor_genes is not None:
+        #     self.anchor_gene_mask = np.array([x in anchor_genes for x in self.genes])
+        #     if np.sum(self.anchor_gene_mask) == 0:
+        #         logger.error("Couldn't find any match for %s" % list(anchor_genes))
+
+        # self.anchor_pheno_mask = None
+        # if anchor_phenos is not None:
+        #     self.anchor_pheno_mask = np.array([x in anchor_phenos for x in self.phenos])
+        #     if np.sum(self.anchor_pheno_mask) == 0:
+        #         logger.error("Couldn't find any match for %s" % list(anchor_phenos))
+
+        return phenos, gene_pheno_Y, gene_pheno_combined_prior_Ys#, gene_pheno_priors
+
 
 def generate_gene_vector_from_list(list_gene, map_gene_index, log=False):
     '''

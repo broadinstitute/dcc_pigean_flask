@@ -41,7 +41,7 @@ import numpy as np
 from numpy.random import gamma
 from numpy.random import normal
 from numpy.random import exponential
-from sklearn.decomposition import NMF
+# from sklearn.decomposition import NMF
 import json
 import time
 
@@ -1076,6 +1076,46 @@ def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index
 
     # return
     return map_gene_scores, map_gene_set_scores, logs_process
+
+
+def positive_controls_log_bf(background_prior=0.05, positive_controls_default_prob=0.95):
+    background_log_bf = np.log(background_prior / (1 - background_prior))
+    background_bf = np.exp(background_log_bf)
+    positive_controls_log_bf = np.log(positive_controls_default_prob / (1 - positive_controls_default_prob)) - background_log_bf
+    return positive_controls_log_bf, background_bf
+
+
+def calculate_phewas(gene_list, list_system_genes, map_gene_index, phenos, gene_pheno_Y, gene_pheno_combined_prior_Ys, batch_size = 2000):
+    log_bf, background_bf = positive_controls_log_bf()
+    Y = np.zeros(len(list_system_genes))
+    for gene in gene_list:
+        Y[map_gene_index[gene]] = log_bf
+
+    input_values = np.hstack((Y[:,np.newaxis], Y[:,np.newaxis]))
+    #convert these to probabilities
+    input_values = np.exp(input_values + background_bf) / (1 + np.exp(input_values + background_bf))
+    print(input_values)
+
+    mean_shifts = np.mean(input_values, axis=0)
+    scale_factors = np.std(input_values, axis=0)
+
+    beta_tildes = np.zeros(gene_pheno_Y.shape[1])
+    ses = np.zeros(gene_pheno_Y.shape[1])
+    p_values = np.zeros(gene_pheno_Y.shape[1])
+
+    num_batches = int(np.ceil(len(phenos) / batch_size))
+    for batch in range(num_batches):
+        begin = batch * batch_size
+        end = (batch + 1) * batch_size
+        if end > len(phenos):
+            end = len(phenos)
+        gene_pheno_Y_part = gene_pheno_Y[:,begin:end].toarray()
+        cal_p_values, cal_beta_tildes, cal_ses = compute_beta_tildes(input_values, gene_pheno_Y_part.T, scale_factors=scale_factors, mean_shifts=mean_shifts)
+        p_values[begin:end] = cal_p_values[:,0]
+        beta_tildes[begin:end] = cal_beta_tildes[:,0]
+        ses[begin:end] = cal_ses[:,0]
+
+    return p_values, beta_tildes, ses
 
 
 def calculate_naive_priors(input_matrix_gene_set, input_vector_genes, input_betas, input_scale_factors, log=False):
