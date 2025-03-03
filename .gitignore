@@ -5,3 +5,4 @@ gene_set_list_mesh.txt
 pops.sparse.gmt
 *.gmt
 
+*/venv

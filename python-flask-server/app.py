@@ -40,6 +40,10 @@ matrix_gene_sets, map_gene_set_index = mutils.load_geneset_matrix(map_gene_index
                                                                   list_gene_set_files=map_conf.get('gene_set_files'), path_gene_set_files=map_conf.get('root_dir'), log=False)
 (mean_shifts, scale_factors) = cutils._calc_X_shift_scale(X=matrix_gene_sets)
 
+# load the phewas data
+gene_phewas_bfs_in = map_conf.get('root_dir') +  "all_trait_gcat.trait_gene_combined.gt1.txt"
+phenos, gene_pheno_Y, gene_pheno_combined_prior_Ys = mutils.read_gene_phewas_bfs(list_system_genes, map_gene_index, gene_phewas_bfs_in)
+
 logger.info("================ Bayes App is UP! ===========================")
 
 # test 
@@ -567,6 +571,58 @@ def log_and_add_to_list(logger, list_input, str_message):
 
     # return
     return list_input
+
+
+@app.route("/phenotypes", methods=["POST"])
+def post_phenotypes():
+    # initialize 
+    map_result = {}
+    list_input_genes = []
+    list_logs = []
+
+    # get the input
+    data = request.get_json()
+    if data:
+        list_input_genes = data.get('genes')
+
+    logger.info("got phenotypes request: {} with gene inputs: {}".format(request.method, list_input_genes))
+    str_message = "got gene inputs of size: {}".format(len(list_input_genes))
+    logger.info(str_message)
+    list_logs.append(str_message)
+
+    # get max number of phenotypes
+    max_number_phenotypes = process_numeric_value(json_request=data, name='max_number_phenotypes', cutoff_default=100, is_float=False)
+    str_message = "got using max number of phenotypes: {}".format(max_number_phenotypes)
+    logger.info(str_message)
+    list_logs.append(str_message)
+
+    # time
+    start = time.time()
+
+    # run phewas
+    p_values, beta_tildes, ses = cutils.calculate_phewas(list_input_genes, list_system_genes, map_gene_index, phenos, gene_pheno_Y, gene_pheno_combined_prior_Ys)
+
+    # build the results
+    result_list = cutils.build_phewas_p_value_list(phenos, p_values, max_number_phenotypes)
+
+    # time
+    end = time.time()
+
+    # log filter results
+    str_message = "got phenotypes results of size: {} out of {} phenotypes".format(len(result_list), len(phenos))
+    logger.info(str_message)
+    list_logs.append(str_message)
+
+    # add time
+    str_message = "post /phenotypes total elapsed time is: {}s".format(end-start)
+    list_logs.append(str_message)
+
+    # add results to map
+    map_result['phenotypes'] = result_list
+    map_result['logs'] = list_logs
+
+    # return
+    return map_result
 
 
 @app.route("/novelty_query", methods=["POST"])

@@ -281,7 +281,6 @@ def read_gene_phewas_bfs(genes, gene_to_ind, gene_phewas_bfs_in, min_value=1.0, 
         if Ys is not None:
             Ys = np.array(Ys)[unique_indices]
             gene_pheno_Y = csc_matrix((Ys, (row, col)), shape=(len(genes), len(phenos)))
-        print('   ++ gene_pheno_Y', gene_pheno_Y.shape)
 
         if priors is not None:
             priors = np.array(priors)[unique_indices]

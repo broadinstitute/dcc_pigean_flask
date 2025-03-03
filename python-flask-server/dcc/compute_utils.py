@@ -1094,7 +1094,6 @@ def calculate_phewas(gene_list, list_system_genes, map_gene_index, phenos, gene_
     input_values = np.hstack((Y[:,np.newaxis], Y[:,np.newaxis]))
     #convert these to probabilities
     input_values = np.exp(input_values + background_bf) / (1 + np.exp(input_values + background_bf))
-    print(input_values)
 
     mean_shifts = np.mean(input_values, axis=0)
     scale_factors = np.std(input_values, axis=0)
@@ -1116,6 +1115,21 @@ def calculate_phewas(gene_list, list_system_genes, map_gene_index, phenos, gene_
         ses[begin:end] = cal_ses[:,0]
 
     return p_values, beta_tildes, ses
+
+
+def build_phewas_p_value_list(phenos, p_values, max_num_phenos=100):
+    '''
+    will build a sorted list of phenotype/p_value objects
+    '''
+    # initialize
+    list_result = []
+
+    # build the list
+    selected_indices = np.argsort(p_values)[:max_num_phenos]
+    for index in selected_indices:
+        list_result.append({'phenotype': phenos[index], 'p_value': p_values[index]})
+
+    return list_result
 
 
 def calculate_naive_priors(input_matrix_gene_set, input_vector_genes, input_betas, input_scale_factors, log=False):
