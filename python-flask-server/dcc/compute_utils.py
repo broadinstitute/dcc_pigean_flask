@@ -1089,7 +1089,10 @@ def calculate_phewas(gene_list, list_system_genes, map_gene_index, phenos, gene_
     log_bf, background_bf = positive_controls_log_bf()
     Y = np.zeros(len(list_system_genes))
     for gene in gene_list:
-        Y[map_gene_index[gene]] = log_bf
+        # BUG https://github.com/broadinstitute/dcc_pigean_flask/issues/11
+        # added check on input gene not in gene list (system list?)
+        if map_gene_index.get(gene):    
+            Y[map_gene_index[gene]] = log_bf
 
     input_values = np.hstack((Y[:,np.newaxis], Y[:,np.newaxis]))
     #convert these to probabilities
