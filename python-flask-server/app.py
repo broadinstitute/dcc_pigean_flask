@@ -295,9 +295,15 @@ def post_pigean_genes():
 
         if is_add_gene_scores:
             # get the gene scores
-            map_gene_scores, map_gene_set_scores, logs_gene_scores = cutils.calculate_gene_scores_map(matrix_gene_sets=matrix_gene_sets, list_input_genes=list_input_genes, map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
-                                                            list_system_genes=list_system_genes,
-                                                            input_scale_factors=scale_factors, input_mean_shifts=mean_shifts, max_num_gene_sets=max_number_gene_sets, log=True)
+            map_gene_scores, map_gene_set_scores, logs_gene_scores = cutils.calculate_gene_scores_map(matrix_gene_sets=gene_set_family_object.matrix_gene_sets, 
+                                                                                                      list_input_genes=list_input_genes, 
+                                                                                                      map_gene_index=map_gene_index, 
+                                                                                                      map_gene_set_index=gene_set_family_object.map_gene_set_index,
+                                                                                                      list_system_genes=list_system_genes,
+                                                                                                      input_scale_factors=gene_set_family_object.scale_factors, 
+                                                                                                      input_mean_shifts=gene_set_family_object.mean_shifts, 
+                                                                                                      max_num_gene_sets=max_number_gene_sets, 
+                                                                                                      log=True)
 
 
             # get the gene score gui elements
