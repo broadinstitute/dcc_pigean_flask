@@ -146,6 +146,11 @@ class GeneSetFamily:
         self.mean_shifts = mean_shifts
         self.scale_factors = scale_factors
 
+    def get_num_gene_sets(self):
+        if self.map_gene_set_index:
+            return len(self.map_gene_set_index)
+        else:
+            return -1
 
 # main
 if __name__ == "__main__":

@@ -960,6 +960,9 @@ def calculate_gene_scores_map(matrix_gene_sets, list_input_genes, map_gene_index
     map_gene_set_scores = {}
     logs_process = []
 
+    # log
+    logger.info("GENE_SCORE: input gene list of size: {}, gene set matrix shape: {} and gene set number: {}".format(len(list_input_genes), matrix_gene_sets.shape, len(map_gene_set_index)))
+
     # get the matrix/vectors needed
     vector_gene, list_input_gene_indices = mutils.generate_gene_vector_from_list(list_gene=list_input_genes, map_gene_index=map_gene_index)
 

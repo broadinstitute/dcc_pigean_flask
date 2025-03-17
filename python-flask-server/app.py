@@ -53,7 +53,12 @@ logger.info("================ Test App is UP! ===========================")
 
 @app.route("/heartbeat", methods=["GET"])
 def heartbeat():
-    map_result = {'message': 'yes, I am up ;>', 'gene_sets': list(map_gene_set_families.keys())}
+    # get the sizes of each gene set list
+    map_gene_set_size = {}
+    for key, value in map_gene_set_families.items():
+        map_gene_set_size[key] = format(value.get_num_gene_sets(), ",")
+       
+    map_result = {'message': 'yes, I am up ;>', 'gene_sets': list(map_gene_set_families.keys()), 'gene_set_sizes': map_gene_set_size}
 
     return map_result
 
@@ -388,9 +393,13 @@ def post_gene_scores():
         # time
         start = time.time()
 
-        map_gene_scores, map_gene_set_scores, logs_process = cutils.calculate_gene_scores_map(matrix_gene_sets=matrix_gene_sets, list_input_genes=list_input_genes, map_gene_index=map_gene_index, map_gene_set_index=map_gene_set_index,
-                                                        list_system_genes=list_system_genes,
-                                                        input_scale_factors=scale_factors, input_mean_shifts=mean_shifts, log=True)
+        map_gene_scores, map_gene_set_scores, logs_process = cutils.calculate_gene_scores_map(matrix_gene_sets=gene_set_family_object.matrix_gene_sets, 
+                                                                                              list_input_genes=list_input_genes, 
+                                                                                              map_gene_index=map_gene_index, 
+                                                                                              map_gene_set_index=gene_set_family_object.map_gene_set_index,
+                                                                                              list_system_genes=list_system_genes,
+                                                                                              input_scale_factors=gene_set_family_object.scale_factors, 
+                                                                                              input_mean_shifts=gene_set_family_object.mean_shifts, log=True)
 
         # list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, \
         # gene_set_factor, map_gene_novelty, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 

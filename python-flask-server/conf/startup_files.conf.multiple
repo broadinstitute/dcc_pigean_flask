@@ -26,6 +26,34 @@
         
         },
         {
+            "name": "cfde",
+            "gene_set_files": [
+                "gene_set_list_msigdb_c1.txt",
+                "gene_set_list_msigdb_c2.txt",
+                "gene_set_list_msigdb_c3.txt",
+                "gene_set_list_msigdb_c4.txt",
+                "gene_set_list_msigdb_c5.txt",
+                "gene_set_list_msigdb_c6.txt",
+                "gene_set_list_msigdb_c7.txt",
+                "gene_set_list_msigdb_c8.txt",
+                "gene_set_list_msigdb_h.txt",
+                "gene_set_list_msigdb_h2.txt",
+                "gene_set_list_mouse_2024.txt",
+                "cfde_overlaps.gmt",
+                "de_gene_sets.gmt",
+                "GlyGen_XMT_2022-12-13_GlyGen_Glycosylated_Proteins_2022.gmt",
+                "GTEx_XMT_2022-06-06_GTEx_Aging_Signatures_2021.gmt",
+                "GTEx_XMT_2023-03-10_GTEx_Tissues_V8_2023.gmt",
+                "IDG_XMT_2022-06-06_ARCHS4_IDG_Coexp.gmt",
+                "IDG_XMT_2022-12-13_IDG_Drug_Targets_2022.gmt",
+                "KOMP2_XMT_2022-12-13_KOMP2_Mouse_Phenotypes_2022.gmt",
+                "MoTrPAC_Endurance_Trained_Rats_2023.gmt",
+                "LINCS_XMT_2022-12-13_LINCS_L1000_CRISPR_KO_Consensus_Sigs.gmt",
+                "LINCS_XMT_2022-12-13_LINCS_L1000_Chem_Pert_Consensus_Sigs.gmt"
+            ]
+        
+        },
+        {
             "name": "text_mining_rumma",
             "gene_set_files": [
                 "gene_set_list_mesh.txt",
