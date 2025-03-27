@@ -28,6 +28,6 @@ sklearn==0.0
 threadpoolctl==2.1.0
 tomli==2.0.1
 urllib3==1.26.5
-werkzeug==3.0.3
+werkzeug==3.0.6
 xlrd==2.0.1
 zipp==3.19.2
