@@ -174,167 +174,167 @@
           }
         }
       }
-    }
-  },
-  "/query": {
-    "post": {
-      "summary": "Gene set clustering",
-      "description": "This endpoint accepts a list of NCBI gene IDs and returns gene set clustering results.",
-      "operationId": "postGeneSetClustering",
-      "requestBody": {
-        "description": "A JSON object with a list of NCBI gene IDs.",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "genes": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "description": "List of NCBI gene IDs"
-                }
-              },
-              "required": [
-                "genes"
-              ]
-            },
-            "example": {
-              "genes": [
-                "ABCA1",
-                "ABCC6",
-                "ACE",
-                "ADAMTS7",
-                "ADIPOQ",
-                "AGT",
-                "AGTR1",
-                "ALDH2",
-                "ANK2",
-                "APOA1",
-                "APOA5",
-                "APOB",
-                "APOC3",
-                "APOE",
-                "ARHGEF26",
-                "ARL15",
-                "BAG3",
-                "BCL2",
-                "BIRC5",
-                "C9orf3",
-                "CAV1",
-                "CETP",
-                "CHRM2",
-                "CLEC16A",
-                "CNOT4",
-                "COL4A1",
-                "COL4A2",
-                "CRP",
-                "CTLA4",
-                "CXCL12",
-                "CYBA",
-                "DAB2IP",
-                "DDAH1",
-                "DHCR7",
-                "DLG1",
-                "DSCAML1",
-                "EDEM1",
-                "EDN1",
-                "F2",
-                "F5",
-                "F8",
-                "F9",
-                "FGF23",
-                "FGF5",
-                "FURIN",
-                "GATA2",
-                "GCKR",
-                "GHR",
-                "GJA5",
-                "GPC5",
-                "GPX3",
-                "HAMP",
-                "HIF1A",
-                "HMOX1",
-                "HNF1A",
-                "IL6",
-                "IRS1",
-                "KLF14",
-                "LDLR",
-                "LEP",
-                "LIPC",
-                "LPA",
-                "LPL",
-                "LRP1",
-                "MADD",
-                "MMP3",
-                "MTHFR",
-                "MYBPC3",
-                "NOS3",
-                "NPR1",
-                "NR1H3",
-                "OLR1",
-                "PCSK9",
-                "PDE4D",
-                "PDGFD",
-                "PEMT",
-                "PLAT",
-                "PLAU",
-                "PLCB3",
-                "PLG",
-                "PPARG",
-                "PRKCH",
-                "PSRC1",
-                "PTGS1",
-                "PTGS2",
-                "RECK",
-                "SCARB1",
-                "SIRT1",
-                "SLC22A3",
-                "SMARCA4",
-                "SOD2",
-                "SORT1",
-                "SPARC",
-                "TFPI",
-                "THBD",
-                "TLL1",
-                "TNF",
-                "TP53",
-                "TRAF3",
-                "TRIB1",
-                "UBE2Z",
-                "VAMP8",
-                "VWF"
-              ]
-            }
-          }
-        }
-      },
-      "responses": {
-        "200": {
-          "description": "Gene set clustering results",
+    },
+    "/query": {
+      "post": {
+        "summary": "Gene set clustering",
+        "description": "This endpoint accepts a list of NCBI gene IDs and returns gene set clustering results.",
+        "operationId": "postGeneSetClustering",
+        "requestBody": {
+          "description": "A JSON object with a list of NCBI gene IDs.",
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
-                "description": "The clustering results of the input genes.",
                 "properties": {
-                  "clusters": {
+                  "genes": {
                     "type": "array",
                     "items": {
-                      "type": "object",
-                      "properties": {
-                        "cluster_id": {
-                          "type": "string"
-                        },
-                        "genes": {
-                          "type": "array",
-                          "items": {
+                      "type": "string"
+                    },
+                    "description": "List of NCBI gene IDs"
+                  }
+                },
+                "required": [
+                  "genes"
+                ]
+              },
+              "example": {
+                "genes": [
+                  "ABCA1",
+                  "ABCC6",
+                  "ACE",
+                  "ADAMTS7",
+                  "ADIPOQ",
+                  "AGT",
+                  "AGTR1",
+                  "ALDH2",
+                  "ANK2",
+                  "APOA1",
+                  "APOA5",
+                  "APOB",
+                  "APOC3",
+                  "APOE",
+                  "ARHGEF26",
+                  "ARL15",
+                  "BAG3",
+                  "BCL2",
+                  "BIRC5",
+                  "C9orf3",
+                  "CAV1",
+                  "CETP",
+                  "CHRM2",
+                  "CLEC16A",
+                  "CNOT4",
+                  "COL4A1",
+                  "COL4A2",
+                  "CRP",
+                  "CTLA4",
+                  "CXCL12",
+                  "CYBA",
+                  "DAB2IP",
+                  "DDAH1",
+                  "DHCR7",
+                  "DLG1",
+                  "DSCAML1",
+                  "EDEM1",
+                  "EDN1",
+                  "F2",
+                  "F5",
+                  "F8",
+                  "F9",
+                  "FGF23",
+                  "FGF5",
+                  "FURIN",
+                  "GATA2",
+                  "GCKR",
+                  "GHR",
+                  "GJA5",
+                  "GPC5",
+                  "GPX3",
+                  "HAMP",
+                  "HIF1A",
+                  "HMOX1",
+                  "HNF1A",
+                  "IL6",
+                  "IRS1",
+                  "KLF14",
+                  "LDLR",
+                  "LEP",
+                  "LIPC",
+                  "LPA",
+                  "LPL",
+                  "LRP1",
+                  "MADD",
+                  "MMP3",
+                  "MTHFR",
+                  "MYBPC3",
+                  "NOS3",
+                  "NPR1",
+                  "NR1H3",
+                  "OLR1",
+                  "PCSK9",
+                  "PDE4D",
+                  "PDGFD",
+                  "PEMT",
+                  "PLAT",
+                  "PLAU",
+                  "PLCB3",
+                  "PLG",
+                  "PPARG",
+                  "PRKCH",
+                  "PSRC1",
+                  "PTGS1",
+                  "PTGS2",
+                  "RECK",
+                  "SCARB1",
+                  "SIRT1",
+                  "SLC22A3",
+                  "SMARCA4",
+                  "SOD2",
+                  "SORT1",
+                  "SPARC",
+                  "TFPI",
+                  "THBD",
+                  "TLL1",
+                  "TNF",
+                  "TP53",
+                  "TRAF3",
+                  "TRIB1",
+                  "UBE2Z",
+                  "VAMP8",
+                  "VWF"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Gene set clustering results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "clusters": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "cluster_id": {
                             "type": "string"
+                          },
+                          "genes": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "enrichment_score": {
+                            "type": "number"
                           }
-                        },
-                        "enrichment_score": {
-                          "type": "number"
                         }
                       }
                     }
@@ -342,19 +342,18 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
           }
-        },
-        "400": {
-          "description": "Invalid input"
-        },
-        "500": {
-          "description": "Server error"
         }
       }
     }
+  },
+  "components": {
+    "schemas": {}
   }
-},
-"components": {
-  "schemas": {}
-}
 }
