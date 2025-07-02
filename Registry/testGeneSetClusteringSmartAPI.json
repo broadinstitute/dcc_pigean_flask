@@ -1,0 +1,359 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Gene Set Clustering",
+    "version": "0.2",
+    "description": "A service which takes in a list of NCBI gene IDs and returns gene set clustering results using gene set enrichment for the genes.",
+    "contact": {
+      "name": "Marc Duby",
+      "x-role": "developer",
+      "url": "http://broadinstitute.org/",
+      "email": "mduby@broadinstitute.org"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://translator.broadinstitute.org/genetics_provider/bayes_gene/",
+      "x-location": "Broad Institute",
+      "x-maturity": "development",
+      "description": "development"
+    }
+  ],
+  "paths": {
+    "/translator_gene": {
+      "post": {
+        "summary": "Perform gene grouping, factorization and scoring from a set of genes",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "p_value",
+                  "max_number_gene_sets",
+                  "genes"
+                ],
+                "properties": {
+                  "p_value": {
+                    "type": "string",
+                    "description": "Significance threshold for gene sets",
+                    "example": "0.05"
+                  },
+                  "max_number_gene_sets": {
+                    "type": "integer",
+                    "description": "Maximum number of gene sets to return",
+                    "example": 150
+                  },
+                  "genes": {
+                    "type": "array",
+                    "description": "List of input genes (with namespace prefixes)",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [
+                      "NCBIGene:136259",
+                      "NCBIGene:79660",
+                      "NCBIGene:94241",
+                      "NCBIGene:169026",
+                      "NCBIGene:7436",
+                      "NCBIGene:169792",
+                      "NCBIGene:6194",
+                      "NCBIGene:140803",
+                      "NCBIGene:29979",
+                      "NCBIGene:6812"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful gene factorization response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "logs": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "Processing and debugging messages"
+                    },
+                    "pigean-factor": {
+                      "type": "object",
+                      "properties": {
+                        "data": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "cluster": {
+                                "type": "string"
+                              },
+                              "factor": {
+                                "type": "string"
+                              },
+                              "gene_score": {
+                                "type": "number"
+                              },
+                              "gene_set_score": {
+                                "type": "number"
+                              },
+                              "label": {
+                                "type": "string"
+                              },
+                              "top_gene_sets": {
+                                "type": "string"
+                              },
+                              "top_genes": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "logs": [
+                        "got gene inputs of size: 95",
+                        "got p_value filter: 0.05",
+                        "got using max number of genes: 150",
+                        "using input gene set family key: default",
+                        "got translated gene inputs of size: 95",
+                        "gene factorization compute process time is: 4.569001197814941s",
+                        "used p_value: 0.05",
+                        "used max number of gene sets: 150",
+                        "post /translator_gene total elapsed time is: 4.570158958435059s",
+                        "code version is: 20240904_yvar_fix"
+                      ],
+                      "pigean-factor": {
+                        "data": [
+                          {
+                            "cluster": "Factor0",
+                            "factor": "Factor0",
+                            "gene_score": 0.2533703970948424,
+                            "gene_set_score": 4.451495218675021,
+                            "label": "HP_ABNORMAL_GLUCOSE_HOMEOSTASIS",
+                            "top_gene_sets": "HP_ABNORMAL_GLUCOSE_HOMEOSTASIS;HP_DIABETES_MELLITUS;HP_HYPERGLYCEMIA;HP_NEONATAL_HYPOGLYCEMIA;HP_INSULIN_RESISTANCE",
+                            "top_genes": "ITPR3;OTX2;GFM2;GATA3;BMP2"
+                          },
+                          {
+                            "cluster": "Factor1",
+                            "factor": "Factor1",
+                            "gene_score": 0.37370683439611946,
+                            "gene_set_score": 3.0912060447417082,
+                            "label": "GOBP_HORMONE_TRANSPORT",
+                            "top_gene_sets": "GOBP_HORMONE_TRANSPORT;GOBP_REGULATION_OF_HORMONE_SECRETION;GOBP_SIGNAL_RELEASE;GOBP_PEPTIDE_TRANSPORT;GOBP_REGULATION_OF_PEPTIDE_TRANSPORT",
+                            "top_genes": "ADCYAP1;HFE;GABBR1;CRHBP;FFAR4"
+                          },
+                          {
+                            "cluster": "Factor2",
+                            "factor": "Factor2",
+                            "gene_score": 0.3536658825128506,
+                            "gene_set_score": 3.091934902952548,
+                            "label": "GOBP_REGULATION_OF_PROTEIN_SECRETION",
+                            "top_gene_sets": "GOBP_REGULATION_OF_PROTEIN_SECRETION;GOBP_REGULATION_OF_INSULIN_SECRETION;GOBP_INSULIN_SECRETION;GOBP_REGULATION_OF_PEPTIDE_TRANSPORT;GOBP_AMIDE_TRANSPORT",
+                            "top_genes": "HADH;ISL1;CHGA;UCP2;GLUD1"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/query": {
+      "post": {
+        "summary": "Gene set clustering",
+        "description": "This endpoint accepts a list of NCBI gene IDs and returns gene set clustering results.",
+        "operationId": "postGeneSetClustering",
+        "requestBody": {
+          "description": "A JSON object with a list of NCBI gene IDs.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "genes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "List of NCBI gene IDs"
+                  }
+                },
+                "required": [
+                  "genes"
+                ]
+              },
+              "example": {
+                "genes": [
+                  "ABCA1",
+                  "ABCC6",
+                  "ACE",
+                  "ADAMTS7",
+                  "ADIPOQ",
+                  "AGT",
+                  "AGTR1",
+                  "ALDH2",
+                  "ANK2",
+                  "APOA1",
+                  "APOA5",
+                  "APOB",
+                  "APOC3",
+                  "APOE",
+                  "ARHGEF26",
+                  "ARL15",
+                  "BAG3",
+                  "BCL2",
+                  "BIRC5",
+                  "C9orf3",
+                  "CAV1",
+                  "CETP",
+                  "CHRM2",
+                  "CLEC16A",
+                  "CNOT4",
+                  "COL4A1",
+                  "COL4A2",
+                  "CRP",
+                  "CTLA4",
+                  "CXCL12",
+                  "CYBA",
+                  "DAB2IP",
+                  "DDAH1",
+                  "DHCR7",
+                  "DLG1",
+                  "DSCAML1",
+                  "EDEM1",
+                  "EDN1",
+                  "F2",
+                  "F5",
+                  "F8",
+                  "F9",
+                  "FGF23",
+                  "FGF5",
+                  "FURIN",
+                  "GATA2",
+                  "GCKR",
+                  "GHR",
+                  "GJA5",
+                  "GPC5",
+                  "GPX3",
+                  "HAMP",
+                  "HIF1A",
+                  "HMOX1",
+                  "HNF1A",
+                  "IL6",
+                  "IRS1",
+                  "KLF14",
+                  "LDLR",
+                  "LEP",
+                  "LIPC",
+                  "LPA",
+                  "LPL",
+                  "LRP1",
+                  "MADD",
+                  "MMP3",
+                  "MTHFR",
+                  "MYBPC3",
+                  "NOS3",
+                  "NPR1",
+                  "NR1H3",
+                  "OLR1",
+                  "PCSK9",
+                  "PDE4D",
+                  "PDGFD",
+                  "PEMT",
+                  "PLAT",
+                  "PLAU",
+                  "PLCB3",
+                  "PLG",
+                  "PPARG",
+                  "PRKCH",
+                  "PSRC1",
+                  "PTGS1",
+                  "PTGS2",
+                  "RECK",
+                  "SCARB1",
+                  "SIRT1",
+                  "SLC22A3",
+                  "SMARCA4",
+                  "SOD2",
+                  "SORT1",
+                  "SPARC",
+                  "TFPI",
+                  "THBD",
+                  "TLL1",
+                  "TNF",
+                  "TP53",
+                  "TRAF3",
+                  "TRIB1",
+                  "UBE2Z",
+                  "VAMP8",
+                  "VWF"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Gene set clustering results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "clusters": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "cluster_id": {
+                            "type": "string"
+                          },
+                          "genes": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "enrichment_score": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {}
+  }
+}
