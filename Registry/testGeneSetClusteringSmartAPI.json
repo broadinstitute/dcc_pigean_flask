@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Gene Set Clustering",
+    "title": "Translator Gene Clustering",
     "version": "0.2",
     "description": "A service which takes in a list of NCBI gene IDs and returns gene set clustering results using gene set enrichment for the genes.",
     "contact": {
