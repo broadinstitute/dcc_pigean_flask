@@ -338,6 +338,107 @@ def post_pigean_genes():
     return map_result
 
 
+@app.route("/translator_gene", methods=["POST"])
+def post_translator_gene():
+    # initialize 
+    map_result = {}
+    list_input_genes = []
+    sql_conn_query = sql_utils.db_sqlite_get_connection(db_path=db_file)
+    p_value_cutoff = P_VALUE_CUTOFF
+    list_logs = []
+
+    # get the input
+    data = request.get_json()
+    if data:
+        list_input_genes = data.get('genes')
+
+    logger.info("got request: {} with gene inputs: {}".format(request.method, list_input_genes))
+    str_message = "got gene inputs of size: {}".format(len(list_input_genes))
+    logger.info(str_message)
+    list_logs.append(str_message)
+
+    # get the p_value
+    p_value_cutoff = process_numeric_value(json_request=data, name='p_value', cutoff_default=P_VALUE_CUTOFF)
+    str_message = "got p_value filter: {}".format(p_value_cutoff)
+    logger.info(str_message)
+    list_logs.append(str_message)
+
+    # get the max gene sets
+    max_number_gene_sets = process_numeric_value(json_request=data, name='max_number_gene_sets', cutoff_default=MAX_NUMBER_GENE_SETS_FOR_COMPUTATION, is_float=False)
+    str_message = "got using max number of genes: {}".format(max_number_gene_sets)
+    logger.info(str_message)
+    list_logs.append(str_message)
+
+    # get the gene set family name
+    gene_set_family_key = process_string_value(json_request=data, name=dutils.KEY_REST_GENE_SET, default=dutils.KEY_DEFAULT_GENE_SET_FAMILY)
+    str_message = "using input gene set family key: {}".format(gene_set_family_key)
+    logger.info(str_message)
+    list_logs.append(str_message)
+
+    # get the gene set family object
+    gene_set_family_object: sutils.GeneSetFamily = map_gene_set_families.get(gene_set_family_key)
+
+    # make sure gene set family available
+    if not gene_set_family_object:
+        str_message = "got gene set family key which is not loaded: {}".format(gene_set_family_key)
+        logger.error(str_message)
+        map_result = {"logs": [str_message]}
+
+    else:
+        # translate the genes into what the system can handle
+        list_input_translated = sql_utils.db_get_gene_names_from_list(conn=sql_conn_query, list_input=list_input_genes)
+        str_message = "got translated gene inputs of size: {}".format(len(list_input_translated))
+        logger.info(str_message)
+        list_logs.append(str_message)
+
+        # add the genes to the result
+        # map_result['input_genes'] = list_input_genes
+        if DEBUG:
+            map_result['conf'] = map_conf
+
+        # time
+        start = time.time()
+
+        # compute
+        list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, \
+        gene_set_factor, map_gene_novelty, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 
+                                                                                                                p_value=p_value_cutoff,
+                                                                                                                max_num_gene_sets=max_number_gene_sets,
+                                                                                                                list_gene=list_input_translated, 
+                                                                                                                list_system_genes=list_system_genes, 
+                                                                                                                map_gene_index=map_gene_index, 
+                                                                                                    map_gene_set_index=gene_set_family_object.map_gene_set_index,
+                                                                                                    mean_shifts=gene_set_family_object.mean_shifts, 
+                                                                                                    scale_factors=gene_set_family_object.scale_factors,
+                                                                                                                is_factor_labels_llm=False,
+                                                                                                                log=True)
+        # format the data
+        # map_factors = cutils.group_factor_results(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, list_factor_genes=list_factor_genes)
+        # map_result['data'] = map_factors
+        map_result = gutils.gui_build_translator_gene_results_map(list_input_genes=list_input_genes, list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, 
+                                                            list_factor_genes=list_factor_genes, list_gene_set_p_values=list_gene_set_p_values)
+
+
+        # time
+        end = time.time()
+
+        # add time
+        str_message = "post /translator_gene total elapsed time is: {}s".format(end-start)
+        logs_process.append(str_message)
+        logs_process.append("code version is: {}".format(dutils.get_code_version()))
+
+        # add the input to the logs
+        logs_process = list_logs + logs_process
+        map_result['logs'] = logs_process
+
+        # print logs to app log
+        for row in logs_process:
+            logger.info(row)
+
+    # return
+    return map_result
+
+
 @app.route("/gene_scores", methods=["POST"])
 def post_gene_scores():
     # initialize 

@@ -181,6 +181,40 @@ def gui_build_pigean_app_results_map(list_input_genes, list_factor, list_factor_
     return map_result
 
 
+def gui_build_translator_gene_results_map(list_input_genes, list_factor, list_factor_genes, list_factor_gene_sets, list_gene_set_p_values, max_num_per_factor=dutils.NUMBER_RETURNED_PER_FACTOR, log=False):
+    '''
+    root method to build the pigean app results 
+    '''
+    # initialize
+    map_result = {}
+
+    # get the index values of the clean factors
+    list_verified_index = get_list_verified_results_for_giu(list_factor=list_factor, list_factor_genes=list_factor_genes, list_factor_gene_sets=list_factor_gene_sets)
+    list_factor_gui = [list_factor[index] for index in list_verified_index]
+    list_factor_genes_gui = [list_factor_genes[index] for index in list_verified_index]
+    list_factor_gene_sets_gui = [list_factor_gene_sets[index] for index in list_verified_index]
+
+    # build the subsets of the data
+    pigean_factor_map = build_pigean_factor_results_map(list_factor=list_factor_gui, list_factor_genes=list_factor_genes_gui, list_factor_gene_sets=list_factor_gene_sets_gui, 
+            max_num_per_factor=max_num_per_factor, log=log)
+    map_result[dutils.KEY_APP_FACTOR_PIGEAN] = pigean_factor_map
+
+    # # add the gene factors
+    # map_result[dutils.KEY_APP_FACTOR_GENE] = build_pigean_gene_factor_results_map(list_factor=list_factor_gui, list_factor_genes=list_factor_genes_gui, list_factor_gene_sets=list_factor_gene_sets_gui)
+
+    # # add the gene factors
+    # map_result[dutils.KEY_APP_FACTOR_GENE_SET] = build_pigean_gene_set_factor_results_map(list_factor=list_factor_gui, list_factor_gene_sets=list_factor_gene_sets_gui)
+
+    # # add the input gene list
+    # map_result[dutils.KEY_APP_INPUT_GENES] = list_input_genes
+
+    # # add the gene set p_value list list
+    # map_result[dutils.KEY_APP_GENE_SETS] = list_gene_set_p_values
+
+    # return
+    return map_result
+
+
 def gui_build_gene_scores_app_results_map(map_gene_scores, map_gene_set_scores, log=False):
     '''
     root method to build the pigean app results 
