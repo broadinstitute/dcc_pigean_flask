@@ -410,7 +410,7 @@ def post_translator_gene():
                                                                                                     map_gene_set_index=gene_set_family_object.map_gene_set_index,
                                                                                                     mean_shifts=gene_set_family_object.mean_shifts, 
                                                                                                     scale_factors=gene_set_family_object.scale_factors,
-                                                                                                                is_factor_labels_llm=False,
+                                                                                                                is_factor_labels_llm=True,
                                                                                                                 log=True)
         # format the data
         # map_factors = cutils.group_factor_results(list_factor=list_factor, list_factor_gene_sets=list_factor_gene_sets, list_factor_genes=list_factor_genes)
