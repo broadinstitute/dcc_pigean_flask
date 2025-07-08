@@ -48,6 +48,7 @@ KEY_GENE_SET_FILES = "gene_set_files"
 KEY_FILE_ROOT_DIR = "root_dir"
 KEY_GENE_SET_FAMILIES = "gene_set_families"
 KEY_NAME_GENE_SET_FAMILY = "name"
+KEY_NEGATIVE_CONTROLS = "+negative_controls"
 
 # app keys
 KEY_REST_GENES = "genes"
@@ -59,6 +60,7 @@ KEY_INTERNAL_HIGHEST_FACTOR_NAME = "highest_factor_name"
 KEY_INTERNAL_HIGHEST_FACTOR_SCORE = "highest_factor_score"
 KEY_REST_GENERATE_FACTOR_LABELS = "generate_factor_labels"
 KEY_REST_ADD_GENE_SCORES = "calculate_gene_scores"
+KEY_REST_EXCLUDE_CONTROLS = "exclude_controls"
 
 # app call keys
 KEY_APP_QUERY=1

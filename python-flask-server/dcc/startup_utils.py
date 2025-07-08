@@ -36,6 +36,9 @@ import dcc.dcc_utils as dutils
 import dcc.matrix_utils as mutils 
 import dcc.compute_utils as cutils 
 
+import numpy as np
+from scipy.sparse import csc_matrix, hstack
+
 # constants
 # DIR_CONF = "python-flask-server/conf/"
 DIR_CONF = "conf/"
@@ -82,10 +85,15 @@ def load_gene_set_family_map(map_conf, map_gene_index, log=False):
     '''
     map_gene_set_family = {}
     dir_root = map_conf.get(dutils.KEY_FILE_ROOT_DIR)
+    mock_family_index = 0
 
     # load the default data
     map_gene_set_family[dutils.KEY_DEFAULT_GENE_SET_FAMILY] = load_gene_set_family_data(name=dutils.KEY_DEFAULT_GENE_SET_FAMILY, 
         list_gene_set_files=map_conf.get(dutils.KEY_GENE_SET_FILES), path_gene_set_files=dir_root, map_gene_index=map_gene_index, log=log)
+    # create a family with controls
+    family_with_controls = cretate_mock_gene_set_family(map_gene_set_family[dutils.KEY_DEFAULT_GENE_SET_FAMILY], mock_family_index)
+    map_gene_set_family[family_with_controls.name] = family_with_controls
+    mock_family_index += 1
 
     # load the extra data
     # make sure there is a gene set family value
@@ -95,7 +103,10 @@ def load_gene_set_family_map(map_conf, map_gene_index, log=False):
         for item in list_gene_set_families_config:
             name = item.get(dutils.KEY_NAME_GENE_SET_FAMILY)
             map_gene_set_family[name] = load_gene_set_family_data(name=name, list_gene_set_files=item.get(dutils.KEY_GENE_SET_FILES),
-            path_gene_set_files=dir_root, map_gene_index=map_gene_index, log=log)
+                path_gene_set_files=dir_root, map_gene_index=map_gene_index, log=log)
+            family_with_controls = cretate_mock_gene_set_family(map_gene_set_family[name], mock_family_index)
+            map_gene_set_family[family_with_controls.name] = family_with_controls
+            mock_family_index += 1
 
     # log
     logger.info("loaded gene set family list of size: {} with name: {}".format(len(map_gene_set_family), list(map_gene_set_family.keys())))
@@ -132,6 +143,71 @@ def load_gene_set_family_data(name, list_gene_set_files, path_gene_set_files, ma
 
     # return
     return class_gene_set_family
+
+
+def cretate_mock_gene_set_family(src_gene_set_family, suffix):
+    '''
+    create family with mock gene sets
+    This will add mock gene sets with the same number of gene sets as the source family
+    '''
+    name = src_gene_set_family.name + dutils.KEY_NEGATIVE_CONTROLS
+    list_gene_set_files = src_gene_set_family.list_gene_set_files
+    path_gene_set_files = src_gene_set_family.path_gene_set_files
+    src_matrix_gene_sets = src_gene_set_family.matrix_gene_sets
+    src_map_gene_set_index = src_gene_set_family.map_gene_set_index
+    n_gene_sets = src_matrix_gene_sets.shape[1]
+    mock_matrix_gene_sets, mock_map_gene_set_index = create_mock_gene_set_matrix(src_gene_set_family.matrix_gene_sets, suffix)
+    matrix_gene_sets = hstack([src_matrix_gene_sets, mock_matrix_gene_sets], format='csc')
+    map_gene_set_index = src_map_gene_set_index.copy()
+    for (i, mock_name) in mock_map_gene_set_index.items():
+        map_gene_set_index[i + n_gene_sets] = mock_name
+    list_gene_sets = []
+    (mean_shifts, scale_factors) = cutils._calc_X_shift_scale(X=matrix_gene_sets)
+
+    mock_gene_set_family = GeneSetFamily(name=name, list_gene_set_files=list_gene_set_files, 
+                                         path_gene_set_files=path_gene_set_files, 
+                                         matrix_gene_sets=matrix_gene_sets, 
+                                         map_gene_set_index=map_gene_set_index, 
+                                         list_gene_sets=list_gene_sets, 
+                                         mean_shifts=mean_shifts, 
+                                         scale_factors=scale_factors)
+    # log
+    logger.info("created mock gene set family {} with {} gene sets and {} genes".format(name, matrix_gene_sets.shape[1], matrix_gene_sets.shape[0]))
+    # return
+    return mock_gene_set_family
+
+
+def create_mock_gene_set_matrix(src_matrix_gene_sets, suffix=0):
+    n_gene_sets = src_matrix_gene_sets.shape[1] if src_matrix_gene_sets is not None else 0
+    n_all_genes = src_matrix_gene_sets.shape[0] if src_matrix_gene_sets is not None else 0
+    logger.info("creating mock gene set family with {} gene sets and {} genes".format(n_gene_sets, n_all_genes))
+    map_gene_set_index = {}
+
+    list_row = []
+    list_columns = []
+    list_data = []
+    for i in range(n_gene_sets):
+        map_gene_set_index[i] = 'negative_control_' + str(i) + '_' + str(suffix)
+        n_genes = src_matrix_gene_sets[:,i].count_nonzero()
+        all_genes = [j for j in range(n_all_genes)]
+        for j in range(n_genes):
+            random_index = np.random.randint(n_all_genes-j)
+            gene_index = all_genes[random_index]
+            all_genes[random_index] = all_genes[n_all_genes-j-1]  # remove the gene from the list
+            list_row.append(gene_index)
+            list_columns.append(i)
+            list_data.append(1)
+
+    matrix_gene_sets = csc_matrix((list_data, (list_row, list_columns)), shape=(n_all_genes, n_gene_sets))
+
+    for i in range(n_gene_sets):
+        src_count = src_matrix_gene_sets[:,i].count_nonzero()
+        mock_count = matrix_gene_sets[:,i].count_nonzero()
+        if src_count != mock_count:
+            logger.warning("source gene set {} has {} genes, but mock gene set has {}".format(i, src_count, mock_count))
+
+    logger.info("created mock gene set family with {} gene sets and {} genes".format(n_gene_sets, n_all_genes))
+    return matrix_gene_sets, map_gene_set_index
 
 
 # classes

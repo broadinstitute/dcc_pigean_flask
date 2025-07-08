@@ -15,7 +15,11 @@ logger = dutils.get_logger(__name__)
 # methods
 def generate_distinct_colors_orig(N):
 
-    if N == 2:
+    if N <= 0:
+        colors = []
+    elif N == 1:
+        colors = [(1, 0, 0)]
+    elif N == 2:
         colors = [(1,0,0), (0,0,1)]
     else:
 
