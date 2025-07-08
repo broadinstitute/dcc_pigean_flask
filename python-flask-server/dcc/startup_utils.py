@@ -43,7 +43,6 @@ from scipy.sparse import csc_matrix, hstack
 # DIR_CONF = "python-flask-server/conf/"
 DIR_CONF = "conf/"
 FILE_CONF = "startup_files.json"
-MOCK = "negative_control"
 
 # variables
 # matrix_gene_set = None
@@ -151,7 +150,7 @@ def cretate_mock_gene_set_family(src_gene_set_family, suffix):
     create family with mock gene sets
     This will add mock gene sets with the same number of gene sets as the source family
     '''
-    name = src_gene_set_family.name + '_' + MOCK
+    name = src_gene_set_family.name + dutils.KEY_NEGATIVE_CONTROLS
     list_gene_set_files = src_gene_set_family.list_gene_set_files
     path_gene_set_files = src_gene_set_family.path_gene_set_files
     src_matrix_gene_sets = src_gene_set_family.matrix_gene_sets
@@ -188,7 +187,7 @@ def create_mock_gene_set_matrix(src_matrix_gene_sets, suffix=0):
     list_columns = []
     list_data = []
     for i in range(n_gene_sets):
-        map_gene_set_index[i] = MOCK + '_' + str(i) + '_' + str(suffix)
+        map_gene_set_index[i] = 'negative_control_' + str(i) + '_' + str(suffix)
         n_genes = src_matrix_gene_sets[:,i].count_nonzero()
         all_genes = [j for j in range(n_all_genes)]
         for j in range(n_genes):

@@ -100,6 +100,14 @@ def post_genes():
 
     # get the gene set family name
     gene_set_family_key = process_string_value(json_request=data, name=dutils.KEY_REST_GENE_SET, default=dutils.KEY_DEFAULT_GENE_SET_FAMILY)
+    exclude_controls = process_boolean_value(json_request=data, name=dutils.KEY_REST_EXCLUDE_CONTROLS, default=False)
+    if not exclude_controls:
+        gene_set_family_with_controls_key = gene_set_family_key + dutils.KEY_NEGATIVE_CONTROLS
+        if gene_set_family_key in map_gene_set_families:
+            gene_set_family_key = gene_set_family_with_controls_key
+        else:
+            str_message = "got gene set family key which is not loaded: {}".format(gene_set_family_with_controls_key)
+            logger.warning(str_message)
     logger.info("using input gene set family key: {}".format(gene_set_family_key))
 
     # get the gene set family object
@@ -234,6 +242,15 @@ def post_pigean_genes():
 
     # get the gene set family name
     gene_set_family_key = process_string_value(json_request=data, name=dutils.KEY_REST_GENE_SET, default=dutils.KEY_DEFAULT_GENE_SET_FAMILY)
+    exclude_controls = process_boolean_value(json_request=data, name=dutils.KEY_REST_EXCLUDE_CONTROLS, default=False)
+    if not exclude_controls:
+        gene_set_family_with_controls_key = gene_set_family_key + dutils.KEY_NEGATIVE_CONTROLS
+        if gene_set_family_key in map_gene_set_families:
+            gene_set_family_key = gene_set_family_with_controls_key
+        else:
+            str_message = "got gene set family key which is not loaded: {}".format(gene_set_family_with_controls_key)
+            logger.warning(str_message)
+            list_logs.append(str_message)
     str_message = "using input gene set family key: {}".format(gene_set_family_key)
     logger.info(str_message)
     list_logs.append(str_message)
@@ -371,6 +388,15 @@ def post_translator_gene():
 
     # get the gene set family name
     gene_set_family_key = process_string_value(json_request=data, name=dutils.KEY_REST_GENE_SET, default=dutils.KEY_DEFAULT_GENE_SET_FAMILY)
+    exclude_controls = process_boolean_value(json_request=data, name=dutils.KEY_REST_EXCLUDE_CONTROLS, default=False)
+    if not exclude_controls:
+        gene_set_family_with_controls_key = gene_set_family_key + dutils.KEY_NEGATIVE_CONTROLS
+        if gene_set_family_key in map_gene_set_families:
+            gene_set_family_key = gene_set_family_with_controls_key
+        else:
+            str_message = "got gene set family key which is not loaded: {}".format(gene_set_family_with_controls_key)
+            logger.warning(str_message)
+            list_logs.append(str_message)
     str_message = "using input gene set family key: {}".format(gene_set_family_key)
     logger.info(str_message)
     list_logs.append(str_message)
@@ -472,6 +498,15 @@ def post_gene_scores():
 
     # get the gene set family name
     gene_set_family_key = process_string_value(json_request=data, name=dutils.KEY_REST_GENE_SET, default=dutils.KEY_DEFAULT_GENE_SET_FAMILY)
+    exclude_controls = process_boolean_value(json_request=data, name=dutils.KEY_REST_EXCLUDE_CONTROLS, default=False)
+    if not exclude_controls:
+        gene_set_family_with_controls_key = gene_set_family_key + dutils.KEY_NEGATIVE_CONTROLS
+        if gene_set_family_key in map_gene_set_families:
+            gene_set_family_key = gene_set_family_with_controls_key
+        else:
+            str_message = "got gene set family key which is not loaded: {}".format(gene_set_family_with_controls_key)
+            logger.warning(str_message)
+            list_logs.append(str_message)
     str_message = "using input gene set family key: {}".format(gene_set_family_key)
     logger.info(str_message)
     list_logs.append(str_message)
@@ -579,6 +614,15 @@ def post_network_graph():
 
     # get the gene set family name
     gene_set_family_key = process_string_value(json_request=data, name=dutils.KEY_REST_GENE_SET, default=dutils.KEY_DEFAULT_GENE_SET_FAMILY)
+    exclude_controls = process_boolean_value(json_request=data, name=dutils.KEY_REST_EXCLUDE_CONTROLS, default=False)
+    if not exclude_controls:
+        gene_set_family_with_controls_key = gene_set_family_key + dutils.KEY_NEGATIVE_CONTROLS
+        if gene_set_family_key in map_gene_set_families:
+            gene_set_family_key = gene_set_family_with_controls_key
+        else:
+            str_message = "got gene set family key which is not loaded: {}".format(gene_set_family_with_controls_key)
+            logger.warning(str_message)
+            list_logs.append(str_message)
     str_message = "using input gene set family key: {}".format(gene_set_family_key)
     logger.info(str_message)
     list_logs.append(str_message)
