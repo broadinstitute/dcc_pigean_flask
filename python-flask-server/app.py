@@ -98,6 +98,11 @@ def post_genes():
     max_number_gene_sets = process_numeric_value(json_request=data, name=dutils.KEY_REST_MAX_NUMBER_GENE_SETS, cutoff_default=MAX_NUMBER_GENE_SETS_FOR_COMPUTATION, is_float=False)
     logger.info("using max number gene sets: {}".format(max_number_gene_sets))
 
+    # adding input to indicate the enrichment analysis type
+    enrichment_analysis = process_string_value(json_request=data, name=dutils.KEY_REST_ENRICHMENT_ANALYSIS, default=dutils.DEFAULT_ENRICHMENT_ANALYSIS)
+    str_message = "using enrichment analysis: {}".format(enrichment_analysis)
+    logger.info(str_message)
+
     # get the gene set family name
     gene_set_family_key = process_string_value(json_request=data, name=dutils.KEY_REST_GENE_SET, default=dutils.KEY_DEFAULT_GENE_SET_FAMILY)
     exclude_controls = process_boolean_value(json_request=data, name=dutils.KEY_REST_EXCLUDE_CONTROLS, default=False)
@@ -158,6 +163,7 @@ def post_genes():
         list_factor, list_factor_genes, list_factor_gene_sets, \
             gene_factor, gene_set_factor, map_gene_factor_data, list_gene_set_p_values, logs_process = cutils.calculate_factors(
                                                                                                     matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 
+                                                                                                    enrichment_analysis=enrichment_analysis,
                                                                                                     p_value=p_value_cutoff,
                                                                                                     max_num_gene_sets=max_number_gene_sets,
                                                                                                     list_gene=list_input_translated, 
@@ -240,6 +246,12 @@ def post_pigean_genes():
     logger.info(str_message)
     list_logs.append(str_message)
 
+    # adding input to indicate the enrichment analysis type
+    enrichment_analysis = process_string_value(json_request=data, name=dutils.KEY_REST_ENRICHMENT_ANALYSIS, default=dutils.DEFAULT_ENRICHMENT_ANALYSIS)
+    str_message = "using enrichment analysis: {}".format(enrichment_analysis)
+    logger.info(str_message)
+    list_logs.append(str_message)
+
     # get the gene set family name
     gene_set_family_key = process_string_value(json_request=data, name=dutils.KEY_REST_GENE_SET, default=dutils.KEY_DEFAULT_GENE_SET_FAMILY)
     exclude_controls = process_boolean_value(json_request=data, name=dutils.KEY_REST_EXCLUDE_CONTROLS, default=False)
@@ -293,6 +305,7 @@ def post_pigean_genes():
 
         list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, \
         gene_set_factor, map_gene_novelty, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 
+                                                                                                                enrichment_analysis=enrichment_analysis,
                                                                                                                 p_value=p_value_cutoff,
                                                                                                                 max_num_gene_sets=max_number_gene_sets,
                                                                                                                 list_gene=list_input_translated, 
@@ -386,6 +399,12 @@ def post_translator_gene():
     logger.info(str_message)
     list_logs.append(str_message)
 
+    # adding input to indicate the enrichment analysis type
+    enrichment_analysis = process_string_value(json_request=data, name=dutils.KEY_REST_ENRICHMENT_ANALYSIS, default=dutils.DEFAULT_ENRICHMENT_ANALYSIS)
+    str_message = "using enrichment analysis: {}".format(enrichment_analysis)
+    logger.info(str_message)
+    list_logs.append(str_message)
+
     # get the gene set family name
     gene_set_family_key = process_string_value(json_request=data, name=dutils.KEY_REST_GENE_SET, default=dutils.KEY_DEFAULT_GENE_SET_FAMILY)
     exclude_controls = process_boolean_value(json_request=data, name=dutils.KEY_REST_EXCLUDE_CONTROLS, default=False)
@@ -428,6 +447,7 @@ def post_translator_gene():
         # compute
         list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, \
         gene_set_factor, map_gene_novelty, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 
+                                                                                                                enrichment_analysis=enrichment_analysis,
                                                                                                                 p_value=p_value_cutoff,
                                                                                                                 max_num_gene_sets=max_number_gene_sets,
                                                                                                                 list_gene=list_input_translated, 
@@ -633,6 +653,12 @@ def post_network_graph():
     logger.info(str_message)
     list_logs.append(str_message)
 
+    # adding input to indicate the enrichment analysis type
+    enrichment_analysis = process_string_value(json_request=data, name=dutils.KEY_REST_ENRICHMENT_ANALYSIS, default=dutils.DEFAULT_ENRICHMENT_ANALYSIS)
+    str_message = "using enrichment analysis: {}".format(enrichment_analysis)
+    logger.info(str_message)
+    list_logs.append(str_message)
+
     # get the gene set family object
     gene_set_family_object: sutils.GeneSetFamily = map_gene_set_families.get(gene_set_family_key)
 
@@ -659,6 +685,7 @@ def post_network_graph():
 
         list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, \
         gene_set_factor, map_gene_novelty, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 
+                                                                                                                enrichment_analysis=enrichment_analysis,
                                                                                                                 p_value=p_value_cutoff,
                                                                                                                 max_num_gene_sets=max_number_gene_sets,
                                                                                                                 list_gene=list_input_translated, 
@@ -857,8 +884,14 @@ def process_genes(list_input_genes, p_value_cutoff, log=False):
     list_input_translated = sql_utils.db_get_gene_names_from_list(conn=sql_conn_query, list_input=list_input_genes)
     logger.info("got translated gene inputs of size: {}".format(len(list_input_translated)))
 
+    # adding input to indicate the enrichment analysis type
+    enrichment_analysis = process_string_value(json_request=data, name=dutils.KEY_REST_ENRICHMENT_ANALYSIS, default=dutils.DEFAULT_ENRICHMENT_ANALYSIS)
+    str_message = "using enrichment analysis: {}".format(enrichment_analysis)
+    logger.info(str_message)
+
     # do the calculations
     list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_factor_data, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
+                                                                                                               enrichment_analysis=enrichment_analysis,
                                                                                                                p_value=p_value_cutoff,
                                                                                                                list_gene=list_input_translated, 
                                                                                                                list_system_genes=list_system_genes, 

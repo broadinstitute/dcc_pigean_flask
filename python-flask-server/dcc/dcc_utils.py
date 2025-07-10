@@ -61,6 +61,8 @@ KEY_INTERNAL_HIGHEST_FACTOR_SCORE = "highest_factor_score"
 KEY_REST_GENERATE_FACTOR_LABELS = "generate_factor_labels"
 KEY_REST_ADD_GENE_SCORES = "calculate_gene_scores"
 KEY_REST_EXCLUDE_CONTROLS = "exclude_controls"
+KEY_REST_ENRICHMENT_ANALYSIS = "enrichment_analysis"
+DEFAULT_ENRICHMENT_ANALYSIS = "hypergeometric"
 
 # app call keys
 KEY_APP_QUERY=1
@@ -78,6 +80,7 @@ KEY_APP_P_VALUE = 'p_value'
 KEY_APP_GENE_SET_SCORES = 'gene_set_scores'
 KEY_APP_GENE_SCORES = 'gene_scores'
 KEY_APP_NETWORK_GRAPH = 'network_graph'
+KEY_APP_GENE_SET_SIZE = 'gene_set_size'
 
 
 # methods
