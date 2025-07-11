@@ -34,6 +34,7 @@
 import scipy
 import scipy.sparse as sparse
 import scipy.stats
+from scipy.stats import hypergeom
 from scipy.stats import truncnorm, norm
 from scipy.special import psi as digamma
 from scipy.special import erfc
@@ -80,7 +81,8 @@ class RunFactorException(Exception):
 
 # methods
 def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_genes, map_gene_index, map_gene_set_index, mean_shifts, scale_factors, 
-                      p_value=0.05, max_num_gene_sets=100, is_factor_labels_llm=False, use_set_p_value=False, step_log=True, log=False):
+        enrichment_analysis='hypergeometric', factorization_weight='pvalue',
+        p_value=0.05, max_num_gene_sets=100, is_factor_labels_llm=False, use_set_p_value=False, step_log=True, log=False):
     '''
     will produce the gene set factors and gene factors
     '''
@@ -110,7 +112,13 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
         logger.info("step 2: got resulting found gene indices list of size: {}".format(len(list_input_gene_indices)))
 
     # step 3: get the p_values by gene set
-    vector_gene_set_pvalues, _, _ = compute_beta_tildes(X=matrix_gene_sets_gene_original, Y=vector_gene, scale_factors=scale_factors, mean_shifts=mean_shifts)
+    if enrichment_analysis == dutils.KEY_EA_HYPERGEOMETRIC or enrichment_analysis == dutils.KEY_EA_HYPERGEOMETRIC_DISTIBUTION:
+        vector_gene_set_pvalues, gene_set_sizes = compute_enrichment(vector_gene, matrix_gene_sets_gene_original)
+        vector_gene_set_pvalues = np.reshape(vector_gene_set_pvalues, (1, -1))
+    else:
+        vector_gene_set_pvalues, _, _ = compute_beta_tildes(X=matrix_gene_sets_gene_original, Y=vector_gene, scale_factors=scale_factors, mean_shifts=mean_shifts)
+        gene_set_sizes = matrix_gene_sets_gene_original.sum(axis=0).A1
+
 
     if step_log:
         logger.info("step 3: got p values vector of shape: {}".format(vector_gene_set_pvalues.shape))
@@ -132,7 +140,8 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
 
     # NOTE - only used in return at end
     # build filtered gene set list with p_values
-    list_gene_set_p_values = build_gene_set_p_value_list(vector_gene_set_pvalues=vector_gene_set_pvalues, selected_gene_set_indices=selected_gene_set_indices, map_gene_set_index=map_gene_set_index)
+    list_gene_set_p_values = build_gene_set_p_value_list(vector_gene_set_pvalues=vector_gene_set_pvalues, selected_gene_set_indices=selected_gene_set_indices, 
+                                                         map_gene_set_index=map_gene_set_index, gene_set_sizes=gene_set_sizes)
     
     # step 5: filter gene rows by only the genes that are part of the remaining gene sets from the filtered gene set matrix
     matrix_gene_filtered_by_remaining_gene_sets, selected_gene_indices = filter_matrix_rows_by_sum_cutoff(matrix_to_filter=matrix_gene_set_filtered_by_pvalues, 
@@ -152,12 +161,30 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
     else:
         # TODO - this is the place to create new matrix to do bayes by
 
-        
+        if factorization_weight == dutils.KEY_WEIGHT_NEG_LOG_PVALUE: #'-logpvalue':
+            weight = -np.log10(vector_gene_set_pvalues[0,selected_gene_set_indices]) if p_value > 1e-100 else 100.0
+
+        elif factorization_weight == dutils.KEY_WEIGHT_NEG_LOG_PVALUE_SIZE: #'-logpvalue/size':
+            weight = -np.log10(vector_gene_set_pvalues[0,selected_gene_set_indices]) if p_value > 1e-100 else 100.0
+            sizes = gene_set_sizes[selected_gene_set_indices]
+            weight = np.mean(sizes) * weight / sizes
+
+        elif factorization_weight == dutils.KEY_WEIGHT_NEG_LOG_PVALUE_SQRT_SIZE :#'-logpvalue/sqrt_size':
+            weight = -np.log10(vector_gene_set_pvalues[0,selected_gene_set_indices]) if p_value > 1e-100 else 100.0
+            sizes = gene_set_sizes[selected_gene_set_indices]
+            weight = np.sqrt(np.mean(sizes)) * weight / np.sqrt(sizes)
+
+        else: #factorization_weight == '1' or factorization_weight == '1.0':
+            weight = np.ones(len(selected_gene_set_indices))
+
         # step 6: from this double filtered matrix, compute the factors
-        gene_factor, gene_set_factor, _, _, exp_lambda, _ = _bayes_nmf_l2(V0=matrix_gene_filtered_by_remaining_gene_sets)
+
+        weighted_filtered_matrix =  matrix_gene_filtered_by_remaining_gene_sets @ sparse.diags(weight, format='csc')
+        gene_factor, gene_set_factor, _, _, exp_lambda, _ = _bayes_nmf_l2(V0=weighted_filtered_matrix)
         # gene_factor, gene_set_factor = run_nmf(matrix_input=matrix_gene_filtered_by_remaining_gene_sets, log=log)
 
         if step_log:
+            logger.info("step 6: got weights in range [{} - {}]".format(np.min(weight), np.max(weight)))
             logger.info("step 6: got gene factor matrix of shape: {}".format(gene_factor.shape))
             logger.info("step 6: got gene set factor matrix of shape: {}".format(gene_set_factor.shape))
             logger.info("step 6: got lambda matrix of shape: {} with data: {}".format(exp_lambda.shape, exp_lambda))
@@ -202,7 +229,7 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
     return list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_factor_data_per_gene, list_gene_set_p_values, logs_process
 
 
-def build_gene_set_p_value_list(vector_gene_set_pvalues, selected_gene_set_indices, map_gene_set_index, log=False):
+def build_gene_set_p_value_list(vector_gene_set_pvalues, selected_gene_set_indices, map_gene_set_index, gene_set_sizes, log=False):
     '''
     will build a sorted list of gene/p_value objects
     '''
@@ -215,7 +242,7 @@ def build_gene_set_p_value_list(vector_gene_set_pvalues, selected_gene_set_indic
 
     # build the list
     for index in selected_gene_set_indices:
-        list_result.append({dutils.KEY_APP_GENE_SET: map_gene_set_index.get(index), dutils.KEY_APP_P_VALUE: vector_gene_set_pvalues[0, index]})
+        list_result.append({dutils.KEY_APP_GENE_SET: map_gene_set_index.get(index), dutils.KEY_APP_P_VALUE: vector_gene_set_pvalues[0, index], dutils.KEY_APP_GENE_SET_SIZE: int(gene_set_sizes[index])})
 
     # log
     if log:
@@ -333,6 +360,30 @@ def finalize_regression(beta_tildes, ses, se_inflation_factors):
     # pvalues is what I want
     return (beta_tildes, ses, z_scores, p_values, se_inflation_factors)
 
+
+def compute_enrichment(gene_list, gene_sets):
+    """
+    Compute enrichment p-values using the Hypergeometric Distribution.
+    """
+    logger.info("Calculating enrichment p-values")
+
+    n_all_genes = gene_sets.shape[0]
+    intersections = sparse.csc_matrix(gene_list) @ (gene_sets)
+    intersections = intersections.toarray()[0,:]
+    gene_set_sizes = gene_sets.sum(axis=0).A1
+    gene_list_size = sum(sum(gene_list))
+
+    # Calculate the p-value using the hypergeometric test
+    #     # Sizes for the hypergeometric test
+    #     M = n_all_genes  # Total number of genes
+    #     N = len(gene_set_genes)  # Size of the gene set
+    #     n = len(gene_list)  # Size of the input gene list
+    #     K = len(set(gene_list) & set(gene_set_genes))  # Overlap between gene list and gene set
+    #     # Compute the p-value using the survival function (sf)
+    #     p_value = hypergeom.sf(K - 1, M, N, n)
+    pvalues = hypergeom.sf(intersections-1, n_all_genes, gene_list_size, gene_set_sizes)
+    logger.info("Enrichment p-values calculated for %d gene sets." % len(pvalues))
+    return pvalues, gene_set_sizes
 
 
 # NOTE - this code is adapted from https://github.com/gwas-partitioning/bnmf-clustering
