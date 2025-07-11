@@ -112,7 +112,7 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
         logger.info("step 2: got resulting found gene indices list of size: {}".format(len(list_input_gene_indices)))
 
     # step 3: get the p_values by gene set
-    if enrichment_analysis == 'hypergeometric' or enrichment_analysis == 'hypergeometric distribution':
+    if enrichment_analysis == dutils.KEY_EA_HYPERGEOMETRIC or enrichment_analysis == dutils.KEY_EA_HYPERGEOMETRIC_DISTIBUTION:
         vector_gene_set_pvalues, gene_set_sizes = compute_enrichment(vector_gene, matrix_gene_sets_gene_original)
         vector_gene_set_pvalues = np.reshape(vector_gene_set_pvalues, (1, -1))
     else:
@@ -161,15 +161,15 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
     else:
         # TODO - this is the place to create new matrix to do bayes by
 
-        if factorization_weight == '-logpvalue':
+        if factorization_weight == dutils.KEY_WEIGHT_NEG_LOG_PVALUE: #'-logpvalue':
             weight = -np.log10(vector_gene_set_pvalues[0,selected_gene_set_indices]) if p_value > 1e-100 else 100.0
 
-        elif factorization_weight == '-logpvalue/size':
+        elif factorization_weight == dutils.KEY_WEIGHT_NEG_LOG_PVALUE_SIZE: #'-logpvalue/size':
             weight = -np.log10(vector_gene_set_pvalues[0,selected_gene_set_indices]) if p_value > 1e-100 else 100.0
             sizes = gene_set_sizes[selected_gene_set_indices]
             weight = np.mean(sizes) * weight / sizes
 
-        elif factorization_weight == '-logpvalue/sqrt_size':
+        elif factorization_weight == dutils.KEY_WEIGHT_NEG_LOG_PVALUE_SQRT_SIZE :#'-logpvalue/sqrt_size':
             weight = -np.log10(vector_gene_set_pvalues[0,selected_gene_set_indices]) if p_value > 1e-100 else 100.0
             sizes = gene_set_sizes[selected_gene_set_indices]
             weight = np.sqrt(np.mean(sizes)) * weight / np.sqrt(sizes)

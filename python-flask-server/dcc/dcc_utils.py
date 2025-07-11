@@ -50,6 +50,16 @@ KEY_GENE_SET_FAMILIES = "gene_set_families"
 KEY_NAME_GENE_SET_FAMILY = "name"
 KEY_NEGATIVE_CONTROLS = "+negative_controls"
 
+# computation options keys
+KEY_EA_NAIVE_PIORS = "naive_priors"
+KEY_EA_HYPERGEOMETRIC = "hypergeometric"
+KEY_EA_HYPERGEOMETRIC_DISTIBUTION = "hypergeometric_distribution" # same as hypergeometric
+
+KEY_WEIGHT_1 = "1.0"
+KEY_WEIGHT_NEG_LOG_PVALUE = "-log_pvalue"
+KEY_WEIGHT_NEG_LOG_PVALUE_SIZE = "-log_pvalue/size"
+KEY_WEIGHT_NEG_LOG_PVALUE_SQRT_SIZE = "-log_pvalue/sqrt_size"
+
 # app keys
 KEY_REST_GENES = "genes"
 KEY_REST_P_VALUE = "p_value"
@@ -62,9 +72,9 @@ KEY_REST_GENERATE_FACTOR_LABELS = "generate_factor_labels"
 KEY_REST_ADD_GENE_SCORES = "calculate_gene_scores"
 KEY_REST_EXCLUDE_CONTROLS = "exclude_controls"
 KEY_REST_ENRICHMENT_ANALYSIS = "enrichment_analysis"
-DEFAULT_ENRICHMENT_ANALYSIS = "hypergeometric"
+DEFAULT_ENRICHMENT_ANALYSIS = KEY_EA_HYPERGEOMETRIC
 KEY_REST_FACTORIZATION_WEIGHT = "factorization_weight"
-DEFAULT_FACTORIZATION_WEIGHT = "-logpvalue/sqrt_size"
+DEFAULT_FACTORIZATION_WEIGHT = KEY_WEIGHT_NEG_LOG_PVALUE_SQRT_SIZE
 
 # app call keys
 KEY_APP_QUERY=1
