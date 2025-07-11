@@ -81,7 +81,8 @@ class RunFactorException(Exception):
 
 # methods
 def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_genes, map_gene_index, map_gene_set_index, mean_shifts, scale_factors, 
-        enrichment_analysis='hypergeometric', p_value=0.05, max_num_gene_sets=100, is_factor_labels_llm=False, use_set_p_value=False, step_log=True, log=False):
+        enrichment_analysis='hypergeometric', factorization_weight='pvalue',
+        p_value=0.05, max_num_gene_sets=100, is_factor_labels_llm=False, use_set_p_value=False, step_log=True, log=False):
     '''
     will produce the gene set factors and gene factors
     '''
@@ -160,12 +161,30 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
     else:
         # TODO - this is the place to create new matrix to do bayes by
 
-        
+        if factorization_weight == '-logpvalue':
+            weight = -np.log10(vector_gene_set_pvalues[0,selected_gene_set_indices]) if p_value > 1e-100 else 100.0
+
+        elif factorization_weight == '-logpvalue/size':
+            weight = -np.log10(vector_gene_set_pvalues[0,selected_gene_set_indices]) if p_value > 1e-100 else 100.0
+            sizes = gene_set_sizes[selected_gene_set_indices]
+            weight = np.mean(sizes) * weight / sizes
+
+        elif factorization_weight == '-logpvalue/sqrt_size':
+            weight = -np.log10(vector_gene_set_pvalues[0,selected_gene_set_indices]) if p_value > 1e-100 else 100.0
+            sizes = gene_set_sizes[selected_gene_set_indices]
+            weight = np.sqrt(np.mean(sizes)) * weight / np.sqrt(sizes)
+
+        else: #factorization_weight == '1' or factorization_weight == '1.0':
+            weight = np.ones(len(selected_gene_set_indices))
+
         # step 6: from this double filtered matrix, compute the factors
-        gene_factor, gene_set_factor, _, _, exp_lambda, _ = _bayes_nmf_l2(V0=matrix_gene_filtered_by_remaining_gene_sets)
+
+        weighted_filtered_matrix =  matrix_gene_filtered_by_remaining_gene_sets @ sparse.diags(weight, format='csc')
+        gene_factor, gene_set_factor, _, _, exp_lambda, _ = _bayes_nmf_l2(V0=weighted_filtered_matrix)
         # gene_factor, gene_set_factor = run_nmf(matrix_input=matrix_gene_filtered_by_remaining_gene_sets, log=log)
 
         if step_log:
+            logger.info("step 6: got weights in range [{} - {}]".format(np.min(weight), np.max(weight)))
             logger.info("step 6: got gene factor matrix of shape: {}".format(gene_factor.shape))
             logger.info("step 6: got gene set factor matrix of shape: {}".format(gene_set_factor.shape))
             logger.info("step 6: got lambda matrix of shape: {} with data: {}".format(exp_lambda.shape, exp_lambda))

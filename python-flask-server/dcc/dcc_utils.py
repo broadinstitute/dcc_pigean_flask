@@ -63,6 +63,8 @@ KEY_REST_ADD_GENE_SCORES = "calculate_gene_scores"
 KEY_REST_EXCLUDE_CONTROLS = "exclude_controls"
 KEY_REST_ENRICHMENT_ANALYSIS = "enrichment_analysis"
 DEFAULT_ENRICHMENT_ANALYSIS = "hypergeometric"
+KEY_REST_FACTORIZATION_WEIGHT = "factorization_weight"
+DEFAULT_FACTORIZATION_WEIGHT = "-logpvalue/sqrt_size"
 
 # app call keys
 KEY_APP_QUERY=1
