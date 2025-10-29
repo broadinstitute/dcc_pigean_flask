@@ -24,6 +24,8 @@ logger = dutils.get_logger(__name__)
 P_VALUE_CUTOFF = 0.3
 # p_value_cutoff = 0.05
 MAX_NUMBER_GENE_SETS_FOR_COMPUTATION=100
+# default factorization phi value = 1.0
+DEFAULT_FACTORIZATION_PHI = 1.0
 
 # in memory compute variables
 map_conf = sutils.load_conf()
@@ -108,6 +110,11 @@ def post_genes():
     str_message = "using factorization weight: {}".format(factorization_weight)
     logger.info(str_message)
 
+    # adding input to indicate the factorization phi value
+    phi = process_numeric_value(json_request=data, name=dutils.KEY_REST_PHI, cutoff_default=DEFAULT_FACTORIZATION_PHI)
+    str_message = "using factorization phi: {}".format(phi)
+    logger.info(str_message)
+
     # get the gene set family name
     gene_set_family_key = process_string_value(json_request=data, name=dutils.KEY_REST_GENE_SET, default=dutils.KEY_DEFAULT_GENE_SET_FAMILY)
     exclude_controls = process_boolean_value(json_request=data, name=dutils.KEY_REST_EXCLUDE_CONTROLS, default=False)
@@ -170,6 +177,7 @@ def post_genes():
                                                                                                     matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 
                                                                                                     enrichment_analysis=enrichment_analysis,
                                                                                                     factorization_weight=factorization_weight,
+                                                                                                    phi=phi,
                                                                                                     p_value=p_value_cutoff,
                                                                                                     max_num_gene_sets=max_number_gene_sets,
                                                                                                     list_gene=list_input_translated, 
@@ -264,6 +272,12 @@ def post_pigean_genes():
     logger.info(str_message)
     list_logs.append(str_message)
 
+    # adding input to indicate the factorization phi value
+    phi = process_numeric_value(json_request=data, name=dutils.KEY_REST_PHI, cutoff_default=DEFAULT_FACTORIZATION_PHI)
+    str_message = "using factorization phi: {}".format(phi)
+    logger.info(str_message)
+    list_logs.append(str_message)
+
     # get the gene set family name
     gene_set_family_key = process_string_value(json_request=data, name=dutils.KEY_REST_GENE_SET, default=dutils.KEY_DEFAULT_GENE_SET_FAMILY)
     exclude_controls = process_boolean_value(json_request=data, name=dutils.KEY_REST_EXCLUDE_CONTROLS, default=False)
@@ -319,6 +333,7 @@ def post_pigean_genes():
         gene_set_factor, map_gene_novelty, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 
                                                                                                                 enrichment_analysis=enrichment_analysis,
                                                                                                                 factorization_weight=factorization_weight,
+                                                                                                                phi=phi,
                                                                                                                 p_value=p_value_cutoff,
                                                                                                                 max_num_gene_sets=max_number_gene_sets,
                                                                                                                 list_gene=list_input_translated, 
@@ -424,6 +439,12 @@ def post_translator_gene():
     logger.info(str_message)
     list_logs.append(str_message)
 
+    # adding input to indicate the factorization phi value
+    phi = process_numeric_value(json_request=data, name=dutils.KEY_REST_PHI, cutoff_default=DEFAULT_FACTORIZATION_PHI)
+    str_message = "using factorization phi: {}".format(phi)
+    logger.info(str_message)
+    list_logs.append(str_message)
+
     # get the gene set family name
     gene_set_family_key = process_string_value(json_request=data, name=dutils.KEY_REST_GENE_SET, default=dutils.KEY_DEFAULT_GENE_SET_FAMILY)
     exclude_controls = process_boolean_value(json_request=data, name=dutils.KEY_REST_EXCLUDE_CONTROLS, default=True)
@@ -468,6 +489,7 @@ def post_translator_gene():
         gene_set_factor, map_gene_novelty, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 
                                                                                                                 enrichment_analysis=enrichment_analysis,
                                                                                                                 factorization_weight=factorization_weight,
+                                                                                                                phi=phi,
                                                                                                                 p_value=p_value_cutoff,
                                                                                                                 max_num_gene_sets=max_number_gene_sets,
                                                                                                                 list_gene=list_input_translated, 
@@ -685,6 +707,12 @@ def post_network_graph():
     logger.info(str_message)
     list_logs.append(str_message)
 
+    # adding input to indicate the factorization phi value
+    phi = process_numeric_value(json_request=data, name=dutils.KEY_REST_PHI, cutoff_default=DEFAULT_FACTORIZATION_PHI)
+    str_message = "using factorization phi: {}".format(phi)
+    logger.info(str_message)
+    list_logs.append(str_message)
+
     # get the gene set family object
     gene_set_family_object: sutils.GeneSetFamily = map_gene_set_families.get(gene_set_family_key)
 
@@ -713,6 +741,7 @@ def post_network_graph():
         gene_set_factor, map_gene_novelty, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 
                                                                                                                 enrichment_analysis=enrichment_analysis,
                                                                                                                 factorization_weight=factorization_weight,
+                                                                                                                phi=phi,
                                                                                                                 p_value=p_value_cutoff,
                                                                                                                 max_num_gene_sets=max_number_gene_sets,
                                                                                                                 list_gene=list_input_translated, 
@@ -907,7 +936,7 @@ def post_gene_curies():
     return list_input_translated
 
 
-def process_genes(list_input_genes, p_value_cutoff, enrichment_analysis=dutils.DEFAULT_ENRICHMENT_ANALYSIS, factorization_weight=dutils.DEFAULT_FACTORIZATION_WEIGHT, log=False):
+def process_genes(list_input_genes, p_value_cutoff, enrichment_analysis=dutils.DEFAULT_ENRICHMENT_ANALYSIS, factorization_weight=dutils.DEFAULT_FACTORIZATION_WEIGHT, phi=DEFAULT_FACTORIZATION_PHI, log=False):
     '''
     processes the input genes
     '''
@@ -923,6 +952,7 @@ def process_genes(list_input_genes, p_value_cutoff, enrichment_analysis=dutils.D
     list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_factor_data, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
                                                                                                                enrichment_analysis=enrichment_analysis,
                                                                                                                factorization_weight=factorization_weight,
+                                                                                                               phi=phi,
                                                                                                                p_value=p_value_cutoff,
                                                                                                                list_gene=list_input_translated, 
                                                                                                                list_system_genes=list_system_genes, 

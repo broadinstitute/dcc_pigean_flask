@@ -81,7 +81,7 @@ class RunFactorException(Exception):
 
 # methods
 def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_genes, map_gene_index, map_gene_set_index, mean_shifts, scale_factors, 
-        enrichment_analysis='hypergeometric', factorization_weight='pvalue',
+        enrichment_analysis='hypergeometric', factorization_weight='pvalue', phi=1.0,
         p_value=0.05, max_num_gene_sets=100, is_factor_labels_llm=False, use_set_p_value=False, step_log=True, log=False):
     '''
     will produce the gene set factors and gene factors
@@ -180,7 +180,7 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
         # step 6: from this double filtered matrix, compute the factors
 
         weighted_filtered_matrix =  matrix_gene_filtered_by_remaining_gene_sets @ sparse.diags(weight, format='csc')
-        gene_factor, gene_set_factor, _, _, exp_lambda, _ = _bayes_nmf_l2(V0=weighted_filtered_matrix)
+        gene_factor, gene_set_factor, _, _, exp_lambda, _ = _bayes_nmf_l2(V0=weighted_filtered_matrix, phi=phi)
         # gene_factor, gene_set_factor = run_nmf(matrix_input=matrix_gene_filtered_by_remaining_gene_sets, log=log)
 
         if step_log:
