@@ -1174,7 +1174,7 @@ def calculate_phewas(gene_list, list_system_genes, map_gene_index, phenos, gene_
     return p_values, beta_tildes, ses
 
 
-def build_phewas_p_value_list(phenos, p_values, max_num_phenos=100):
+def build_phewas_p_value_list(phenos, p_values, max_num_phenos=100, map_phenotype_names={}):
     '''
     will build a sorted list of phenotype/p_value objects
     '''
@@ -1184,7 +1184,11 @@ def build_phewas_p_value_list(phenos, p_values, max_num_phenos=100):
     # build the list
     selected_indices = np.argsort(p_values)[:max_num_phenos]
     for index in selected_indices:
-        list_result.append({'phenotype': phenos[index], 'p_value': p_values[index]})
+        name_phenotype = map_phenotype_names.get(phenos[index])
+        if name_phenotype:
+            list_result.append({'phenotype': name_phenotype, 'p_value': p_values[index], 'phenotype_id': phenos[index]})
+        else:
+            list_result.append({'phenotype': phenos[index], 'p_value': p_values[index], 'phenotype_id': phenos[index]})
 
     return list_result
 

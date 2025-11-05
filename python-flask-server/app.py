@@ -6,6 +6,7 @@ import dcc.file_utils as futils
 import dcc.matrix_utils as mutils 
 import dcc.compute_utils as cutils 
 import dcc.dcc_utils as dutils 
+import dcc.data_utils as data_utils 
 import dcc.sql_utils as sql_utils
 import dcc.gui_utils as gutils
 
@@ -31,6 +32,12 @@ DEFAULT_FACTORIZATION_PHI = 1.0
 map_conf = sutils.load_conf()
 
 # load the data
+# get the phenotypes name map
+map_phenotypes_lookup = data_utils.get_phenotype_map()
+logger.info("===> loaded phenytpes map of size: {}".format(len(map_phenotypes_lookup)))
+
+
+# load the geen sets
 db_file = map_conf.get('root_dir') +  map_conf.get('db_file')
 logger.info("loading database file: {}".format(db_file))
 sql_connection = sql_utils.db_sqlite_get_connection(db_path=db_file)
@@ -846,7 +853,7 @@ def post_phenotypes():
     p_values, beta_tildes, ses = cutils.calculate_phewas(list_input_genes, list_system_genes, map_gene_index, phenos, gene_pheno_Y, gene_pheno_combined_prior_Ys)
 
     # build the results
-    result_list = cutils.build_phewas_p_value_list(phenos, p_values, max_number_phenotypes)
+    result_list = cutils.build_phewas_p_value_list(phenos, p_values, max_number_phenotypes, map_phenotype_names=map_phenotypes_lookup)
 
     # time
     end = time.time()
