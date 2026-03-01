@@ -169,7 +169,8 @@ def calculate_factors(matrix_gene_sets_gene_original, list_gene, list_system_gen
 
         # step 7a - create the factor labels
         if is_factor_labels_llm:
-            list_factor = mlutils.get_list_factor_names_from_llm(list_labels=list_factor, list_factor_gene_sets=list_factor_gene_sets)
+            # list_factor = mlutils.get_list_factor_names_from_llm(list_labels=list_factor, list_factor_gene_sets=list_factor_gene_sets)
+            list_factor = mlutils.get_list_factor_names_from_ollama_llm(list_labels=list_factor, list_factor_gene_sets=list_factor_gene_sets)
 
         # step 7b - get the lowest factor per gene
         map_factor_data_per_gene = get_gene_factor_data_by_gene(exp_gene_factors=updated_gene_factors, list_system_genes=list_system_genes, 
