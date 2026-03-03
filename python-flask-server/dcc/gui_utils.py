@@ -188,6 +188,9 @@ def gui_build_translator_gene_results_map(list_input_genes, list_factor, list_fa
     # initialize
     map_result = {}
 
+    # add in gene analyized
+    map_result[dutils.KEY_APP_INPUT_GENES] = list_input_genes
+
     # get the index values of the clean factors
     list_verified_index = get_list_verified_results_for_giu(list_factor=list_factor, list_factor_genes=list_factor_genes, list_factor_gene_sets=list_factor_gene_sets)
     list_factor_gui = [list_factor[index] for index in list_verified_index]
