@@ -6,6 +6,7 @@ import dcc.file_utils as futils
 import dcc.matrix_utils as mutils 
 import dcc.compute_utils as cutils 
 import dcc.dcc_utils as dutils 
+import dcc.data_utils as data_utils 
 import dcc.sql_utils as sql_utils
 import dcc.gui_utils as gutils
 import dcc.translator_utils as tran_utils
@@ -25,11 +26,19 @@ logger = dutils.get_logger(__name__)
 P_VALUE_CUTOFF = 0.3
 # p_value_cutoff = 0.05
 MAX_NUMBER_GENE_SETS_FOR_COMPUTATION=100
+# default factorization phi value = 1.0
+DEFAULT_FACTORIZATION_PHI = 1.0
 
 # in memory compute variables
 map_conf = sutils.load_conf()
 
 # load the data
+# get the phenotypes name map
+map_phenotypes_lookup = data_utils.get_phenotype_map()
+logger.info("===> loaded phenytpes map of size: {}".format(len(map_phenotypes_lookup)))
+
+
+# load the geen sets
 db_file = map_conf.get('root_dir') +  map_conf.get('db_file')
 logger.info("loading database file: {}".format(db_file))
 sql_connection = sql_utils.db_sqlite_get_connection(db_path=db_file)
@@ -99,8 +108,31 @@ def post_genes():
     max_number_gene_sets = process_numeric_value(json_request=data, name=dutils.KEY_REST_MAX_NUMBER_GENE_SETS, cutoff_default=MAX_NUMBER_GENE_SETS_FOR_COMPUTATION, is_float=False)
     logger.info("using max number gene sets: {}".format(max_number_gene_sets))
 
+    # adding input to indicate the enrichment analysis type
+    enrichment_analysis = process_string_value(json_request=data, name=dutils.KEY_REST_ENRICHMENT_ANALYSIS, default=dutils.DEFAULT_ENRICHMENT_ANALYSIS)
+    str_message = "using enrichment analysis: {}".format(enrichment_analysis)
+    logger.info(str_message)
+
+    # adding input to indicate the factorization weight
+    factorization_weight = process_string_value(json_request=data, name=dutils.KEY_REST_FACTORIZATION_WEIGHT, default=dutils.DEFAULT_FACTORIZATION_WEIGHT)
+    str_message = "using factorization weight: {}".format(factorization_weight)
+    logger.info(str_message)
+
+    # adding input to indicate the factorization phi value
+    phi = process_numeric_value(json_request=data, name=dutils.KEY_REST_PHI, cutoff_default=DEFAULT_FACTORIZATION_PHI)
+    str_message = "using factorization phi: {}".format(phi)
+    logger.info(str_message)
+
     # get the gene set family name
     gene_set_family_key = process_string_value(json_request=data, name=dutils.KEY_REST_GENE_SET, default=dutils.KEY_DEFAULT_GENE_SET_FAMILY)
+    exclude_controls = process_boolean_value(json_request=data, name=dutils.KEY_REST_EXCLUDE_CONTROLS, default=False)
+    if not exclude_controls:
+        gene_set_family_with_controls_key = gene_set_family_key + dutils.KEY_NEGATIVE_CONTROLS
+        if gene_set_family_key in map_gene_set_families:
+            gene_set_family_key = gene_set_family_with_controls_key
+        else:
+            str_message = "got gene set family key which is not loaded: {}".format(gene_set_family_with_controls_key)
+            logger.warning(str_message)
     logger.info("using input gene set family key: {}".format(gene_set_family_key))
 
     # get the gene set family object
@@ -151,6 +183,9 @@ def post_genes():
         list_factor, list_factor_genes, list_factor_gene_sets, \
             gene_factor, gene_set_factor, map_gene_factor_data, list_gene_set_p_values, logs_process = cutils.calculate_factors(
                                                                                                     matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 
+                                                                                                    enrichment_analysis=enrichment_analysis,
+                                                                                                    factorization_weight=factorization_weight,
+                                                                                                    phi=phi,
                                                                                                     p_value=p_value_cutoff,
                                                                                                     max_num_gene_sets=max_number_gene_sets,
                                                                                                     list_gene=list_input_translated, 
@@ -233,8 +268,35 @@ def post_pigean_genes():
     logger.info(str_message)
     list_logs.append(str_message)
 
+    # adding input to indicate the enrichment analysis type
+    enrichment_analysis = process_string_value(json_request=data, name=dutils.KEY_REST_ENRICHMENT_ANALYSIS, default=dutils.DEFAULT_ENRICHMENT_ANALYSIS)
+    str_message = "using enrichment analysis: {}".format(enrichment_analysis)
+    logger.info(str_message)
+    list_logs.append(str_message)
+
+    # adding input to indicate the factorization weight
+    factorization_weight = process_string_value(json_request=data, name=dutils.KEY_REST_FACTORIZATION_WEIGHT, default=dutils.DEFAULT_FACTORIZATION_WEIGHT)
+    str_message = "using factorization weight: {}".format(factorization_weight)
+    logger.info(str_message)
+    list_logs.append(str_message)
+
+    # adding input to indicate the factorization phi value
+    phi = process_numeric_value(json_request=data, name=dutils.KEY_REST_PHI, cutoff_default=DEFAULT_FACTORIZATION_PHI)
+    str_message = "using factorization phi: {}".format(phi)
+    logger.info(str_message)
+    list_logs.append(str_message)
+
     # get the gene set family name
     gene_set_family_key = process_string_value(json_request=data, name=dutils.KEY_REST_GENE_SET, default=dutils.KEY_DEFAULT_GENE_SET_FAMILY)
+    exclude_controls = process_boolean_value(json_request=data, name=dutils.KEY_REST_EXCLUDE_CONTROLS, default=False)
+    if not exclude_controls:
+        gene_set_family_with_controls_key = gene_set_family_key + dutils.KEY_NEGATIVE_CONTROLS
+        if gene_set_family_key in map_gene_set_families:
+            gene_set_family_key = gene_set_family_with_controls_key
+        else:
+            str_message = "got gene set family key which is not loaded: {}".format(gene_set_family_with_controls_key)
+            logger.warning(str_message)
+            list_logs.append(str_message)
     str_message = "using input gene set family key: {}".format(gene_set_family_key)
     logger.info(str_message)
     list_logs.append(str_message)
@@ -277,6 +339,9 @@ def post_pigean_genes():
 
         list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, \
         gene_set_factor, map_gene_novelty, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 
+                                                                                                                enrichment_analysis=enrichment_analysis,
+                                                                                                                factorization_weight=factorization_weight,
+                                                                                                                phi=phi,
                                                                                                                 p_value=p_value_cutoff,
                                                                                                                 max_num_gene_sets=max_number_gene_sets,
                                                                                                                 list_gene=list_input_translated, 
@@ -370,8 +435,35 @@ def post_translator_gene():
     logger.info(str_message)
     list_logs.append(str_message)
 
+    # adding input to indicate the enrichment analysis type
+    enrichment_analysis = process_string_value(json_request=data, name=dutils.KEY_REST_ENRICHMENT_ANALYSIS, default=dutils.DEFAULT_ENRICHMENT_ANALYSIS)
+    str_message = "using enrichment analysis: {}".format(enrichment_analysis)
+    logger.info(str_message)
+    list_logs.append(str_message)
+
+    # adding input to indicate the factorization weight
+    factorization_weight = process_string_value(json_request=data, name=dutils.KEY_REST_FACTORIZATION_WEIGHT, default=dutils.DEFAULT_FACTORIZATION_WEIGHT)
+    str_message = "using factorization weight: {}".format(factorization_weight)
+    logger.info(str_message)
+    list_logs.append(str_message)
+
+    # adding input to indicate the factorization phi value
+    phi = process_numeric_value(json_request=data, name=dutils.KEY_REST_PHI, cutoff_default=DEFAULT_FACTORIZATION_PHI)
+    str_message = "using factorization phi: {}".format(phi)
+    logger.info(str_message)
+    list_logs.append(str_message)
+
     # get the gene set family name
     gene_set_family_key = process_string_value(json_request=data, name=dutils.KEY_REST_GENE_SET, default=dutils.KEY_DEFAULT_GENE_SET_FAMILY)
+    exclude_controls = process_boolean_value(json_request=data, name=dutils.KEY_REST_EXCLUDE_CONTROLS, default=True)
+    if not exclude_controls:
+        gene_set_family_with_controls_key = gene_set_family_key + dutils.KEY_NEGATIVE_CONTROLS
+        if gene_set_family_key in map_gene_set_families:
+            gene_set_family_key = gene_set_family_with_controls_key
+        else:
+            str_message = "got gene set family key which is not loaded: {}".format(gene_set_family_with_controls_key)
+            logger.warning(str_message)
+            list_logs.append(str_message)
     str_message = "using input gene set family key: {}".format(gene_set_family_key)
     logger.info(str_message)
     list_logs.append(str_message)
@@ -403,6 +495,9 @@ def post_translator_gene():
         # compute
         list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, \
         gene_set_factor, map_gene_novelty, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 
+                                                                                                                enrichment_analysis=enrichment_analysis,
+                                                                                                                factorization_weight=factorization_weight,
+                                                                                                                phi=phi,
                                                                                                                 p_value=p_value_cutoff,
                                                                                                                 max_num_gene_sets=max_number_gene_sets,
                                                                                                                 list_gene=list_input_translated, 
@@ -585,6 +680,15 @@ def post_gene_scores():
 
     # get the gene set family name
     gene_set_family_key = process_string_value(json_request=data, name=dutils.KEY_REST_GENE_SET, default=dutils.KEY_DEFAULT_GENE_SET_FAMILY)
+    exclude_controls = process_boolean_value(json_request=data, name=dutils.KEY_REST_EXCLUDE_CONTROLS, default=False)
+    if not exclude_controls:
+        gene_set_family_with_controls_key = gene_set_family_key + dutils.KEY_NEGATIVE_CONTROLS
+        if gene_set_family_key in map_gene_set_families:
+            gene_set_family_key = gene_set_family_with_controls_key
+        else:
+            str_message = "got gene set family key which is not loaded: {}".format(gene_set_family_with_controls_key)
+            logger.warning(str_message)
+            list_logs.append(str_message)
     str_message = "using input gene set family key: {}".format(gene_set_family_key)
     logger.info(str_message)
     list_logs.append(str_message)
@@ -692,6 +796,15 @@ def post_network_graph():
 
     # get the gene set family name
     gene_set_family_key = process_string_value(json_request=data, name=dutils.KEY_REST_GENE_SET, default=dutils.KEY_DEFAULT_GENE_SET_FAMILY)
+    exclude_controls = process_boolean_value(json_request=data, name=dutils.KEY_REST_EXCLUDE_CONTROLS, default=False)
+    if not exclude_controls:
+        gene_set_family_with_controls_key = gene_set_family_key + dutils.KEY_NEGATIVE_CONTROLS
+        if gene_set_family_key in map_gene_set_families:
+            gene_set_family_key = gene_set_family_with_controls_key
+        else:
+            str_message = "got gene set family key which is not loaded: {}".format(gene_set_family_with_controls_key)
+            logger.warning(str_message)
+            list_logs.append(str_message)
     str_message = "using input gene set family key: {}".format(gene_set_family_key)
     logger.info(str_message)
     list_logs.append(str_message)
@@ -699,6 +812,24 @@ def post_network_graph():
     # adding input to indicate whether to generate factor label names
     is_generate_factor_labels = process_boolean_value(json_request=data, name=dutils.KEY_REST_GENERATE_FACTOR_LABELS, default=False)
     str_message = "using input whether generate factor labels (using LLM): {}".format(is_generate_factor_labels)
+    logger.info(str_message)
+    list_logs.append(str_message)
+
+    # adding input to indicate the enrichment analysis type
+    enrichment_analysis = process_string_value(json_request=data, name=dutils.KEY_REST_ENRICHMENT_ANALYSIS, default=dutils.DEFAULT_ENRICHMENT_ANALYSIS)
+    str_message = "using enrichment analysis: {}".format(enrichment_analysis)
+    logger.info(str_message)
+    list_logs.append(str_message)
+
+    # adding input to indicate the factorization weight
+    factorization_weight = process_string_value(json_request=data, name=dutils.KEY_REST_FACTORIZATION_WEIGHT, default=dutils.DEFAULT_FACTORIZATION_WEIGHT)
+    str_message = "using factorization weight: {}".format(factorization_weight)
+    logger.info(str_message)
+    list_logs.append(str_message)
+
+    # adding input to indicate the factorization phi value
+    phi = process_numeric_value(json_request=data, name=dutils.KEY_REST_PHI, cutoff_default=DEFAULT_FACTORIZATION_PHI)
+    str_message = "using factorization phi: {}".format(phi)
     logger.info(str_message)
     list_logs.append(str_message)
 
@@ -728,6 +859,9 @@ def post_network_graph():
 
         list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, \
         gene_set_factor, map_gene_novelty, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=gene_set_family_object.matrix_gene_sets, 
+                                                                                                                enrichment_analysis=enrichment_analysis,
+                                                                                                                factorization_weight=factorization_weight,
+                                                                                                                phi=phi,
                                                                                                                 p_value=p_value_cutoff,
                                                                                                                 max_num_gene_sets=max_number_gene_sets,
                                                                                                                 list_gene=list_input_translated, 
@@ -832,7 +966,7 @@ def post_phenotypes():
     p_values, beta_tildes, ses = cutils.calculate_phewas(list_input_genes, list_system_genes, map_gene_index, phenos, gene_pheno_Y, gene_pheno_combined_prior_Ys)
 
     # build the results
-    result_list = cutils.build_phewas_p_value_list(phenos, p_values, max_number_phenotypes)
+    result_list = cutils.build_phewas_p_value_list(phenos, p_values, max_number_phenotypes, map_phenotype_names=map_phenotypes_lookup)
 
     # time
     end = time.time()
@@ -880,6 +1014,14 @@ def post_novelty_genes():
     max_number_gene_sets = process_numeric_value(json_request=data, name='max_number_gene_sets', cutoff_default=MAX_NUMBER_GENE_SETS_FOR_COMPUTATION)
     logger.info("got using p_value: {}".format(p_value_cutoff))
 
+    # adding input to indicate the enrichment analysis type
+    enrichment_analysis = process_string_value(json_request=data, name=dutils.KEY_REST_ENRICHMENT_ANALYSIS, default=dutils.DEFAULT_ENRICHMENT_ANALYSIS)
+    logger.info("using enrichment analysis: {}".format(enrichment_analysis))
+
+    # adding input to indicate the factorization weight
+    factorization_weight = process_string_value(json_request=data, name=dutils.KEY_REST_FACTORIZATION_WEIGHT, default=dutils.DEFAULT_FACTORIZATION_WEIGHT)
+    logger.info("using factorization weight: {}".format(factorization_weight))
+
     # get the calculated data
     map_gene_factor_data, list_input_translated = process_genes(list_input_genes=list_input_genes, p_value_cutoff=p_value_cutoff)
 
@@ -914,7 +1056,7 @@ def post_gene_curies():
     return list_input_translated
 
 
-def process_genes(list_input_genes, p_value_cutoff, log=False):
+def process_genes(list_input_genes, p_value_cutoff, enrichment_analysis=dutils.DEFAULT_ENRICHMENT_ANALYSIS, factorization_weight=dutils.DEFAULT_FACTORIZATION_WEIGHT, phi=DEFAULT_FACTORIZATION_PHI, log=False):
     '''
     processes the input genes
     '''
@@ -928,6 +1070,9 @@ def process_genes(list_input_genes, p_value_cutoff, log=False):
 
     # do the calculations
     list_factor, list_factor_genes, list_factor_gene_sets, gene_factor, gene_set_factor, map_gene_factor_data, list_gene_set_p_values, logs_process = cutils.calculate_factors(matrix_gene_sets_gene_original=matrix_gene_sets, 
+                                                                                                               enrichment_analysis=enrichment_analysis,
+                                                                                                               factorization_weight=factorization_weight,
+                                                                                                               phi=phi,
                                                                                                                p_value=p_value_cutoff,
                                                                                                                list_gene=list_input_translated, 
                                                                                                                list_system_genes=list_system_genes, 

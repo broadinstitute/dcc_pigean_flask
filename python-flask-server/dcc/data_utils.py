@@ -1,10 +1,13 @@
 
 # imports
 import dcc.dcc_utils as dutils 
+import requests
 
 
 # constants
 logger = dutils.get_logger(__name__)
+URL_PHENOTYPES = "https://bioindex-dev.hugeamp.org/api/bio/query/pigean-phenotypes?q=1"
+
 
 # methods
 def get_list_verified_results_for_giu(list_factor, list_factor_genes, list_factor_gene_sets, log=False):
@@ -22,6 +25,42 @@ def get_list_verified_results_for_giu(list_factor, list_factor_genes, list_facto
     # return
     return list_result
 
+
+def get_phenotype_map(endpoint_url: str=URL_PHENOTYPES) -> dict:
+    """
+    Sends a POST request to the given REST endpoint and returns
+    a dict mapping phenotype -> phenotype_name.
+
+    Args:
+        endpoint_url (str): The API endpoint URL.
+        payload (dict): The POST data (e.g. parameters, filters).
+
+    Returns:
+        dict: { phenotype: phenotype_name, ... }
+    """
+    try:
+        response = requests.get(endpoint_url)
+        response.raise_for_status()
+        data = response.json()
+
+        if "data" not in data:
+            raise ValueError("Unexpected response format: missing 'data' field")
+
+        phenotype_map = {
+            item["phenotype"]: item["phenotype_name"]
+            for item in data["data"]
+            if "phenotype" in item and "phenotype_name" in item
+        }
+
+        return phenotype_map
+
+    except requests.RequestException as e:
+        print(f"HTTP error: {e}")
+        return {}
+    except Exception as e:
+        print(f"Error: {e}")
+        return {}
+    
 
 def extract_factor_data_list(list_factor_input, list_factor_genes_input, list_factor_gene_sets_input, max_num_per_factor=5, log=True):
     '''
