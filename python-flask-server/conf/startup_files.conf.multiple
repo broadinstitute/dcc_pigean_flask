@@ -49,7 +49,9 @@
                 "KOMP2_XMT_2022-12-13_KOMP2_Mouse_Phenotypes_2022.gmt",
                 "MoTrPAC_Endurance_Trained_Rats_2023.gmt",
                 "LINCS_XMT_2022-12-13_LINCS_L1000_CRISPR_KO_Consensus_Sigs.gmt",
-                "LINCS_XMT_2022-12-13_LINCS_L1000_Chem_Pert_Consensus_Sigs.gmt"
+                "LINCS_XMT_2022-12-13_LINCS_L1000_Chem_Pert_Consensus_Sigs.gmt",
+                "MW_XMT_2022-12-13_Metabolomics_Workbench_Metabolites_2022.gmt",
+                "HuBMAP_ASCT-B.gmt"
             ]
         
         },
