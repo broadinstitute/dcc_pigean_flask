@@ -44,6 +44,7 @@ import argparse
 import json
 import sys
 import time
+from collections import Counter
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -155,7 +156,8 @@ def poll_ars(
     debug: bool = False,
 ) -> Dict[str, Any]:
     """Poll /ars/api/messages/{pk} until the parent query is Done/Error or timeout."""
-    url = f"{ars_base}/ars/api/messages/{pk}"
+    # ?trace=y tells ARS to include per-ARA child messages in the response
+    url = f"{ars_base}/ars/api/messages/{pk}?trace=y"
     waited = 0
     last: Dict[str, Any] = {}
     while waited <= max_wait_s:
@@ -185,13 +187,39 @@ def summarize_children(ars_result: Dict[str, Any]) -> List[Dict[str, Any]]:
                 "agent": name,
                 "status": child.get("status"),
                 "code": child.get("code"),
+                "pk": child.get("pk") or child.get("message"),
             }
         )
     return summary
 
 
+def fetch_kg_size(ars_base: str, child_pk: str, timeout: int = 30) -> Optional[tuple]:
+    """Return (node_count, edge_count, category_counts) from a child ARS message, or None on failure."""
+    url = f"{ars_base}/ars/api/messages/{child_pk}"
+    try:
+        resp = requests.get(url, timeout=timeout)
+        resp.raise_for_status()
+        data = resp.json()
+        message = (
+            data.get("fields", {}).get("data", {}).get("message")
+            or data.get("message")
+            or {}
+        )
+        kg = message.get("knowledge_graph") or {}
+        nodes = kg.get("nodes") or {}
+        edges = kg.get("edges") or {}
+        cats: Counter = Counter()
+        for node in nodes.values():
+            for cat in (node.get("categories") or ["unknown"]):
+                cats[cat] += 1
+        return len(nodes), len(edges), dict(cats.most_common())
+    except Exception:
+        return None
+
+
 def run(args: argparse.Namespace) -> None:
     ars_base = ARS_ENVS[args.ars_env]
+    verbose = args.verbose
     tests_path = Path(args.tests_dir)
     if not tests_path.exists():
         sys.exit(f"Path not found: {tests_path}")
@@ -203,50 +231,84 @@ def run(args: argparse.Namespace) -> None:
         assets = assets[: args.limit]
 
     results = []
+    out_path = Path(args.output)
+    out_fh = out_path.open("w")
     for i, asset in enumerate(assets, 1):
         name = asset.get("id") or asset.get("name") or f"asset_{i}"
         print(f"\n[{i}/{len(assets)}] {name} (from {asset.get('_source_file')})")
-
-        trapi_payload = build_trapi_query(asset)
-        if trapi_payload is None:
-            print("  [skip] could not build a TRAPI query (missing id/predicate) -- check schema mapping")
-            continue
-
         try:
-            pk = submit_to_ars(ars_base, trapi_payload)
-        except requests.RequestException as e:
-            print(f"  [error] submit failed: {e}")
-            continue
+            trapi_payload = build_trapi_query(asset)
+            if trapi_payload is None:
+                print("  [skip] could not build a TRAPI query (missing id/predicate) -- check schema mapping")
+                continue
 
-        if not pk:
-            continue
-        print(f"  submitted -> pk={pk}")
-        print(f"  view in ARAX UI: https://arax.transltr.io/?source=ARS&id={pk}")
+            if verbose:
+                print(f"  POST {ars_base}/ars/api/submit")
+            try:
+                pk = submit_to_ars(ars_base, trapi_payload)
+            except requests.RequestException as e:
+                print(f"  [error] submit failed: {e}")
+                continue
 
-        ars_result = poll_ars(
-            ars_base, pk, max_wait_s=args.max_wait, poll_every_s=args.poll_interval, debug=args.debug
-        )
-        child_summary = summarize_children(ars_result)
-        if not child_summary:
-            print("  [warn] no per-ARA children parsed -- rerun with --debug to inspect raw response shape")
-        for c in child_summary:
-            print(f"    - {c['agent']:<20} status={c['status']} code={c['code']}")
+            if not pk:
+                continue
+            arax_url = f"https://arax.transltr.io/?source=ARS&id={pk}"
+            if verbose:
+                print(f"  submitted -> pk={pk}")
+                print(f"  polling {ars_base}/ars/api/messages/{pk}?trace=y")
+            print(f"  ARAX UI: {arax_url}")
 
-        results.append(
-            {
+            ars_result = poll_ars(
+                ars_base, pk, max_wait_s=args.max_wait, poll_every_s=args.poll_interval, debug=args.debug
+            )
+            child_summary = summarize_children(ars_result)
+            if not child_summary:
+                top_keys = list(ars_result.keys())
+                fields_keys = list(ars_result.get("fields", {}).keys())
+                print(f"  [warn] no per-ARA children parsed -- top-level keys: {top_keys}, fields keys: {fields_keys}")
+                print(f"  [warn] rerun with --debug to print the full raw response")
+            ars_kg: Optional[tuple] = None
+            for c in child_summary:
+                kg_info = ""
+                cat_lines = []
+                is_ars = c.get("agent") == "ars-ars-agent"
+                if is_ars and c.get("pk") and (c.get("status") or "").lower() in ("done", "complete", "completed"):
+                    size = fetch_kg_size(ars_base, c["pk"])
+                    if size is not None:
+                        ars_kg = size
+                        kg_info = f" [nodes={size[0]} edges={size[1]}]"
+                        if verbose:
+                            cat_lines = [f"      {cat}: {cnt}" for cat, cnt in size[2].items()]
+                        else:
+                            cat_lines = [f"      {cat}: {cnt}" for cat, cnt in size[2].items() if cat == "biolink:GeneOrGeneProduct"]
+                if verbose:
+                    print(f"    - {c['agent']:<20} status={c['status']} code={c['code']}{kg_info}")
+                elif is_ars and kg_info:
+                    print(f"    - {'ars-ars-agent':<20} status={c['status']} code={c['code']}{kg_info}")
+                for line in cat_lines:
+                    print(line)
+
+            record = {
                 "test_asset": name,
                 "source_file": asset.get("_source_file"),
                 "pk": pk,
                 "ars_env": args.ars_env,
+                "ars_nodes": ars_kg[0] if ars_kg else None,
+                "ars_edges": ars_kg[1] if ars_kg else None,
+                "ars_categories": ars_kg[2] if ars_kg else None,
                 "children": child_summary,
             }
-        )
+            results.append(record)
+            out_fh.write(json.dumps(record) + "\n")
+            out_fh.flush()
+
+        except Exception as e:
+            print(f"  [error] unexpected failure for {name}: {e}")
 
         if args.sleep:
             time.sleep(args.sleep)
 
-    out_path = Path(args.output)
-    out_path.write_text(json.dumps(results, indent=2))
+    out_fh.close()
     print(f"\nWrote {len(results)} result(s) to {out_path}")
 
 
@@ -265,8 +327,9 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--max-wait", type=int, default=300, help="Max seconds to wait for each query")
     p.add_argument("--poll-interval", type=int, default=10, help="Seconds between status polls")
     p.add_argument("--sleep", type=float, default=1.0, help="Seconds to pause between submissions")
-    p.add_argument("--output", default="ars_test_results.json", help="Where to write the summary JSON")
+    p.add_argument("--output", default="ars_test_results.jsonl", help="Where to write the summary (JSON Lines)")
     p.add_argument("--debug", action="store_true", help="Print raw ARS JSON responses while polling")
+    p.add_argument("-v", "--verbose", action="store_true", help="Print per-ARA children, all categories, and request URLs")
     return p.parse_args()
 
 
