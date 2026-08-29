@@ -1,0 +1,4 @@
+data/
+*.gmt
+*.jsonl
+*.json

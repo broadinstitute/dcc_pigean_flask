@@ -193,18 +193,55 @@ def summarize_children(ars_result: Dict[str, Any]) -> List[Dict[str, Any]]:
     return summary
 
 
+def _extract_message(data: Dict[str, Any]) -> Dict[str, Any]:
+    return (
+        data.get("fields", {}).get("data", {}).get("message")
+        or data.get("message")
+        or {}
+    )
+
+
+def _genes_from_message(message: Dict[str, Any]) -> List[str]:
+    """Extract unique gene names from TRAPI results via node_bindings and auxiliary graph edges."""
+    kg_nodes = (message.get("knowledge_graph") or {}).get("nodes") or {}
+    kg_edges = (message.get("knowledge_graph") or {}).get("edges") or {}
+    aux_graphs = message.get("auxiliary_graphs") or {}
+
+    candidate_curies: set = set()
+    for result in (message.get("results") or []):
+        # direct answer node bindings
+        for bindings in (result.get("node_bindings") or {}).values():
+            for b in (bindings or []):
+                candidate_curies.add(b.get("id") if isinstance(b, dict) else b)
+        # nodes reachable via auxiliary/support graphs
+        for analysis in (result.get("analyses") or []):
+            for graph_id in (analysis.get("support_graphs") or []):
+                for edge_id in ((aux_graphs.get(graph_id) or {}).get("edges") or []):
+                    edge = kg_edges.get(edge_id) or {}
+                    candidate_curies.add(edge.get("subject"))
+                    candidate_curies.add(edge.get("object"))
+
+    genes: List[str] = []
+    seen: set = set()
+    for curie in candidate_curies:
+        if not curie:
+            continue
+        node = kg_nodes.get(curie) or {}
+        if "biolink:GeneOrGeneProduct" in (node.get("categories") or []):
+            gene_name = node.get("name") or curie
+            if gene_name not in seen:
+                seen.add(gene_name)
+                genes.append(gene_name)
+    return genes
+
+
 def fetch_kg_size(ars_base: str, child_pk: str, timeout: int = 30) -> Optional[tuple]:
-    """Return (node_count, edge_count, category_counts) from a child ARS message, or None on failure."""
+    """Return (node_count, edge_count, category_counts, gene_names) from a child ARS message, or None on failure."""
     url = f"{ars_base}/ars/api/messages/{child_pk}"
     try:
         resp = requests.get(url, timeout=timeout)
         resp.raise_for_status()
-        data = resp.json()
-        message = (
-            data.get("fields", {}).get("data", {}).get("message")
-            or data.get("message")
-            or {}
-        )
+        message = _extract_message(resp.json())
         kg = message.get("knowledge_graph") or {}
         nodes = kg.get("nodes") or {}
         edges = kg.get("edges") or {}
@@ -212,7 +249,18 @@ def fetch_kg_size(ars_base: str, child_pk: str, timeout: int = 30) -> Optional[t
         for node in nodes.values():
             for cat in (node.get("categories") or ["unknown"]):
                 cats[cat] += 1
-        return len(nodes), len(edges), dict(cats.most_common())
+        return len(nodes), len(edges), dict(cats.most_common()), _genes_from_message(message)
+    except Exception:
+        return None
+
+
+def fetch_kg_genes(ars_base: str, child_pk: str, timeout: int = 30) -> Optional[List[str]]:
+    """Return gene names from TRAPI results via node_bindings and auxiliary graphs, or None on failure."""
+    url = f"{ars_base}/ars/api/messages/{child_pk}"
+    try:
+        resp = requests.get(url, timeout=timeout)
+        resp.raise_for_status()
+        return _genes_from_message(_extract_message(resp.json()))
     except Exception:
         return None
 
@@ -233,6 +281,7 @@ def run(args: argparse.Namespace) -> None:
     results = []
     out_path = Path(args.output)
     out_fh = out_path.open("w")
+    gmt_fh = open(args.gmt, "w") if args.gmt else None
     for i, asset in enumerate(assets, 1):
         name = asset.get("id") or asset.get("name") or f"asset_{i}"
         print(f"\n[{i}/{len(assets)}] {name} (from {asset.get('_source_file')})")
@@ -272,7 +321,8 @@ def run(args: argparse.Namespace) -> None:
                 kg_info = ""
                 cat_lines = []
                 is_ars = c.get("agent") == "ars-ars-agent"
-                if is_ars and c.get("pk") and (c.get("status") or "").lower() in ("done", "complete", "completed"):
+                is_done = (c.get("status") or "").lower() in ("done", "complete", "completed")
+                if is_ars and c.get("pk") and is_done:
                     size = fetch_kg_size(ars_base, c["pk"])
                     if size is not None:
                         ars_kg = size
@@ -281,6 +331,15 @@ def run(args: argparse.Namespace) -> None:
                             cat_lines = [f"      {cat}: {cnt}" for cat, cnt in size[2].items()]
                         else:
                             cat_lines = [f"      {cat}: {cnt}" for cat, cnt in size[2].items() if cat == "biolink:GeneOrGeneProduct"]
+                        if gmt_fh and len(size[3]) >= 5:
+                            gmt_fh.write("\t".join([name, f"pk:{pk}"] + size[3]) + "\n")
+                            gmt_fh.flush()
+                elif gmt_fh and c.get("pk") and is_done:
+                    genes = fetch_kg_genes(ars_base, c["pk"])
+                    if genes and len(genes) >= 0:
+                        agent = c.get("agent", "unknown")
+                        gmt_fh.write("\t".join([f"{name}_{agent}", agent] + genes) + "\n")
+                        gmt_fh.flush()
                 if verbose:
                     print(f"    - {c['agent']:<20} status={c['status']} code={c['code']}{kg_info}")
                 elif is_ars and kg_info:
@@ -309,6 +368,9 @@ def run(args: argparse.Namespace) -> None:
             time.sleep(args.sleep)
 
     out_fh.close()
+    if gmt_fh:
+        gmt_fh.close()
+        print(f"Wrote gene sets to {args.gmt}")
     print(f"\nWrote {len(results)} result(s) to {out_path}")
 
 
@@ -327,9 +389,10 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--max-wait", type=int, default=300, help="Max seconds to wait for each query")
     p.add_argument("--poll-interval", type=int, default=10, help="Seconds between status polls")
     p.add_argument("--sleep", type=float, default=1.0, help="Seconds to pause between submissions")
-    p.add_argument("--output", default="ars_test_results.jsonl", help="Where to write the summary (JSON Lines)")
+    p.add_argument("--output", default="data/ars_test_results.jsonl", help="Where to write the summary (JSON Lines)")
     p.add_argument("--debug", action="store_true", help="Print raw ARS JSON responses while polling")
     p.add_argument("-v", "--verbose", action="store_true", help="Print per-ARA children, all categories, and request URLs")
+    p.add_argument("-gmt", "--gmt", metavar="FILE", default=None, help="Write gene sets to this GMT file (aggregate >=5 genes, per-ARA >=3 genes)")
     return p.parse_args()
 
 
