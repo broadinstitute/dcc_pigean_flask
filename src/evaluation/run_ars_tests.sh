@@ -3,7 +3,7 @@
 # then merge all per-asset GMT files into a single combined GMT.
 #
 # Usage:
-#   ./run_filtered_ars_tests.sh <tests-asset-dir> [output.gmt] [ars-env]
+#   ./run_ars_tests.sh <tests-asset-dir> [output.gmt] [ars-env]
 #
 #   <tests-asset-dir>  Directory containing Asset_N.json files
 #                      (clone of https://github.com/NCATSTranslator/Tests test_assets/)
@@ -14,6 +14,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 JSONL="${SCRIPT_DIR}/data/all_ars_test_results.jsonl"
+
 TESTS_DIR="${1:?ERROR: missing required argument <tests-asset-dir>. Usage: $0 <tests-asset-dir> [output.gmt] [ars-env]}"
 OUTPUT_GMT="${2:-${SCRIPT_DIR}/data/combined_genes.gmt}"
 ARS_ENV="${3:-prod}"
@@ -22,10 +23,10 @@ TEMP_DIR=$(mktemp -d)
 trap 'rm -rf "$TEMP_DIR"' EXIT
 
 echo "=== Filtered ARS Test Runner ==="
-echo "JSONL source : $JSONL"
-echo "Test assets  : $TESTS_DIR"
-echo "Output GMT   : $OUTPUT_GMT"
-echo "ARS env      : $ARS_ENV"
+echo "JSONL source  : $JSONL"
+echo "Test assets   : $TESTS_DIR"
+echo "Output GMT    : $OUTPUT_GMT"
+echo "ARS env       : $ARS_ENV"
 echo ""
 
 # Write Python filter to a temp file to avoid quoting/heredoc edge cases
@@ -87,7 +88,8 @@ while IFS=$'\t' read -r asset_name source_file; do
         --ars-env  "$ARS_ENV" \
         --limit    0 \
         --output   "$temp_jsonl" \
-        --gmt      "$temp_gmt"
+        --gmt      "$temp_gmt" \
+        -e
 
     if [ -f "$temp_gmt" ] && [ -s "$temp_gmt" ]; then
         GMT_LINES=$(wc -l < "$temp_gmt" | tr -d ' ')

@@ -57,6 +57,8 @@ ARS_ENVS = {
     "dev": "https://ars-dev.transltr.io",
 }
 
+BAYES_GENE_URL = "https://translator.broadinstitute.org/genetics_provider/bayes_gene/trapi_analysis"
+
 
 def load_test_assets(path: Path) -> List[Dict[str, Any]]:
     """Load one Test Asset JSON file, or every *.json file in a directory."""
@@ -235,13 +237,25 @@ def _genes_from_message(message: Dict[str, Any]) -> List[str]:
     return genes
 
 
-def fetch_kg_size(ars_base: str, child_pk: str, timeout: int = 30) -> Optional[tuple]:
-    """Return (node_count, edge_count, category_counts, gene_names) from a child ARS message, or None on failure."""
+def fetch_kg_size(ars_base: str, child_pk: str, timeout: int = 30, save_path: Optional[Path] = None) -> Optional[tuple]:
+    """Return (node_count, edge_count, category_counts, gene_names, message) from a child ARS message, or None on failure."""
     url = f"{ars_base}/ars/api/messages/{child_pk}"
     try:
         resp = requests.get(url, timeout=timeout)
         resp.raise_for_status()
         message = _extract_message(resp.json())
+        if save_path is not None:
+            save_path.write_text(json.dumps(resp.json(), indent=2))
+            print(f"  submitting to bayes_gene: {BAYES_GENE_URL}")
+            bayes_message = submit_bayes_analysis(resp.json())
+            if bayes_message is not None:
+                bayes_path = Path(save_path).parent / f"{save_path.stem}_bayes_gene.json"
+                bayes_path.write_text(json.dumps(bayes_message, indent=2))
+                factors = (bayes_message.get("pigean-factor") or {}).get("data") or []
+                labels = [f.get("label") or f.get("factor", "?") for f in factors]
+                print(f"  bayes_gene -> {len(factors)} factor(s), saved to {bayes_path.name}")
+                for label in labels:
+                    print(f"    * {label}")
         kg = message.get("knowledge_graph") or {}
         nodes = kg.get("nodes") or {}
         edges = kg.get("edges") or {}
@@ -249,7 +263,7 @@ def fetch_kg_size(ars_base: str, child_pk: str, timeout: int = 30) -> Optional[t
         for node in nodes.values():
             for cat in (node.get("categories") or ["unknown"]):
                 cats[cat] += 1
-        return len(nodes), len(edges), dict(cats.most_common()), _genes_from_message(message)
+        return len(nodes), len(edges), dict(cats.most_common()), _genes_from_message(message), message
     except Exception:
         return None
 
@@ -262,6 +276,17 @@ def fetch_kg_genes(ars_base: str, child_pk: str, timeout: int = 30) -> Optional[
         resp.raise_for_status()
         return _genes_from_message(_extract_message(resp.json()))
     except Exception:
+        return None
+
+
+def submit_bayes_analysis(message: Dict[str, Any], timeout: int = 600) -> Optional[Dict[str, Any]]:
+    """POST a TRAPI message to the Bayes Gene analysis endpoint and return the response message."""
+    try:
+        resp = requests.post(BAYES_GENE_URL, json=message, timeout=timeout)
+        resp.raise_for_status()
+        return resp.json()
+    except requests.RequestException as e:
+        print(f"  [warn] bayes_gene analysis failed: {e}")
         return None
 
 
@@ -323,7 +348,8 @@ def run(args: argparse.Namespace) -> None:
                 is_ars = c.get("agent") == "ars-ars-agent"
                 is_done = (c.get("status") or "").lower() in ("done", "complete", "completed")
                 if is_ars and c.get("pk") and is_done:
-                    size = fetch_kg_size(ars_base, c["pk"])
+                    save_path = Path(args.output).parent / f"{name}_ars.json" if args.eaggl_analysis else None
+                    size = fetch_kg_size(ars_base, c["pk"], save_path=save_path)
                     if size is not None:
                         ars_kg = size
                         kg_info = f" [nodes={size[0]} edges={size[1]}]"
@@ -341,7 +367,7 @@ def run(args: argparse.Namespace) -> None:
                         gmt_fh.write("\t".join([f"{name}_{agent}", agent] + genes) + "\n")
                         gmt_fh.flush()
                 if verbose:
-                    print(f"    - {c['agent']:<20} status={c['status']} code={c['code']}{kg_info}")
+                    print(f"    - {c['agent']:<20} status={c['status']} code={c['code']} pk={c.get('pk')}{kg_info}")
                 elif is_ars and kg_info:
                     print(f"    - {'ars-ars-agent':<20} status={c['status']} code={c['code']}{kg_info}")
                 for line in cat_lines:
@@ -355,6 +381,7 @@ def run(args: argparse.Namespace) -> None:
                 "ars_nodes": ars_kg[0] if ars_kg else None,
                 "ars_edges": ars_kg[1] if ars_kg else None,
                 "ars_categories": ars_kg[2] if ars_kg else None,
+                "ars_genes": ars_kg[3] if ars_kg else None,
                 "children": child_summary,
             }
             results.append(record)
@@ -392,6 +419,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--output", default="data/ars_test_results.jsonl", help="Where to write the summary (JSON Lines)")
     p.add_argument("--debug", action="store_true", help="Print raw ARS JSON responses while polling")
     p.add_argument("-v", "--verbose", action="store_true", help="Print per-ARA children, all categories, and request URLs")
+    p.add_argument("-e", "--eaggl-analysis", action="store_true", help="Save the ars-ars-agent TRAPI response and run EAGGL/Bayes Gene analysis for each asset")
     p.add_argument("-gmt", "--gmt", metavar="FILE", default=None, help="Write gene sets to this GMT file (aggregate >=5 genes, per-ARA >=3 genes)")
     return p.parse_args()
 
