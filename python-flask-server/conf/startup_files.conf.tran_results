@@ -1,0 +1,10 @@
+{
+    "root_dir": "conf/startup_files/",
+    "gene_file": "genes.txt",
+    "db_file": "pigean.db",
+    "gene_set_files": [
+        "translator_gene_sets_no_desc.gmt"
+    ],
+    "gene_set_families": [
+    ]
+}
