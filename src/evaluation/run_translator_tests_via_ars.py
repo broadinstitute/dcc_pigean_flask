@@ -253,7 +253,7 @@ def fetch_kg_size(ars_base: str, child_pk: str, timeout: int = 30, save_path: Op
                 bayes_path.write_text(json.dumps(bayes_message, indent=2))
                 factors = (bayes_message.get("pigean-factor") or {}).get("data") or []
                 labels = [f.get("label") or f.get("factor", "?") for f in factors]
-                print(f"  bayes_gene -> {len(factors)} factor(s), saved to {bayes_path.name}")
+                print(f"  bayes_gene -> {len(factors)} factor(s), saved to {bayes_path}")
                 for label in labels:
                     print(f"    * {label}")
         kg = message.get("knowledge_graph") or {}

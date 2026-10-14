@@ -19,18 +19,26 @@ TESTS_DIR="${1:?ERROR: missing required argument <tests-asset-dir>. Usage: $0 <t
 OUTPUT_GMT="${2:-${SCRIPT_DIR}/data/combined_genes.gmt}"
 ARS_ENV="${3:-prod}"
 
-TEMP_DIR=$(mktemp -d)
-trap 'rm -rf "$TEMP_DIR"' EXIT
+DATA_DIR="${SCRIPT_DIR}/data/ars_tests_$(date +%s)"
+mkdir -p "$DATA_DIR"
+FILTER_PY=""
+MATCHING_TSV=""
+cleanup() {
+    [ -n "$FILTER_PY" ] && rm -f "$FILTER_PY"
+    [ -n "$MATCHING_TSV" ] && rm -f "$MATCHING_TSV"
+}
+trap cleanup EXIT
 
 echo "=== Filtered ARS Test Runner ==="
 echo "JSONL source  : $JSONL"
 echo "Test assets   : $TESTS_DIR"
 echo "Output GMT    : $OUTPUT_GMT"
 echo "ARS env       : $ARS_ENV"
+echo "Data dir      : $DATA_DIR (JSON files are kept)"
 echo ""
 
 # Write Python filter to a temp file to avoid quoting/heredoc edge cases
-FILTER_PY="${TEMP_DIR}/filter.py"
+FILTER_PY="${DATA_DIR}/filter.py"
 cat > "$FILTER_PY" << 'PYEOF'
 import json
 import sys
@@ -51,7 +59,7 @@ with open(jsonl_path) as fh:
             print(f"{record['test_asset']}\t{record['source_file']}")
 PYEOF
 
-MATCHING_TSV="${TEMP_DIR}/matching.tsv"
+MATCHING_TSV="${DATA_DIR}/matching.tsv"
 python3 "$FILTER_PY" "$JSONL" > "$MATCHING_TSV"
 
 TOTAL=$(wc -l < "$MATCHING_TSV" | tr -d ' ')
@@ -79,8 +87,8 @@ while IFS=$'\t' read -r asset_name source_file; do
         continue
     fi
 
-    temp_gmt="${TEMP_DIR}/${asset_name}.gmt"
-    temp_jsonl="${TEMP_DIR}/${asset_name}.jsonl"
+    temp_gmt="${DATA_DIR}/${asset_name}.gmt"
+    temp_jsonl="${DATA_DIR}/${asset_name}.jsonl"
 
     echo "[${asset_name}] Submitting ${source_file} ..."
     python3 "${SCRIPT_DIR}/run_translator_tests_via_ars.py" \
