@@ -3,8 +3,25 @@
     "gene_file": "genes.txt",
     "db_file": "pigean.db",
     "gene_set_files": [
-        "translator_gene_sets_no_desc.gmt"
+        "gene_set_list_msigdb_c2.txt",
+        "gene_set_list_msigdb_c5.txt"
     ],
     "gene_set_families": [
+        {
+            "name": "translator",
+            "gene_set_files": [
+                "translator_gene_sets_no_desc.gmt"
+            ]
+        
+        },
+        {
+            "name": "combined",
+            "gene_set_files": [
+                "gene_set_list_msigdb_c2.txt",
+                "gene_set_list_msigdb_c5.txt",
+                "translator_gene_sets_no_desc.gmt"
+            ]
+        
+        }
     ]
 }
