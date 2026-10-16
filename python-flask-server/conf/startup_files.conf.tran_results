@@ -3,8 +3,15 @@
     "gene_file": "genes.txt",
     "db_file": "pigean.db",
     "gene_set_files": [
+        "gene_set_list_msigdb_c1.txt",
         "gene_set_list_msigdb_c2.txt",
-        "gene_set_list_msigdb_c5.txt"
+        "gene_set_list_msigdb_c3.txt",
+        "gene_set_list_msigdb_c4.txt",
+        "gene_set_list_msigdb_c5.txt",
+        "gene_set_list_msigdb_c6.txt",
+        "gene_set_list_msigdb_c7.txt",
+        "gene_set_list_msigdb_c8.txt",
+        "gene_set_list_msigdb_h.txt"
     ],
     "gene_set_families": [
         {
@@ -17,8 +24,15 @@
         {
             "name": "combined",
             "gene_set_files": [
+                "gene_set_list_msigdb_c1.txt",
                 "gene_set_list_msigdb_c2.txt",
+                "gene_set_list_msigdb_c3.txt",
+                "gene_set_list_msigdb_c4.txt",
                 "gene_set_list_msigdb_c5.txt",
+                "gene_set_list_msigdb_c6.txt",
+                "gene_set_list_msigdb_c7.txt",
+                "gene_set_list_msigdb_c8.txt",
+                "gene_set_list_msigdb_h.txt",
                 "translator_gene_sets_no_desc.gmt"
             ]
         
